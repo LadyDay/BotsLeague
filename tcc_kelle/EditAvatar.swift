@@ -41,7 +41,7 @@ class EditAvatar: SKScene {
     override func didMoveToView(view: SKView) {
         self.selectedPart = self.childNodeWithName("head") as! SKSpriteNode
         initializeNodesInTheView()
-        //initializeTexturesOfNodesInView()
+        initializeTexturesOfNodesInView()
         initializeTexturesOfRobotAndLots()
     }
     
@@ -116,29 +116,12 @@ class EditAvatar: SKScene {
         for touch in touches {
             let location = touch.locationInNode(self)
             
-            if let body = self.nodeAtPoint(location) as? SKSpriteNode {
+            //let body = self.nodeAtPoint(location) as? SKSpriteNode
+            
+            if let node = self.physicsWorld.bodyAtPoint(location)?.node {
                 
-                if let name: String = body.name {
+                if let name: String = node.name {
                     switch name {
-                        
-                    case "buttonNext":
-                        print("buttonNext Touched")
-                        buttonNextPressed()
-                        break
-                        
-                    case "buttonBack":
-                        print("buttonBack Touched")
-                        buttonBackPressed()
-                        break
-                        
-                    case "buttonHome":
-                        print("buttonHome Touched")
-                        goToMainScreen()
-                        break
-                        
-                    case "buttonMenu":
-                        print("buttonMenu Touched")
-                        break
                         
                     case "antenna":
                         print("antenna Touched")
@@ -182,6 +165,37 @@ class EditAvatar: SKScene {
                         updateLots()
                         break
                         
+                    default:
+                        print("nn foi dessa vez")
+                        
+                    }
+                }
+            }
+            
+                let body = self.nodeAtPoint(location) as? SKSpriteNode
+                
+                if let name: String = body!.name {
+                    switch name {
+                        
+                    case "buttonNext":
+                        print("buttonNext Touched")
+                        buttonNextPressed()
+                        break
+                        
+                    case "buttonBack":
+                        print("buttonBack Touched")
+                        buttonBackPressed()
+                        break
+                        
+                    case "buttonHome":
+                        print("buttonHome Touched")
+                        goToMainScreen()
+                        break
+                        
+                    case "buttonMenu":
+                        print("buttonMenu Touched")
+                        break
+                        
                     case "lotOne":
                         print("lotOne Touched")
                         self.selectedPart.texture = self.lotOne.texture
@@ -202,10 +216,9 @@ class EditAvatar: SKScene {
                         
                     default:
                         print("nn foi dessa vez")
-                        
+
                     }
                 }
-            }
             
         }
         
@@ -266,14 +279,6 @@ class EditAvatar: SKScene {
         mainScreen?.currentRobot = self.currentRobot
         self.view?.presentScene(mainScreen!, transition: transition)
         mainScreen!.scaleMode = .AspectFill
-    }
-    
-    func createLight(light: SKLightNode){
-        let rightAction = SKAction.moveByX(-5.0, y: 0.0, duration: 0.1)
-        let leftAction = SKAction.moveByX(5.0, y: 0.0, duration: 0.1)
-        let seq = SKAction.sequence([rightAction, leftAction])
-        let rep = SKAction.repeatActionForever(seq)
-        light.runAction(rep)
     }
     
 }
