@@ -9,11 +9,21 @@ import SpriteKit
 
 class MainScreen: SKScene {
     
-    var editScene: Edit!
+    var myRobot: Robot?
+    var currentRobot: Robot?
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        if(myRobot == nil){
+            myRobot = Robot()
+        }
         
+        if(currentRobot == nil){
+            currentRobot = Robot()
+        }
+        
+        initializeRobot()
+        initializeTexturesOfRobot()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -34,6 +44,7 @@ class MainScreen: SKScene {
                         
                     case "buttonPlay":
                         print("buttonBack Touched")
+                        buttonPlay()
                         break
                     default:
                         print("nn foi dessa vez")
@@ -44,17 +55,64 @@ class MainScreen: SKScene {
         }
     }
     
-    func buttonEditAvatar(){
+    func initializeRobot(){
+        //parts of the robot
+        self.myRobot!.antenna = childNodeWithName("antenna") as! SKSpriteNode
+        self.myRobot!.head = childNodeWithName("head") as! SKSpriteNode
+        self.myRobot!.eyes = childNodeWithName("eyes") as! SKSpriteNode
+        self.myRobot!.body = childNodeWithName("body") as! SKSpriteNode
+        self.myRobot!.rightArm = childNodeWithName("rightArm") as! SKSpriteNode
+        self.myRobot!.leftArm = childNodeWithName("leftArm") as! SKSpriteNode
+        self.myRobot!.legs = childNodeWithName("legs") as! SKSpriteNode
+    }
+    
+    func initializeTexturesOfRobot(){
+        //parts of the robot
+        repeat{
+            self.myRobot!.antenna.texture = self.currentRobot!.antenna.texture
+        }while(self.myRobot!.antenna.texture == nil)
+        
+        repeat{
+            self.myRobot!.head.texture = self.currentRobot!.head.texture
+        }while(self.myRobot!.head.texture == nil)
+        
+        repeat{
+            self.myRobot!.eyes.texture = self.currentRobot!.eyes.texture
+        }while(self.myRobot!.eyes.texture == nil)
+        
+        repeat{
+            self.myRobot!.body.texture = self.currentRobot!.body.texture
+        }while(self.myRobot!.body.texture == nil)
+        
+        repeat{
+            self.myRobot!.rightArm.texture = self.currentRobot!.rightArm.texture
+        }while(self.myRobot!.rightArm.texture == nil)
+        
+        repeat{
+            self.myRobot!.leftArm.texture = self.currentRobot!.leftArm.texture
+        }while(self.myRobot!.leftArm.texture == nil)
+        
+        repeat{
+            self.myRobot!.legs.texture = self.currentRobot!.legs.texture
+        }while(self.myRobot!.legs.texture == nil)
 
-        let gameView = self.view as SKView!
+    }
+    
+    func buttonPlay(){
         
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
-        gameView.ignoresSiblingOrder = true
+        let transition = SKTransition.crossFadeWithDuration(1.5)
+        let scene = GameScene(fileNamed: "GameScene")
+        self.view?.presentScene(scene!, transition: transition)
+        scene!.scaleMode = .AspectFill
+    }
+    
+    func buttonEditAvatar(){
         
-        self.editScene = Edit(size: gameView.bounds.size)
-        gameView.presentScene(self.editScene)
-        self.editScene.scaleMode = .AspectFill
-        
+        let transition = SKTransition.crossFadeWithDuration(1.5)
+        let scene = EditAvatar(fileNamed: "EditAvatar")
+        scene?.myRobot = self.myRobot
+        self.view?.presentScene(scene!, transition: transition)
+        scene!.scaleMode = .AspectFill
     }
     
     override func update(currentTime: CFTimeInterval) {

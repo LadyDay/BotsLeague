@@ -49,10 +49,10 @@ class GameScene: SKScene {
     func swipeDown(sender: UISwipeGestureRecognizer){
         /* Function to display the inventory */
         let position = sender.locationInView(self.view)
-        let node = self.nodeAtPoint(position)
-        
-        //let name: String = node.name!
-        
+        let node1 = self.nodeAtPoint(position)
+        if(node1.name! == "lot"){
+            
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {

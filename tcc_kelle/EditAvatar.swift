@@ -8,10 +8,9 @@
 
 import SpriteKit
 
-class Edit: SKScene {
-    var myRobot: Robot = Robot()
+class EditAvatar: SKScene {
+    var myRobot: Robot!
     var currentRobot: Robot = Robot()
-    var homeScene: Home!
     var selectedPart: SKSpriteNode!
     
     //informations of lots
@@ -40,9 +39,9 @@ class Edit: SKScene {
     var buttonMoney: SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
-        self.selectedPart = childNodeWithName("head") as! SKSpriteNode
+        self.selectedPart = self.childNodeWithName("head") as! SKSpriteNode
         initializeNodesInTheView()
-        initializeTexturesOfNodesInView()
+        //initializeTexturesOfNodesInView()
         initializeTexturesOfRobotAndLots()
     }
     
@@ -54,21 +53,21 @@ class Edit: SKScene {
     
     func initializeNodesInTheView(){
         //lots
-        self.lotOne = childNodeWithName("lotOne") as! SKSpriteNode
-        self.lotTwo = childNodeWithName("lotTwo") as! SKSpriteNode
-        self.lotTree = childNodeWithName("lotTree") as! SKSpriteNode
+        self.lotOne = self.childNodeWithName("lotOne") as! SKSpriteNode
+        self.lotTwo = self.childNodeWithName("lotTwo") as! SKSpriteNode
+        self.lotTree = self.childNodeWithName("lotTree") as! SKSpriteNode
         
-        self.power = childNodeWithName("power") as! SKSpriteNode
-        self.money = childNodeWithName("money") as! SKSpriteNode
-        self.armario = childNodeWithName("armario") as! SKSpriteNode
-        self.basedRobot = childNodeWithName("basedRobot") as! SKSpriteNode
+        self.power = self.childNodeWithName("power") as! SKSpriteNode
+        self.money = self.childNodeWithName("money") as! SKSpriteNode
+        self.armario = self.childNodeWithName("armario") as! SKSpriteNode
+        self.basedRobot = self.childNodeWithName("basedRobot") as! SKSpriteNode
         
-        self.buttonMenu = childNodeWithName("buttonMenu") as! SKSpriteNode
-        self.buttonNext = childNodeWithName("buttonNext") as! SKSpriteNode
-        self.buttonBack = childNodeWithName("buttonBack") as! SKSpriteNode
-        self.buttonHome = childNodeWithName("buttonHome") as! SKSpriteNode
-        self.buttonPower = childNodeWithName("buttonPower") as! SKSpriteNode
-        self.buttonMoney = childNodeWithName("buttonMoney") as! SKSpriteNode
+        self.buttonMenu = self.childNodeWithName("buttonMenu") as! SKSpriteNode
+        self.buttonNext = self.childNodeWithName("buttonNext") as! SKSpriteNode
+        self.buttonBack = self.childNodeWithName("buttonBack") as! SKSpriteNode
+        self.buttonHome = self.childNodeWithName("buttonHome") as! SKSpriteNode
+        self.buttonPower = self.childNodeWithName("buttonPower") as! SKSpriteNode
+        self.buttonMoney = self.childNodeWithName("buttonMoney") as! SKSpriteNode
 
         //parts of the robot
         self.currentRobot.antenna = childNodeWithName("antenna") as! SKSpriteNode
@@ -134,7 +133,7 @@ class Edit: SKScene {
                         
                     case "buttonHome":
                         print("buttonHome Touched")
-                        goToHome()
+                        goToMainScreen()
                         break
                         
                     case "buttonMenu":
@@ -260,15 +259,13 @@ class Edit: SKScene {
         self.lotTree.texture = SKTexture(imageNamed: stringColor as String)
     }
     
-    func goToHome(){
-        let gameView = self.view as SKView!
+    func goToMainScreen(){
         
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
-        gameView.ignoresSiblingOrder = true
-        
-        self.homeScene = Home(size: gameView.bounds.size)
-        gameView.presentScene(self.homeScene)
-        self.homeScene.scaleMode = .AspectFill
+        let transition = SKTransition.crossFadeWithDuration(1.5)
+        let mainScreen = MainScreen(fileNamed: "MainScreen")
+        mainScreen?.currentRobot = self.currentRobot
+        self.view?.presentScene(mainScreen!, transition: transition)
+        mainScreen!.scaleMode = .AspectFill
     }
     
     func createLight(light: SKLightNode){
