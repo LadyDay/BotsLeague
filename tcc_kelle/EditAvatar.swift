@@ -39,6 +39,18 @@ class EditAvatar: SKScene {
     var buttonMoney: SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
+        
+        let viewRecognizer: UIView = UIView(frame: CGRectMake(30, 770, 702, 209))
+        self.view?.addSubview(viewRecognizer)
+        
+        let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "buttonNextPressed")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        viewRecognizer.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "buttonBackPressed")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        viewRecognizer.addGestureRecognizer(swipeRight)
+        
         self.selectedPart = self.childNodeWithName("head") as! SKSpriteNode
         initializeNodesInTheView()
         initializeTexturesOfNodesInView()
