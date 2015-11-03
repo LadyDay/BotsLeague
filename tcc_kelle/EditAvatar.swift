@@ -38,6 +38,10 @@ class EditAvatar: SKScene {
     var buttonPower: SKSpriteNode!
     var buttonMoney: SKSpriteNode!
     
+    //menu
+    var boolMenu: Bool = false
+    var viewMenu: SKView!
+    
     override func didMoveToView(view: SKView) {
         
         let viewRecognizer: UIView = UIView(frame: CGRectMake(30, 770, 702, 209))
@@ -206,6 +210,7 @@ class EditAvatar: SKScene {
                         
                     case "buttonMenu":
                         print("buttonMenu Touched")
+                        displayMenu()
                         break
                         
                     case "lotOne":
@@ -291,6 +296,22 @@ class EditAvatar: SKScene {
         mainScreen?.currentRobot = self.currentRobot
         self.view?.presentScene(mainScreen!, transition: transition)
         mainScreen!.scaleMode = .AspectFill
+    }
+    
+    func displayMenu(){
+        if(boolMenu){
+            boolMenu = false
+            self.viewMenu.removeFromSuperview()
+        }else{
+            boolMenu = true
+            self.viewMenu = SKView(frame: CGRectMake(20, 20, (self.view?.frame.size.width)!-40, (self.view?.frame.height)!-40))
+            self.view?.addSubview(self.viewMenu as UIView)
+            
+            let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
+            let gameScene: SKScene = MenuView(fileNamed: "MenuView")!
+            viewMenu.presentScene(gameScene, transition: transition)
+            
+        }
     }
     
 }

@@ -14,14 +14,25 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        let viewRecognizer: UIView = UIView(frame: CGRectMake(70, 350, 630, 560))
+        self.view?.addSubview(viewRecognizer)
+        
         /*
         let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown:")
         swipeDown.direction = UISwipeGestureRecognizerDirection.Down
-        self.view?.addGestureRecognizer(swipeDown)
+        viewRecognizer.addGestureRecognizer(swipeDown)
         
         let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUp:")
         swipeUp.direction = UISwipeGestureRecognizerDirection.Up
-        self.view?.addGestureRecognizer(swipeUp)
+        viewRecognizer.addGestureRecognizer(swipeUp)
+        
+        let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeLeft:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        viewRecognizer.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeRight:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        viewRecognizer.addGestureRecognizer(swipeRight)
         */
         updatingScenario()
     }
@@ -36,9 +47,22 @@ class GameScene: SKScene {
     }
     
     func updatingScenario(){
+        var fail: Bool
+        var num: UInt32
+        
         for(var i = 0; i<7; i++){
             for(var j = 0; j<6; j++){
-                let num = arc4random_uniform(6)
+                repeat{
+                    fail = false
+                    num = arc4random_uniform(6)
+                    if(j-2>=0){
+                        if(gameMatrix[j-1][i]==Int(num) && gameMatrix[j-2][i]==Int(num)) {fail = true}
+                    }
+                    if(i-2>=0){
+                        if(gameMatrix[j][i-1]==Int(num) && gameMatrix[j][i-2]==Int(num)) {fail = true}
+                    }
+                }while(fail)
+                
                 gameMatrix[j][i] = Int(num)
                 let lot = self.childNodeWithName("lot\(j)\(i)") as! SKSpriteNode
                 lot.texture = SKTexture(imageNamed: "peca\(gameMatrix[j][i])")
@@ -50,8 +74,22 @@ class GameScene: SKScene {
         /* Function to display the inventory */
         let position = sender.locationInView(self.view)
         let node1 = self.nodeAtPoint(position)
-        if(node1.name! == "lot"){
-            
+        let nameNode1 = node1.name!
+        
+        /*
+        if(Int(String(nameNode1[3])) != 5){
+            let number: Int = String(nameNode1[3]).toInt()
+            let node2 = self.childNodeWithName("lot"+"\(number)"+"\(nameNode1[4])")
+            animationPieces(node1, anotherNode: node2)
+        }
+        */
+    }
+    
+    func animationPieces(node: SKNode, anotherNode: SKNode){
+        let positionAnotherNode: CGPoint = anotherNode.position
+        while(node.position != positionAnotherNode){
+            node.position.y--
+            anotherNode.position.y++
         }
     }
    

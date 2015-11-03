@@ -12,6 +12,10 @@ class MainScreen: SKScene {
     var myRobot: Robot?
     var currentRobot: Robot?
     
+    //menu
+    var boolMenu: Bool = false
+    var viewMenu: SKView!
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         if(myRobot == nil){
@@ -46,6 +50,12 @@ class MainScreen: SKScene {
                         print("buttonBack Touched")
                         buttonPlay()
                         break
+                        
+                    case "buttonMenu":
+                        print("buttonMenu Touched")
+                        displayMenu()
+                        break
+                        
                     default:
                         print("nn foi dessa vez")
                         
@@ -113,6 +123,22 @@ class MainScreen: SKScene {
         scene?.myRobot = self.myRobot
         self.view?.presentScene(scene!, transition: transition)
         scene!.scaleMode = .AspectFill
+    }
+    
+    func displayMenu(){
+        if(boolMenu){
+            boolMenu = false
+            self.viewMenu.removeFromSuperview()
+        }else{
+            boolMenu = true
+            self.viewMenu = SKView(frame: CGRectMake(20, 20, (self.view?.frame.size.width)!-40, (self.view?.frame.height)!-40))
+            self.view?.addSubview(self.viewMenu as UIView)
+            
+            let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
+            let gameScene: SKScene = MenuView(fileNamed: "MenuView")!
+            viewMenu.presentScene(gameScene, transition: transition)
+            
+        }
     }
     
     override func update(currentTime: CFTimeInterval) {
