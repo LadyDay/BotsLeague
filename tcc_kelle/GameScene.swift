@@ -17,15 +17,14 @@ class GameScene: SKScene {
         let viewRecognizer: UIView = UIView(frame: CGRectMake(70, 350, 630, 560))
         self.view?.addSubview(viewRecognizer)
         
-        /*
         let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown:")
         swipeDown.direction = UISwipeGestureRecognizerDirection.Down
-        viewRecognizer.addGestureRecognizer(swipeDown)
-        
+        self.view?.addGestureRecognizer(swipeDown)
+
         let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUp:")
         swipeUp.direction = UISwipeGestureRecognizerDirection.Up
         viewRecognizer.addGestureRecognizer(swipeUp)
-        
+        /*
         let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeLeft:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         viewRecognizer.addGestureRecognizer(swipeLeft)
@@ -70,26 +69,73 @@ class GameScene: SKScene {
         }
     }
     
+    func swipeUp(sender: UISwipeGestureRecognizer){
+        /* Function to display the inventory */
+        let position = sender.locationInView(self.view)
+        let node1 = self.nodeAtPoint(position)
+        let nameNode1 = node1.name!
+        print("\(nameNode1)")
+        let index1 = nameNode1.startIndex.advancedBy(0)
+        let index2 = nameNode1.startIndex.advancedBy(3)
+        let index3 = nameNode1.startIndex.advancedBy(4)
+
+        if(nameNode1[index1]=="l" && Int(String(nameNode1[index2])) != 0){
+            let number: Int = Int(String(nameNode1[index2]))!
+            let node2 = self.childNodeWithName("lot"+"\(number-1)"+"\(nameNode1[index3])")
+            let nameNode2 = node2!.name!
+            print("\(nameNode2)")
+            let positionNode1: CGPoint = node1.position
+            let positionNode2: CGPoint = node2!.position
+            
+            let animationNode1 = SKAction.moveTo(positionNode2, duration: 1)
+            let animationNode2 = SKAction.moveTo(positionNode1, duration: 1)
+            node1.runAction(animationNode1)
+            node2!.runAction(animationNode2)
+            node1.name = nameNode2
+            node2!.name = nameNode1
+        }
+    }
+    
     func swipeDown(sender: UISwipeGestureRecognizer){
         /* Function to display the inventory */
         let position = sender.locationInView(self.view)
         let node1 = self.nodeAtPoint(position)
         let nameNode1 = node1.name!
-        
+        print("\(nameNode1)")
+        let index1 = nameNode1.startIndex.advancedBy(0)
+        let index2 = nameNode1.startIndex.advancedBy(3)
+        let index3 = nameNode1.startIndex.advancedBy(4)
         /*
-        if(Int(String(nameNode1[3])) != 5){
-            let number: Int = String(nameNode1[3]).toInt()
-            let node2 = self.childNodeWithName("lot"+"\(number)"+"\(nameNode1[4])")
-            animationPieces(node1, anotherNode: node2)
+        if(nameNode1[index] == "l"){
+            
+            let node2 = self.nodeAtPoint(CGPointMake(position.x, position.y-50))
+            let nameNode2 = node2.name!
+            
+            let positionNode1: CGPoint = node1.position
+            let positionNode2: CGPoint = node2.position
+            
+            let animationNode1 = SKAction.moveTo(positionNode2, duration: 2)
+            let animationNode2 = SKAction.moveTo(positionNode1, duration: 2)
+            node1.runAction(animationNode1)
+            node2.runAction(animationNode2)
+            node1.name = nameNode2
+            node2.name = nameNode1
         }
         */
-    }
-    
-    func animationPieces(node: SKNode, anotherNode: SKNode){
-        let positionAnotherNode: CGPoint = anotherNode.position
-        while(node.position != positionAnotherNode){
-            node.position.y--
-            anotherNode.position.y++
+        if(nameNode1[index1]=="l" && Int(String(nameNode1[index2])) != 5){
+            let number: Int = Int(String(nameNode1[index2]))!
+            let node2 = self.childNodeWithName("lot"+"\(number+1)"+"\(nameNode1[index3])")
+            let nameNode2 = node2!.name!
+            print("\(nameNode2)")
+            let positionNode1: CGPoint = node1.position
+            let positionNode2: CGPoint = node2!.position
+            
+            let animationNode1 = SKAction.moveTo(positionNode2, duration: 1)
+            let animationNode2 = SKAction.moveTo(positionNode1, duration: 1)
+            node1.runAction(animationNode1)
+            node2!.runAction(animationNode2)
+            node1.name = nameNode2
+            node2!.name = nameNode1
         }
     }
    
