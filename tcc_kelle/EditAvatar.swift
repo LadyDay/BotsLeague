@@ -129,21 +129,39 @@ class EditAvatar: SKScene {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
+//        for touch in touches {
+        
         for touch in touches {
             let location = touch.locationInNode(self)
             
             //let body = self.nodeAtPoint(location) as? SKSpriteNode
             
             if let node = self.physicsWorld.bodyAtPoint(location)?.node {
+                if(node.name == "antenna"){
+                    print("passou pela antena")
+                }
+            }
+            
+        }
+        
+        
+        if let touch = touches.first {
+            let location = touch.locationInNode(self)
+            
+            //let body = self.nodeAtPoint(location) as? SKSpriteNode
+            
+            if let node = self.physicsWorld.bodyAtPoint(location)?.node {
+                if(node.name == "antenna"){
+                    print("antenna Touched")
+                    self.selectedPart = self.currentRobot.antenna
+                    updateLots()
                 
-                if let name: String = node.name {
+                }else{
+            
+                let body = self.nodeAtPoint(location) as? SKSpriteNode
+                
+                if let name: String = body!.name {
                     switch name {
-                        
-                    case "antenna":
-                        print("antenna Touched")
-                        self.selectedPart = self.currentRobot.antenna
-                        updateLots()
-                        break
                         
                     case "head":
                         print("head Touched")
@@ -168,7 +186,7 @@ class EditAvatar: SKScene {
                         self.selectedPart = self.currentRobot.rightArm
                         updateLots()
                         break
-                    
+                        
                     case "leftArm":
                         print("leftArm Touched")
                         self.selectedPart = self.currentRobot.leftArm
@@ -180,18 +198,6 @@ class EditAvatar: SKScene {
                         self.selectedPart = self.currentRobot.legs
                         updateLots()
                         break
-                        
-                    default:
-                        print("nn foi dessa vez")
-                        
-                    }
-                }
-            }
-            
-                let body = self.nodeAtPoint(location) as? SKSpriteNode
-                
-                if let name: String = body!.name {
-                    switch name {
                         
                     case "buttonNext":
                         print("buttonNext Touched")
@@ -236,6 +242,8 @@ class EditAvatar: SKScene {
 
                     }
                 }
+                }
+            }
             
         }
         

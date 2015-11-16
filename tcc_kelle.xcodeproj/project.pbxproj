@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3D0426C51BC9CB3600F72B2F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0426C41BC9CB3600F72B2F /* Home.swift */; };
-		3D05453A1BE0F94D00D1DC0A /* Home.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D0545391BE0F94D00D1DC0A /* Home.sks */; settings = {ASSET_TAGS = (); }; };
-		3D05453C1BE819FC00D1DC0A /* MenuView.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D05453B1BE819FC00D1DC0A /* MenuView.sks */; settings = {ASSET_TAGS = (); }; };
-		3D05453E1BE81A1000D1DC0A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D05453D1BE81A1000D1DC0A /* MenuView.swift */; settings = {ASSET_TAGS = (); }; };
+		3D05453A1BE0F94D00D1DC0A /* Home.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D0545391BE0F94D00D1DC0A /* Home.sks */; };
+		3D05453C1BE819FC00D1DC0A /* MenuView.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D05453B1BE819FC00D1DC0A /* MenuView.sks */; };
+		3D05453E1BE81A1000D1DC0A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D05453D1BE81A1000D1DC0A /* MenuView.swift */; };
 		3D0991491BC9B7D1009C3C06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0991481BC9B7D1009C3C06 /* AppDelegate.swift */; };
 		3D09914B1BC9B7D1009C3C06 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D09914A1BC9B7D1009C3C06 /* GameScene.sks */; };
 		3D09914D1BC9B7D1009C3C06 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09914C1BC9B7D1009C3C06 /* GameScene.swift */; };
@@ -19,7 +19,11 @@
 		3D0991541BC9B7D1009C3C06 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D0991531BC9B7D1009C3C06 /* Images.xcassets */; };
 		3D0991571BC9B7D1009C3C06 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0991551BC9B7D1009C3C06 /* LaunchScreen.xib */; };
 		3D0991631BC9B7D1009C3C06 /* tcc_kelleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0991621BC9B7D1009C3C06 /* tcc_kelleTests.swift */; };
-		3D26744E1BCFA52400B8F8E7 /* MainScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D26744D1BCFA52400B8F8E7 /* MainScreen.sks */; settings = {ASSET_TAGS = (); }; };
+		3D26744E1BCFA52400B8F8E7 /* MainScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D26744D1BCFA52400B8F8E7 /* MainScreen.sks */; };
+		3D4CC92E1BF9F7300022511E /* LevelOne.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC92D1BF9F7300022511E /* LevelOne.sks */; };
+		3D4CC9301BF9F84E0022511E /* LevelOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CC92F1BF9F84E0022511E /* LevelOne.swift */; };
+		3D4CC9321BF9F8BB0022511E /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CC9311BF9F8BB0022511E /* Levels.swift */; };
+		3D4CC9341BFA34330022511E /* MapGame.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC9331BFA34330022511E /* MapGame.sks */; };
 		3D6E20B81BCA873A009029E8 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E20B71BCA873A009029E8 /* MainScreen.swift */; };
 		3D6E20BA1BCA87B0009029E8 /* Robot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E20B91BCA87B0009029E8 /* Robot.swift */; };
 		3D6E20BC1BCA941A009029E8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E20BB1BCA941A009029E8 /* User.swift */; };
@@ -56,6 +60,10 @@
 		3D0991611BC9B7D1009C3C06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D0991621BC9B7D1009C3C06 /* tcc_kelleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tcc_kelleTests.swift; sourceTree = "<group>"; };
 		3D26744D1BCFA52400B8F8E7 /* MainScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MainScreen.sks; path = ../MainScreen.sks; sourceTree = "<group>"; };
+		3D4CC92D1BF9F7300022511E /* LevelOne.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelOne.sks; sourceTree = "<group>"; };
+		3D4CC92F1BF9F84E0022511E /* LevelOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelOne.swift; sourceTree = "<group>"; };
+		3D4CC9311BF9F8BB0022511E /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
+		3D4CC9331BFA34330022511E /* MapGame.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapGame.sks; sourceTree = "<group>"; };
 		3D6E20B71BCA873A009029E8 /* MainScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		3D6E20B91BCA87B0009029E8 /* Robot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Robot.swift; sourceTree = "<group>"; };
 		3D6E20BB1BCA941A009029E8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -103,9 +111,9 @@
 		3D0991451BC9B7D1009C3C06 /* tcc_kelle */ = {
 			isa = PBXGroup;
 			children = (
+				3D4CC9331BFA34330022511E /* MapGame.sks */,
+				3D4CC92C1BF9F6E10022511E /* Game */,
 				3D0991481BC9B7D1009C3C06 /* AppDelegate.swift */,
-				3D09914A1BC9B7D1009C3C06 /* GameScene.sks */,
-				3D09914C1BC9B7D1009C3C06 /* GameScene.swift */,
 				3D0545391BE0F94D00D1DC0A /* Home.sks */,
 				3D0426C41BC9CB3600F72B2F /* Home.swift */,
 				3D6E20B91BCA87B0009029E8 /* Robot.swift */,
@@ -149,6 +157,26 @@
 				3D0991611BC9B7D1009C3C06 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3D4CC92B1BF9F6D10022511E /* Levels */ = {
+			isa = PBXGroup;
+			children = (
+				3D4CC92D1BF9F7300022511E /* LevelOne.sks */,
+				3D4CC92F1BF9F84E0022511E /* LevelOne.swift */,
+				3D4CC9311BF9F8BB0022511E /* Levels.swift */,
+			);
+			name = Levels;
+			sourceTree = "<group>";
+		};
+		3D4CC92C1BF9F6E10022511E /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				3D09914A1BC9B7D1009C3C06 /* GameScene.sks */,
+				3D09914C1BC9B7D1009C3C06 /* GameScene.swift */,
+				3D4CC92B1BF9F6D10022511E /* Levels */,
+			);
+			name = Game;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,7 +224,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = LadyDay;
 				TargetAttributes = {
 					3D0991421BC9B7D1009C3C06 = {
@@ -234,8 +262,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D0991571BC9B7D1009C3C06 /* LaunchScreen.xib in Resources */,
+				3D4CC92E1BF9F7300022511E /* LevelOne.sks in Resources */,
 				3D0991541BC9B7D1009C3C06 /* Images.xcassets in Resources */,
 				3D05453A1BE0F94D00D1DC0A /* Home.sks in Resources */,
+				3D4CC9341BFA34330022511E /* MapGame.sks in Resources */,
 				3D05453C1BE819FC00D1DC0A /* MenuView.sks in Resources */,
 				3D6E20C01BCBF699009029E8 /* EditAvatar.sks in Resources */,
 				3D09914B1BC9B7D1009C3C06 /* GameScene.sks in Resources */,
@@ -264,7 +294,9 @@
 				3D09914D1BC9B7D1009C3C06 /* GameScene.swift in Sources */,
 				3D6E20BC1BCA941A009029E8 /* User.swift in Sources */,
 				3D05453E1BE81A1000D1DC0A /* MenuView.swift in Sources */,
+				3D4CC9321BF9F8BB0022511E /* Levels.swift in Sources */,
 				3D09914F1BC9B7D1009C3C06 /* GameViewController.swift in Sources */,
+				3D4CC9301BF9F84E0022511E /* LevelOne.swift in Sources */,
 				3D0426C51BC9CB3600F72B2F /* Home.swift in Sources */,
 				3D0991491BC9B7D1009C3C06 /* AppDelegate.swift in Sources */,
 				3D6E20BE1BCA97EB009029E8 /* MyButtonNode.swift in Sources */,
@@ -330,6 +362,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -345,7 +378,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -384,7 +417,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -399,10 +432,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = tcc_kelle/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "br.ufpe.cin.dkrs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -413,10 +448,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = tcc_kelle/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "br.ufpe.cin.dkrs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -434,6 +471,7 @@
 				);
 				INFOPLIST_FILE = tcc_kelleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "br.ufpe.cin.dkrs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tcc_kelle.app/tcc_kelle";
 			};
@@ -449,6 +487,7 @@
 				);
 				INFOPLIST_FILE = tcc_kelleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "br.ufpe.cin.dkrs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tcc_kelle.app/tcc_kelle";
 			};
