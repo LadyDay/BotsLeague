@@ -20,15 +20,6 @@ class LevelOne: Levels  {
         updatingScenario(rows, columns: columns)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-        /*
-        for touch in touches {
-        let location = touch.locationInNode(self)
-        }
-        */
-    }
-    
     override func updatingScenario(rows: Int, columns: Int) {
         var fail: Bool
         var num: UInt32
@@ -52,6 +43,22 @@ class LevelOne: Levels  {
             }
         }
 
+    }
+    
+    func swipeUp(sender: UISwipeGestureRecognizer) {
+        changeLots(sender, stringStop: "0", somaX: 0, somaY: 60, indexStringStop: 3)
+    }
+    
+    func swipeDown(sender: UISwipeGestureRecognizer) {
+        changeLots(sender, stringStop: Character("\(rows-1)"), somaX: 0, somaY: -60, indexStringStop: 3)
+    }
+    
+    func swipeLeft(sender: UISwipeGestureRecognizer) {
+        changeLots(sender, stringStop: "0", somaX: -60, somaY: 0, indexStringStop: 4)
+    }
+    
+    func swipeRight(sender: UISwipeGestureRecognizer) {
+        changeLots(sender, stringStop: Character("\(columns-1)"), somaX: 60, somaY: 0, indexStringStop: 4)
     }
     
     override func update(currentTime: CFTimeInterval) {

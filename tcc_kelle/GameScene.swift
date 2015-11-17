@@ -18,7 +18,7 @@ class GameScene: SKScene {
     }
     
     func displayLevel(level: Levels){
-        let viewLevel = SKView(frame: CGRectMake(75, 370, 620, 540))
+        let viewLevel = SKView(frame: CGRectMake(67, 319, 631, 633))
         viewLevel.backgroundColor = UIColor.clearColor()
         self.view?.addSubview(viewLevel as UIView)
         viewLevel.presentScene(level)
