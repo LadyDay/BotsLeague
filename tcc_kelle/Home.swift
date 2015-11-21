@@ -34,7 +34,7 @@ class Home: SKScene {
                     case "buttonStart":
                         
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
-                        let gameScene = MainScreen(fileNamed: "MainScreen")
+                        let gameScene = MapGame(fileNamed: "MapGame")
                         self.view?.presentScene(gameScene!, transition: fadeScene)
                         gameScene!.scaleMode = .AspectFill
                         

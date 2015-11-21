@@ -20,11 +20,14 @@
 		3D0991571BC9B7D1009C3C06 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0991551BC9B7D1009C3C06 /* LaunchScreen.xib */; };
 		3D0991631BC9B7D1009C3C06 /* tcc_kelleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0991621BC9B7D1009C3C06 /* tcc_kelleTests.swift */; };
 		3D26744E1BCFA52400B8F8E7 /* MainScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D26744D1BCFA52400B8F8E7 /* MainScreen.sks */; };
-		3D4CC92E1BF9F7300022511E /* LevelOne.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC92D1BF9F7300022511E /* LevelOne.sks */; };
+		3D2AA67D1BFE05340019FDA5 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA67C1BFE05340019FDA5 /* Skill.swift */; };
+		3D2AA67F1BFE0EFA0019FDA5 /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA67E1BFE0EFA0019FDA5 /* Array2D.swift */; };
+		3D2AA6811C012BF90019FDA5 /* MapGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA6801C012BF90019FDA5 /* MapGame.swift */; };
+		3D4CC92E1BF9F7300022511E /* Level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC92D1BF9F7300022511E /* Level1.sks */; };
 		3D4CC9301BF9F84E0022511E /* LevelOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CC92F1BF9F84E0022511E /* LevelOne.swift */; };
-		3D4CC9321BF9F8BB0022511E /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CC9311BF9F8BB0022511E /* Levels.swift */; };
+		3D4CC9321BF9F8BB0022511E /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CC9311BF9F8BB0022511E /* Level.swift */; };
 		3D4CC9341BFA34330022511E /* MapGame.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC9331BFA34330022511E /* MapGame.sks */; };
-		3D4CC9361BFAAF050022511E /* LevelTwo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC9351BFAAF050022511E /* LevelTwo.sks */; };
+		3D4CC9361BFAAF050022511E /* Level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC9351BFAAF050022511E /* Level2.sks */; };
 		3D4CC9381BFAAF190022511E /* LevelTree.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC9371BFAAF190022511E /* LevelTree.sks */; };
 		3D4CC93A1BFAAF2E0022511E /* LevelFour.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC9391BFAAF2E0022511E /* LevelFour.sks */; };
 		3D4CC93C1BFAAF3B0022511E /* LevelFive.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC93B1BFAAF3B0022511E /* LevelFive.sks */; };
@@ -69,11 +72,14 @@
 		3D0991611BC9B7D1009C3C06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D0991621BC9B7D1009C3C06 /* tcc_kelleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tcc_kelleTests.swift; sourceTree = "<group>"; };
 		3D26744D1BCFA52400B8F8E7 /* MainScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MainScreen.sks; path = ../MainScreen.sks; sourceTree = "<group>"; };
-		3D4CC92D1BF9F7300022511E /* LevelOne.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelOne.sks; sourceTree = "<group>"; };
+		3D2AA67C1BFE05340019FDA5 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Skill.swift; path = ../Skill.swift; sourceTree = "<group>"; };
+		3D2AA67E1BFE0EFA0019FDA5 /* Array2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
+		3D2AA6801C012BF90019FDA5 /* MapGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapGame.swift; sourceTree = "<group>"; };
+		3D4CC92D1BF9F7300022511E /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level1.sks; sourceTree = "<group>"; };
 		3D4CC92F1BF9F84E0022511E /* LevelOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelOne.swift; sourceTree = "<group>"; };
-		3D4CC9311BF9F8BB0022511E /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
+		3D4CC9311BF9F8BB0022511E /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		3D4CC9331BFA34330022511E /* MapGame.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapGame.sks; sourceTree = "<group>"; };
-		3D4CC9351BFAAF050022511E /* LevelTwo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelTwo.sks; sourceTree = "<group>"; };
+		3D4CC9351BFAAF050022511E /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level2.sks; sourceTree = "<group>"; };
 		3D4CC9371BFAAF190022511E /* LevelTree.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelTree.sks; sourceTree = "<group>"; };
 		3D4CC9391BFAAF2E0022511E /* LevelFour.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelFour.sks; sourceTree = "<group>"; };
 		3D4CC93B1BFAAF3B0022511E /* LevelFive.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelFive.sks; sourceTree = "<group>"; };
@@ -129,7 +135,7 @@
 		3D0991451BC9B7D1009C3C06 /* tcc_kelle */ = {
 			isa = PBXGroup;
 			children = (
-				3D4CC9331BFA34330022511E /* MapGame.sks */,
+				3D2AA67C1BFE05340019FDA5 /* Skill.swift */,
 				3D4CC92C1BF9F6E10022511E /* Game */,
 				3D0991481BC9B7D1009C3C06 /* AppDelegate.swift */,
 				3D0545391BE0F94D00D1DC0A /* Home.sks */,
@@ -180,10 +186,10 @@
 		3D4CC92B1BF9F6D10022511E /* Levels */ = {
 			isa = PBXGroup;
 			children = (
-				3D4CC9311BF9F8BB0022511E /* Levels.swift */,
-				3D4CC92D1BF9F7300022511E /* LevelOne.sks */,
+				3D4CC9311BF9F8BB0022511E /* Level.swift */,
+				3D4CC92D1BF9F7300022511E /* Level1.sks */,
 				3D4CC92F1BF9F84E0022511E /* LevelOne.swift */,
-				3D4CC9351BFAAF050022511E /* LevelTwo.sks */,
+				3D4CC9351BFAAF050022511E /* Level2.sks */,
 				3D4CC9371BFAAF190022511E /* LevelTree.sks */,
 				3D4CC9391BFAAF2E0022511E /* LevelFour.sks */,
 				3D4CC93B1BFAAF3B0022511E /* LevelFive.sks */,
@@ -199,8 +205,11 @@
 		3D4CC92C1BF9F6E10022511E /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				3D4CC9331BFA34330022511E /* MapGame.sks */,
+				3D2AA6801C012BF90019FDA5 /* MapGame.swift */,
 				3D09914A1BC9B7D1009C3C06 /* GameScene.sks */,
 				3D09914C1BC9B7D1009C3C06 /* GameScene.swift */,
+				3D2AA67E1BFE0EFA0019FDA5 /* Array2D.swift */,
 				3D4CC92B1BF9F6D10022511E /* Levels */,
 			);
 			name = Game;
@@ -290,7 +299,7 @@
 			files = (
 				3D4CC9421BFAAF730022511E /* LevelEight.sks in Resources */,
 				3D0991571BC9B7D1009C3C06 /* LaunchScreen.xib in Resources */,
-				3D4CC92E1BF9F7300022511E /* LevelOne.sks in Resources */,
+				3D4CC92E1BF9F7300022511E /* Level1.sks in Resources */,
 				3D0991541BC9B7D1009C3C06 /* Images.xcassets in Resources */,
 				3D4CC9461BFAAF9E0022511E /* LevelTen.sks in Resources */,
 				3D05453A1BE0F94D00D1DC0A /* Home.sks in Resources */,
@@ -298,7 +307,7 @@
 				3D4CC9341BFA34330022511E /* MapGame.sks in Resources */,
 				3D4CC9401BFAAF560022511E /* LevelSeven.sks in Resources */,
 				3D4CC9441BFAAF820022511E /* LevelNine.sks in Resources */,
-				3D4CC9361BFAAF050022511E /* LevelTwo.sks in Resources */,
+				3D4CC9361BFAAF050022511E /* Level2.sks in Resources */,
 				3D05453C1BE819FC00D1DC0A /* MenuView.sks in Resources */,
 				3D4CC93C1BFAAF3B0022511E /* LevelFive.sks in Resources */,
 				3D6E20C01BCBF699009029E8 /* EditAvatar.sks in Resources */,
@@ -325,12 +334,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D6E20B81BCA873A009029E8 /* MainScreen.swift in Sources */,
+				3D2AA6811C012BF90019FDA5 /* MapGame.swift in Sources */,
 				3D6E20BA1BCA87B0009029E8 /* Robot.swift in Sources */,
+				3D2AA67D1BFE05340019FDA5 /* Skill.swift in Sources */,
 				3D6E20C61BCC0DE3009029E8 /* EditAvatar.swift in Sources */,
 				3D09914D1BC9B7D1009C3C06 /* GameScene.swift in Sources */,
 				3D6E20BC1BCA941A009029E8 /* User.swift in Sources */,
 				3D05453E1BE81A1000D1DC0A /* MenuView.swift in Sources */,
-				3D4CC9321BF9F8BB0022511E /* Levels.swift in Sources */,
+				3D2AA67F1BFE0EFA0019FDA5 /* Array2D.swift in Sources */,
+				3D4CC9321BF9F8BB0022511E /* Level.swift in Sources */,
 				3D09914F1BC9B7D1009C3C06 /* GameViewController.swift in Sources */,
 				3D4CC9301BF9F84E0022511E /* LevelOne.swift in Sources */,
 				3D0426C51BC9CB3600F72B2F /* Home.swift in Sources */,

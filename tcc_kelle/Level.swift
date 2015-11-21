@@ -1,5 +1,5 @@
 //
-//  Levels.swift
+//  Level.swift
 //  tcc_kelle
 //
 //  Created by Dayane Kelly Rodrigues da Silva on 16/11/15.
@@ -8,13 +8,47 @@
 
 import SpriteKit
 
-class Levels: SKScene {
+let NumColumns = 7
+let NumRows = 7
+
+class Level: SKScene {
     
-    var gameMatrix: Array<Array<Int>>!
+    private var skills = Array2D<Skill>(columns: NumColumns, rows: NumRows)
     var durationSwipe: NSTimeInterval = 0.2
     var swipeEnablad: Bool = true
     var rows: Int = 0
     var columns: Int = 0
+    
+    func skillAtColumn(column: Int, row: Int) -> Skill? {
+        assert(column >= 0 && column < NumColumns)
+        assert(row >= 0 && row < NumRows)
+        return skills[column, row]
+    }
+    
+    func shuffle() -> Set<Skill> {
+        return createInitialSkills()
+    }
+    
+    private func createInitialSkills() -> Set<Skill> {
+        var set = Set<Skill>()
+        
+        // 1
+        for row in 0..<NumRows {
+            for column in 0..<NumColumns {
+                
+                // 2
+                let skillType = SkillType.random()
+                
+                // 3
+                let skill = Skill(column: column, row: row, skillType: skillType)
+                skills[column, row] = skill
+                
+                // 4
+                set.insert(skill)
+            }
+        }
+        return set
+    }
     
     func addSwipes(){
         
@@ -39,7 +73,7 @@ class Levels: SKScene {
         
     }
     
-    func changeLots(sender: UISwipeGestureRecognizer, stringStop: Character, somaX: CGFloat, somaY: CGFloat, indexStringStop: Int){
+    func changeLots(sender: UISwipeGestureRecognizer, stringStop: Character, indexStringStop: Int, somaX: CGFloat, somaY: CGFloat){
         if(swipeEnablad){
             swipeEnablad = false
             let location = sender.locationOfTouch(0, inView: self.view)

@@ -8,8 +8,8 @@
 
 import SpriteKit
 
-class LevelOne: Levels  {
-    
+class LevelOne: Level  {
+/*
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         self.gameMatrix = Array<Array<Int>>(count:6, repeatedValue:Array<Int>(count:7, repeatedValue:Int()))
@@ -46,23 +46,24 @@ class LevelOne: Levels  {
     }
     
     func swipeUp(sender: UISwipeGestureRecognizer) {
-        changeLots(sender, stringStop: "0", somaX: 0, somaY: 60, indexStringStop: 3)
+        changeLots(sender, stringStop: "0", indexStringStop: 3, somaX: 0, somaY: 60)
     }
     
     func swipeDown(sender: UISwipeGestureRecognizer) {
-        changeLots(sender, stringStop: Character("\(rows-1)"), somaX: 0, somaY: -60, indexStringStop: 3)
+        changeLots(sender, stringStop: Character("\(rows-1)"), indexStringStop: 3, somaX: 0, somaY: -60)
     }
     
     func swipeLeft(sender: UISwipeGestureRecognizer) {
-        changeLots(sender, stringStop: "0", somaX: -60, somaY: 0, indexStringStop: 4)
+        changeLots(sender, stringStop: "0", indexStringStop: 4, somaX: -60, somaY: 0)
     }
     
     func swipeRight(sender: UISwipeGestureRecognizer) {
-        changeLots(sender, stringStop: Character("\(columns-1)"), somaX: 60, somaY: 0, indexStringStop: 4)
+        changeLots(sender, stringStop: Character("\(columns-1)"), indexStringStop: 4, somaX: 60, somaY: 0)
     }
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
+*/
 }
 

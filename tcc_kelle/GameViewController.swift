@@ -11,6 +11,7 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
+    var level: Level!
     var skView: SKView?
     var location: CGPoint = CGPoint(x: 500, y: 300)
     
