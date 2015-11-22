@@ -111,7 +111,8 @@ class MainScreen: SKScene {
     func buttonPlay(){
         
         let transition = SKTransition.crossFadeWithDuration(1.5)
-        let scene = GameScene(fileNamed: "GameScene")
+        let scene = MapGame(fileNamed: "MapGame")
+        scene?.first = false
         self.view?.presentScene(scene!, transition: transition)
         scene!.scaleMode = .AspectFill
     }

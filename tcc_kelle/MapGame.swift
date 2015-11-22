@@ -10,8 +10,18 @@ import SpriteKit
 
 class MapGame: SKScene {
     
+    var first: Bool = true
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        //addSwipes()
+        if(first){
+            self.camera!.yScale = 2
+            self.camera!.xScale = 2
+            self.camera!.position = CGPoint(x: 768, y: 1024)
+            let zoomCamera = SKAction.scaleTo(1, duration: 1.5)
+            self.camera!.runAction(zoomCamera)
+        }
         centerOnNode(self.childNodeWithName("level1")!)
     }
     
@@ -39,6 +49,7 @@ class MapGame: SKScene {
                         //let index = name.startIndex.advancedBy(5)
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
                         let gameScene = GameScene(fileNamed: "GameScene")
+                        gameScene?.gameLayer = SKSpriteNode(imageNamed: "marrom-1")
                         gameScene?.level = Level(filename: "Level_1")
                         self.view?.presentScene(gameScene!, transition: fadeScene)
                         gameScene!.scaleMode = .AspectFill
@@ -74,14 +85,33 @@ class MapGame: SKScene {
         }
         
         let moveCamera = SKAction.moveTo(position, duration: 1.5)
-        let zoomCamera = SKAction.scaleTo(1, duration: 1.5)
-        self.camera!.runAction(SKAction.group([moveCamera, zoomCamera]))
+        self.camera!.runAction(moveCamera)
     }
     
     func updateButtonsScene(){
         let buttonEditAvatar = self.childNodeWithName("editAvatar") as! SKSpriteNode
         buttonEditAvatar.position.x = 50 + self.camera!.position.x - 512
     }
+    
+    func addSwipes(){
+        
+        let swipeDown:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipe:")
+        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+        self.view!.addGestureRecognizer(swipeDown)
+        
+        let swipeUp:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipe:")
+        swipeUp.direction = UISwipeGestureRecognizerDirection.Up
+        self.view!.addGestureRecognizer(swipeUp)
+        
+        let swipeLeft:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipe:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view!.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipe:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view!.addGestureRecognizer(swipeRight)
+    }
+
     
 }
 

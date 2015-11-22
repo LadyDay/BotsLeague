@@ -13,8 +13,6 @@ extension Dictionary {
         if let path = NSBundle.mainBundle().pathForResource(filename, ofType: "json") {
             do {
                 let data = try NSData(contentsOfFile: path, options: NSDataReadingOptions())
-                let jsonObj = JSON(data: data)
-                if jsonObj != JSON.null {
                     do {
                         let dictionary: AnyObject? = try NSJSONSerialization.JSONObjectWithData(data,
                         options: NSJSONReadingOptions())
@@ -28,10 +26,6 @@ extension Dictionary {
                         print(error.localizedDescription)
                         return nil
                     }
-                } else {
-                    print("Could not load level file: \(filename)")
-                    return nil
-                }
             } catch let error as NSError {
                 print(error.localizedDescription)
                 return nil

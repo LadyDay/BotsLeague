@@ -12,16 +12,50 @@ class GameScene: SKScene {
 
     var level: Level!
     
-    let TileWidth: CGFloat = 76.0
-    let TileHeight: CGFloat = 75.0
+    let TileWidth: CGFloat = 83.0
+    let TileHeight: CGFloat = 85.0
     
-    let gameLayer = SKNode()
+    let tilesLayer = SKNode()
+    var gameLayer: SKSpriteNode!
     let skillsLayer = SKNode()
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         displayLevel(level)
+        
+        tilesLayer.position = level.position
+        level.addChild(tilesLayer)
+        addTiles()
+        
         beginGame()
+        level.swipeHandler = handleSwipe
+    }
+    
+    func handleSwipe(swap: Swap) {
+        self.view!.userInteractionEnabled = false
+        
+        if level.isPossibleSwap(swap) {
+            level.performSwap(swap)
+            level.animateSwap(swap, completion: {
+                self.view!.userInteractionEnabled = true
+            })
+        } else {
+            level.animateInvalidSwap(swap, completion: {
+                self.view!.userInteractionEnabled = true
+            })
+        }
+    }
+    
+    func addTiles() {
+        for row in 0..<NumRows {
+            for column in 0..<NumColumns {
+                if let tile = level.tileAtColumn(column, row: row) {
+                    let tileNode = SKSpriteNode(imageNamed: "Tile")
+                    tileNode.position = pointForColumn(column, row: row)
+                    tilesLayer.addChild(tileNode)
+                }
+            }
+        }
     }
     
     func addSpritesForSkills(skills: Set<Skill>) {
@@ -50,23 +84,12 @@ class GameScene: SKScene {
         viewLevel.presentScene(level)
     }
     
-    
-    
     func pointForColumn(column: Int, row: Int) -> CGPoint {
         return CGPoint(
             x: CGFloat(column)*TileWidth + TileWidth/2,
             y: CGFloat(row)*TileHeight + TileHeight/2)
     }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-        /*
-        for touch in touches {
-            let location = touch.locationInNode(self)
-        }
-        */
-    }
-   
+
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }

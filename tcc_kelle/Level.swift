@@ -20,8 +20,30 @@ class Level: SKScene {
     var rows: Int = 0
     var columns: Int = 0
     
+    let TileWidth: CGFloat = 83.0
+    let TileHeight: CGFloat = 85.0
+    
+    var swipeFromColumn: Int?
+    var swipeFromRow: Int?
+    var swipeHandler: ((Swap) -> ())?
+    
+    var selectionSprite = SKSpriteNode()
+    private var possibleSwaps = Set<Swap>()
+    
+    let swapSound = SKAction.playSoundFileNamed("Click.mp3", waitForCompletion: false)
+    let invalidSwapSound = SKAction.playSoundFileNamed("Erro.mp3", waitForCompletion: false)
+    var matchSound = SKAction.playSoundFileNamed("", waitForCompletion: false)
+    let fallingCookieSound = SKAction.playSoundFileNamed("", waitForCompletion: false)
+    let addCookieSound = SKAction.playSoundFileNamed("", waitForCompletion: false)
+    
     init(filename: String) {
-        super.init()
+        super.init(size: CGSize(width: 631, height: 633))
+        self.backgroundColor = UIColor.clearColor()
+        self.blendMode = SKBlendMode.MultiplyX2
+        
+        swipeFromColumn = nil
+        swipeFromRow = nil
+        
         // 1
         if let dictionary = Dictionary<String, AnyObject>.loadJSONFromBundle(filename) {
             // 2
@@ -58,7 +80,69 @@ class Level: SKScene {
     }
     
     func shuffle() -> Set<Skill> {
-        return createInitialSkills()
+        var set: Set<Skill>
+        repeat {
+            set = createInitialSkills()
+            detectPossibleSwaps()
+            print("possible swaps: \(possibleSwaps)")
+        }
+            while possibleSwaps.count == 0
+        
+        return set
+    }
+    
+    func isPossibleSwap(swap: Swap) -> Bool {
+        return possibleSwaps.contains(swap)
+    }
+    
+    func detectPossibleSwaps() {
+        var set = Set<Swap>()
+        
+        for row in 0..<NumRows {
+            for column in 0..<NumColumns {
+                if let skill = skills[column, row] {
+                    
+                    // Is it possible to swap this cookie with the one on the right?
+                    if column < NumColumns - 1 {
+                        // Have a cookie in this spot? If there is no tile, there is no cookie.
+                        if let other = skills[column + 1, row] {
+                            // Swap them
+                            skills[column, row] = other
+                            skills[column + 1, row] = skill
+                            
+                            // Is either cookie now part of a chain?
+                            if hasChainAtColumn(column + 1, row: row) ||
+                                hasChainAtColumn(column, row: row) {
+                                    set.insert(Swap(skillA: skill, skillB: other))
+                            }
+                            
+                            // Swap them back
+                            skills[column, row] = skill
+                            skills[column + 1, row] = other
+                        }
+                    }
+                    
+                    if row < NumRows - 1 {
+                        if let other = skills[column, row + 1] {
+                            skills[column, row] = other
+                            skills[column, row + 1] = skill
+                            
+                            // Is either cookie now part of a chain?
+                            if hasChainAtColumn(column, row: row + 1) ||
+                                hasChainAtColumn(column, row: row) {
+                                    set.insert(Swap(skillA: skill, skillB: other))
+                            }
+                            
+                            // Swap them back
+                            skills[column, row] = skill
+                            skills[column, row + 1] = other
+                        }
+                    }
+                }
+            }
+        }
+        
+        possibleSwaps = set
     }
     
     private func createInitialSkills() -> Set<Skill> {
@@ -72,7 +156,16 @@ class Level: SKScene {
                 if tiles[column, row] != nil {
                     
                     // 2
-                    let skillType = SkillType.random()
+                    var skillType: SkillType
+                    repeat {
+                        skillType = SkillType.random()
+                        
+                    }while (column >= 2 &&
+                            skills[column - 1, row]?.skillType == skillType &&
+                            skills[column - 2, row]?.skillType == skillType)
+                            || (row >= 2 &&
+                                skills[column, row - 1]?.skillType == skillType &&
+                                skills[column, row - 2]?.skillType == skillType)
                     
                     // 3
                     let skill = Skill(column: column, row: row, skillType: skillType)
@@ -87,67 +180,191 @@ class Level: SKScene {
         return set
     }
     
-    func addSwipes(){
+    private func hasChainAtColumn(column: Int, row: Int) -> Bool {
+        let skillType = skills[column, row]!.skillType
         
-        let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown:")
-        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
-        self.view!.addGestureRecognizer(swipeDown)
+        var horzLength = 1
+        for var i = column - 1; i >= 0 && skills[i, row]?.skillType == skillType;
+            --i, ++horzLength { }
+        for var i = column + 1; i < NumColumns && skills[i, row]?.skillType == skillType;
+            ++i, ++horzLength { }
+        if horzLength >= 3 { return true }
         
-        let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUp:")
-        swipeUp.direction = UISwipeGestureRecognizerDirection.Up
-        self.view!.addGestureRecognizer(swipeUp)
-        
-        let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeLeft:")
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        self.view!.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeRight:")
-        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        self.view!.addGestureRecognizer(swipeRight)
+        var vertLength = 1
+        for var i = row - 1; i >= 0 && skills[column, i]?.skillType == skillType;
+            --i, ++vertLength { }
+        for var i = row + 1; i < NumRows && skills[column, i]?.skillType == skillType;
+            ++i, ++vertLength { }
+        return vertLength >= 3
     }
     
-    func updatingScenario(rows: Int, columns: Int){
+    func showSelectionIndicatorForCookie(skill: Skill) {
+        if selectionSprite.parent != nil {
+            selectionSprite.removeFromParent()
+        }
         
+        if let sprite = skill.sprite {
+            let texture = SKTexture(imageNamed: skill.skillType.highlightedSpriteName)
+            selectionSprite.size = texture.size()
+            selectionSprite.runAction(SKAction.setTexture(texture))
+            
+            sprite.addChild(selectionSprite)
+            selectionSprite.alpha = 1.0
+        }
     }
     
-    func changeLots(sender: UISwipeGestureRecognizer, stringStop: Character, indexStringStop: Int, somaX: CGFloat, somaY: CGFloat){
-        if(swipeEnablad){
-            swipeEnablad = false
-            let location = sender.locationOfTouch(0, inView: self.view)
-            let position = CGPointMake(location.x, self.frame.height - location.y)
-            
-            let node1 = self.nodeAtPoint(position)
-            let nameNode1 = node1.name!
-            print("\(nameNode1)")
-            
-            let index = nameNode1.startIndex.advancedBy(indexStringStop)
-            if(nameNode1[index] != stringStop){
-                let node2 = self.nodeAtPoint(CGPointMake(node1.position.x + somaX, node1.position.y + somaY))
-                let nameNode2 = node2.name!
-                print("\(nameNode2)")
-                
-                let index1 = nameNode1.startIndex.advancedBy(0)
-                let index2 = nameNode2.startIndex.advancedBy(0)
-                if(nameNode1[index1]=="l" && nameNode2[index2]=="l"){
-                    
-                    let positionNode1: CGPoint = node1.position
-                    let positionNode2: CGPoint = node2.position
-                    
-                    let animationNode1 = SKAction.moveTo(positionNode2, duration: self.durationSwipe)
-                    let animationNode2 = SKAction.moveTo(positionNode1, duration: self.durationSwipe)
-                    node1.runAction(animationNode1, completion: {
-                        self.swipeEnablad = true
-                    })
-                    node2.runAction(animationNode2)
-                    node1.name = nameNode2
-                    node2.name = nameNode1
-                }else{
-                    self.swipeEnablad = true
-                }
-            }else{
-                self.swipeEnablad = true
+    func hideSelectionIndicator() {
+        selectionSprite.runAction(SKAction.sequence([
+            SKAction.fadeOutWithDuration(0.3),
+            SKAction.removeFromParent()]))
+    }
+
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        // 1
+        let touch = touches.first! as UITouch
+        let location = touch.locationInNode(self)
+        // 2
+        let (success, column, row) = convertPoint(location)
+        if success {
+            // 3
+            if let skill = self.skillAtColumn(column, row: row) {
+                showSelectionIndicatorForCookie(skill)
+                // 4
+                swipeFromColumn = column
+                swipeFromRow = row
             }
         }
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        // 1
+        if swipeFromColumn == nil { return }
+        
+        // 2
+        let touch = touches.first! as UITouch
+        let location = touch.locationInNode(self)
+        
+        let (success, column, row) = convertPoint(location)
+        if success {
+            
+            // 3
+            var horzDelta = 0, vertDelta = 0
+            if column < swipeFromColumn! {          // swipe left
+                horzDelta = -1
+            } else if column > swipeFromColumn! {   // swipe right
+                horzDelta = 1
+            } else if row < swipeFromRow! {         // swipe down
+                vertDelta = -1
+            } else if row > swipeFromRow! {         // swipe up
+                vertDelta = 1
+            }
+            
+            // 4
+            if horzDelta != 0 || vertDelta != 0 {
+                trySwapHorizontal(horzDelta, vertical: vertDelta)
+                hideSelectionIndicator()
+                
+                // 5
+                swipeFromColumn = nil
+            }
+        }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if selectionSprite.parent != nil && swipeFromColumn != nil {
+            hideSelectionIndicator()
+        }
+        swipeFromColumn = nil
+        swipeFromRow = nil
+    }
+    
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        touchesEnded(touches!, withEvent: event)
+    }
+    
+    func convertPoint(point: CGPoint) -> (success: Bool, column: Int, row: Int) {
+        if point.x >= 0 && point.x < CGFloat(NumColumns)*TileWidth &&
+            point.y >= 0 && point.y < CGFloat(NumRows)*TileHeight {
+                return (true, Int(point.x / TileWidth), Int(point.y / TileHeight))
+        } else {
+            return (false, 0, 0)  // invalid location
+        }
+    }
+    
+    func trySwapHorizontal(horzDelta: Int, vertical vertDelta: Int) {
+        // 1
+        let toColumn = swipeFromColumn! + horzDelta
+        let toRow = swipeFromRow! + vertDelta
+        // 2
+        if toColumn < 0 || toColumn >= NumColumns { return }
+        if toRow < 0 || toRow >= NumRows { return }
+        // 3
+        if let toSkill = self.skillAtColumn(toColumn, row: toRow) {
+            if let fromSkill = self.skillAtColumn(swipeFromColumn!, row: swipeFromRow!) {
+                // 4
+                if let handler = swipeHandler {
+                    let swap = Swap(skillA: fromSkill, skillB: toSkill)
+                    handler(swap)
+                }
+            }
+        }
+    }
+    
+    func animateSwap(swap: Swap, completion: () -> ()) {
+        let spriteA = swap.skillA.sprite!
+        let spriteB = swap.skillB.sprite!
+        
+        spriteA.zPosition = 100
+        spriteB.zPosition = 90
+        
+        let Duration: NSTimeInterval = 0.3
+        
+        runAction(swapSound)
+        
+        let moveA = SKAction.moveTo(spriteB.position, duration: Duration)
+        moveA.timingMode = .EaseOut
+        spriteA.runAction(moveA, completion: completion)
+        
+        let moveB = SKAction.moveTo(spriteA.position, duration: Duration)
+        moveB.timingMode = .EaseOut
+        spriteB.runAction(moveB)
+    }
+    
+    func animateInvalidSwap(swap: Swap, completion: () -> ()) {
+        let spriteA = swap.skillA.sprite!
+        let spriteB = swap.skillB.sprite!
+        
+        spriteA.zPosition = 100
+        spriteB.zPosition = 90
+        
+        let Duration: NSTimeInterval = 0.2
+        
+        runAction(invalidSwapSound)
+        
+        let moveA = SKAction.moveTo(spriteB.position, duration: Duration)
+        moveA.timingMode = .EaseOut
+        
+        let moveB = SKAction.moveTo(spriteA.position, duration: Duration)
+        moveB.timingMode = .EaseOut
+        
+        spriteA.runAction(SKAction.sequence([moveA, moveB]), completion: completion)
+        spriteB.runAction(SKAction.sequence([moveB, moveA]))
+    }
+    
+    func performSwap(swap: Swap) {
+        let columnA = swap.skillA.column
+        let rowA = swap.skillA.row
+        let columnB = swap.skillB.column
+        let rowB = swap.skillB.row
+        
+        skills[columnA, rowA] = swap.skillB
+        swap.skillB.column = columnA
+        swap.skillB.row = rowA
+        
+        skills[columnB, rowB] = swap.skillA
+        swap.skillA.column = columnB
+        swap.skillA.row = rowB
     }
     
 }
