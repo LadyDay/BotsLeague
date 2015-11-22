@@ -13,11 +13,43 @@ let NumRows = 7
 
 class Level: SKScene {
     
+    private var tiles = Array2D<Tile>(columns: NumColumns, rows: NumRows)
     private var skills = Array2D<Skill>(columns: NumColumns, rows: NumRows)
     var durationSwipe: NSTimeInterval = 0.2
     var swipeEnablad: Bool = true
     var rows: Int = 0
     var columns: Int = 0
+    
+    init(filename: String) {
+        super.init()
+        // 1
+        if let dictionary = Dictionary<String, AnyObject>.loadJSONFromBundle(filename) {
+            // 2
+            if let tilesArray: AnyObject = dictionary["tiles"] {
+                // 3
+                for (row, rowArray) in (tilesArray as! [[Int]]).enumerate() {
+                    // 4
+                    let tileRow = NumRows - row - 1
+                    // 5
+                    for (column, value) in rowArray.enumerate() {
+                        if value == 1 {
+                            tiles[column, tileRow] = Tile()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func tileAtColumn(column: Int, row: Int) -> Tile? {
+        assert(column >= 0 && column < NumColumns)
+        assert(row >= 0 && row < NumRows)
+        return tiles[column, row]
+    }
     
     func skillAtColumn(column: Int, row: Int) -> Skill? {
         assert(column >= 0 && column < NumColumns)
@@ -36,15 +68,20 @@ class Level: SKScene {
         for row in 0..<NumRows {
             for column in 0..<NumColumns {
                 
-                // 2
-                let skillType = SkillType.random()
+                // This line is new
+                if tiles[column, row] != nil {
+                    
+                    // 2
+                    let skillType = SkillType.random()
+                    
+                    // 3
+                    let skill = Skill(column: column, row: row, skillType: skillType)
+                    skills[column, row] = skill
+                    
+                    // 4
+                    set.insert(skill)
+                }
                 
-                // 3
-                let skill = Skill(column: column, row: row, skillType: skillType)
-                skills[column, row] = skill
-                
-                // 4
-                set.insert(skill)
             }
         }
         return set

@@ -39,7 +39,7 @@ class MapGame: SKScene {
                         //let index = name.startIndex.advancedBy(5)
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
                         let gameScene = GameScene(fileNamed: "GameScene")
-                        gameScene?.level = Level(fileNamed: "Level1")
+                        gameScene?.level = Level(filename: "Level_1")
                         self.view?.presentScene(gameScene!, transition: fadeScene)
                         gameScene!.scaleMode = .AspectFill
                         print("nn foi dessa vez")
