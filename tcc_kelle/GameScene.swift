@@ -11,16 +11,35 @@ import SpriteKit
 class GameScene: SKScene {
 
     var level: Level!
+    var currentLevel: Int!
+    var gameOverPanel: SKSpriteNode!
+    var tapGestureRecognizer: UITapGestureRecognizer!
     
-    let TileWidth: CGFloat = 83.0
-    let TileHeight: CGFloat = 85.0
+    let TileWidth: CGFloat = 86.0
+    let TileHeight: CGFloat = 86.0
     
     let tilesLayer = SKNode()
-    var gameLayer: SKSpriteNode!
     let skillsLayer = SKNode()
+    
+    var movesToEnemy = 0
+    var score = 0
+    
+    var lifeAvatarLabel: SKLabelNode!
+    var lifeEnemyLabel: SKLabelNode!
+    var scoreLabel: SKLabelNode!
+    var movesLabel: SKLabelNode!
+    var currentPlayer: Bool!
+    
+    let swapSound = SKAction.playSoundFileNamed("Click.mp3", waitForCompletion: false)
+    let invalidSwapSound = SKAction.playSoundFileNamed("Erro.mp3", waitForCompletion: false)
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        lifeAvatarLabel = self.childNodeWithName("lifeAvatarLabel") as! SKLabelNode
+        lifeEnemyLabel = self.childNodeWithName("lifeEnemyLabel") as! SKLabelNode
+        scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
+        movesLabel = self.childNodeWithName("movesLabel") as! SKLabelNode
+        
         displayLevel(level)
         
         tilesLayer.position = level.position
@@ -31,21 +50,165 @@ class GameScene: SKScene {
         level.swipeHandler = handleSwipe
     }
     
+    //função chamada quando avatar ganha ou perde
+    
+    func showGameOver() {
+        gameOverPanel = SKSpriteNode(color: UIColor.clearColor(), size: CGSizeMake(768, 229))
+        gameOverPanel.position = CGPointMake(384, 448)
+        gameOverPanel.zPosition = 10
+        level.addChild(gameOverPanel)
+        level.userInteractionEnabled = false
+        
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideGameOver")
+        self.view!.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func hideGameOver() {
+        var win: Bool
+        if(gameOverPanel.name == "win"){
+            win = true
+        }else{
+            win = false
+        }
+        
+        gameOverPanel.removeFromParent()
+        level.view?.removeFromSuperview()
+        
+        self.view!.removeGestureRecognizer(tapGestureRecognizer)
+        tapGestureRecognizer = nil
+
+        level.userInteractionEnabled = true
+        
+        let fadeScene = SKTransition.crossFadeWithDuration(1.5)
+        let gameScene = MapGame(fileNamed: "MapGame")
+        gameScene?.first = false
+        
+        if(win){
+            gameScene!.currentLevel = self.currentLevel + 1
+        }else{
+            gameScene!.currentLevel = self.currentLevel
+        }
+        self.view?.presentScene(gameScene!, transition: fadeScene)
+    }
+/*
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        // 1
+        let touch = touches.first! as UITouch
+        let location = touch.locationInNode(self)
+        let nodeTouched = self.nodeAtPoint(location)
+    }
+*/    
+    //sinaliza situação atual do jogo em pontos
+    func updateLabels() {
+        lifeAvatarLabel.text = String(format: "%ld", level.lifeAvatar)
+        lifeEnemyLabel.text = String(format: "%ld", level.lifeEnemy)
+        scoreLabel.text = String(format: "%ld", score)
+        movesLabel.text = String(format: "%ld", movesToEnemy)
+    }
+    
+    //decrementa o número de movimentos até o movimento do adversário
+    func decrementMoves() {
+        --movesToEnemy
+        updateLabels()
+        
+        //verifica se o jogo acabou
+        finishedPlay()
+        
+        //mudar o jogador
+        if(movesToEnemy==0){
+            movesToEnemy = level.maximumMovesToEnemy
+            currentPlayer = !currentPlayer
+            /*if(currentPlayer == false){
+                //chama a função pro inimigo atacar
+            }*/
+        }
+        updateLabels()
+    }
+    
+    //verifica se o jogo acabou
+    func finishedPlay(){
+        if (self.level.lifeEnemy < 1) {
+            //gameOverPanel.texture = SKTexture(imageNamed: "")
+            showGameOver()
+            gameOverPanel.color = UIColor.blackColor()
+            gameOverPanel.name = "win"
+        } else if (self.level.lifeAvatar < 1){
+            //gameOverPanel.texture = SKTexture(imageNamed: "")
+            showGameOver()
+            gameOverPanel.color = UIColor.redColor()
+            gameOverPanel.name = "lose"
+        }
+    }
+    
+    //verifica se o swipe é possivel
     func handleSwipe(swap: Swap) {
         self.view!.userInteractionEnabled = false
         
+        runAction(swapSound)
+        
         if level.isPossibleSwap(swap) {
             level.performSwap(swap)
-            level.animateSwap(swap, completion: {
-                self.view!.userInteractionEnabled = true
-            })
+            level.animateSwap(swap, completion: handleMatches)
         } else {
             level.animateInvalidSwap(swap, completion: {
+                self.runAction(self.invalidSwapSound)
                 self.view!.userInteractionEnabled = true
             })
         }
     }
     
+    //verifica se há matches
+    func handleMatches() {
+        let chains = level.removeMatches()
+        if chains.count == 0 {
+            beginNextTurn()
+            return
+        }
+        level.animateMatchedSkills(chains) {
+            for chain in chains {
+                if(self.currentPlayer == true){
+                    self.score += chain.score
+                    self.level.lifeEnemy -= chain.score
+                }else{
+                    self.level.lifeAvatar -= chain.score
+                }
+                
+            }
+            self.updateLabels()
+            let columns = self.level.fillHoles()
+            self.level.animateFallingSkills(columns) {
+                let columns = self.level.topUpSkills()
+                self.level.animateNewSkills(columns) {
+                    self.handleMatches()
+                }
+            }
+        }
+    }
+    
+    //começa novo turno
+    func beginNextTurn() {
+        
+        if(level.comboMultiplier > 2){
+            let som = "Combo" + String(level.comboMultiplier - 2) + ".mp3"
+            runAction(SKAction.playSoundFileNamed(som, waitForCompletion: false))
+        }
+        
+        level.detectPossibleSwaps()
+        if level.possibleSwaps.count == 0 {
+            
+            //chamar função para exibir uma view em cima
+            
+            let newSkills = level.shuffle()
+            removeSpritesForSkills(newSkills)
+            shuffle()
+        }
+        
+        level.resetComboMultiplier()
+        decrementMoves()
+        self.view!.userInteractionEnabled = true
+    }
+    
+    //adiciona telhas (quadrados marrons)
     func addTiles() {
         for row in 0..<NumRows {
             for column in 0..<NumColumns {
@@ -58,6 +221,7 @@ class GameScene: SKScene {
         }
     }
     
+    //adiciona os sprites dos skills na tela
     func addSpritesForSkills(skills: Set<Skill>) {
         for skill in skills {
             let sprite = SKSpriteNode(imageNamed: skill.skillType.spriteName)
@@ -68,22 +232,46 @@ class GameScene: SKScene {
         }
     }
     
-    func beginGame() {
-        shuffle()
+    //adiciona os sprites dos skills na tela
+    func removeSpritesForSkills(skills: Set<Skill>) {
+        for skill in skills {
+            let sprite = level.nodeAtPoint(pointForColumn(skill.column, row:skill.row))
+            sprite.removeFromParent()
+        }
     }
     
+    //começa novo jogo
+    func beginGame() {
+        currentPlayer = true
+        shuffle()
+        level.resetComboMultiplier()
+        movesToEnemy = level.maximumMovesToEnemy
+        score = 0
+        updateLabels()
+    }
+    
+    //gera novo skills
     func shuffle() {
         let newSkills = level.shuffle()
         self.addSpritesForSkills(newSkills)
     }
     
+    //cria uma view para o level e apresenta o level nela
     func displayLevel(level: Level){
-        let viewLevel = SKView(frame: CGRectMake(67, 319, 631, 633))
+        
+        let levelName = "Level_" + String(currentLevel)
+        let bgBackground = SKSpriteNode(color: UIColor.clearColor(), size: CGSizeMake(632, 634))
+        bgBackground.position = CGPointMake(384, 373)
+        bgBackground.zPosition = 10
+        bgBackground.texture = SKTexture(imageNamed: levelName)
+        self.addChild(bgBackground)
+        let viewLevel = SKView(frame: CGRectMake(83, 345, 602, 602))
         viewLevel.backgroundColor = UIColor.clearColor()
         self.view?.addSubview(viewLevel as UIView)
         viewLevel.presentScene(level)
     }
     
+    //usa as variáveis de largura e altura da telha para posiciona-las
     func pointForColumn(column: Int, row: Int) -> CGPoint {
         return CGPoint(
             x: CGFloat(column)*TileWidth + TileWidth/2,

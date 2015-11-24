@@ -9,6 +9,9 @@
 import SpriteKit
 
 class EditAvatar: SKScene {
+    
+    var currentLevel: Int!
+    
     var myRobot: Robot!
     var currentRobot: Robot = Robot()
     var selectedPart: SKSpriteNode!
@@ -301,6 +304,7 @@ class EditAvatar: SKScene {
         
         let transition = SKTransition.crossFadeWithDuration(1.5)
         let mainScreen = MainScreen(fileNamed: "MainScreen")
+        mainScreen?.currentLevel = self.currentLevel
         mainScreen?.currentRobot = self.currentRobot
         self.view?.presentScene(mainScreen!, transition: transition)
         mainScreen!.scaleMode = .AspectFill

@@ -10,19 +10,29 @@ import SpriteKit
 
 class MapGame: SKScene {
     
-    var first: Bool = true
+    var first: Bool!
+    var currentLevel: Int!
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         //addSwipes()
-        if(first){
+        if(currentLevel > 10){
+            currentLevel = 1
+        }
+        var level: String!
+        if(currentLevel < 10){
+            level = "level" + "0" + String(currentLevel)
+        }else{
+            level = "level" + String(currentLevel)
+        }
+        if(first == true){
             self.camera!.yScale = 2
             self.camera!.xScale = 2
             self.camera!.position = CGPoint(x: 768, y: 1024)
-            let zoomCamera = SKAction.scaleTo(1, duration: 1.5)
+            let zoomCamera = SKAction.scaleTo(0.5, duration: 1.5)
             self.camera!.runAction(zoomCamera)
         }
-        centerOnNode(self.childNodeWithName("level1")!)
+        centerOnNode(self.childNodeWithName(level)!)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -31,7 +41,7 @@ class MapGame: SKScene {
         for touch in touches {
             let location = touch.locationInNode(self)
             
-            if let body = self.nodeAtPoint(location) as? SKSpriteNode {
+            let body = self.nodeAtPoint(location)
                 
                 if let name: String = body.name {
                     switch name {
@@ -40,24 +50,30 @@ class MapGame: SKScene {
                         
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
                         let gameScene = MainScreen(fileNamed: "MainScreen")
+                        gameScene?.currentLevel = self.currentLevel
                         self.view?.presentScene(gameScene!, transition: fadeScene)
                         gameScene!.scaleMode = .AspectFill
                         
                         break
+                    
+                    case "backgroundMap":
+                        break
                         
                     default:
-                        //let index = name.startIndex.advancedBy(5)
+                        let index1 = name.startIndex.advancedBy(5)
+                        let index2 = name.startIndex.advancedBy(6)
+                        self.first = false
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
                         let gameScene = GameScene(fileNamed: "GameScene")
-                        gameScene?.gameLayer = SKSpriteNode(imageNamed: "marrom-1")
-                        gameScene?.level = Level(filename: "Level_1")
-                        self.view?.presentScene(gameScene!, transition: fadeScene)
-                        gameScene!.scaleMode = .AspectFill
+                        let numberLevel = Int(String(name[index1]))! * 10 + Int(String(name[index2]))!
+                        gameScene!.currentLevel = numberLevel
+                        let level = "Level_" + String(name[index1]) + String(name[index2])
+                        gameScene!.level = Level(filename: level)
+                        self.view!.presentScene(gameScene!, transition: fadeScene)
                         print("nn foi dessa vez")
                         
                     }
                 }
-            }
         }
     }
     
@@ -69,17 +85,17 @@ class MapGame: SKScene {
         var position: CGPoint = CGPoint(x: 0, y: 0)
         let background = self.childNodeWithName("backgroundMap")
         
-        if(node.position.x<384){
-           position.x = 384
-        }else if(node.position.x > background!.frame.width - 384){
-            position.x = background!.frame.width - 384
+        if(node.position.x<192){
+           position.x = 192
+        }else if(node.position.x > background!.frame.width - 192){
+            position.x = background!.frame.width - 192
         }else{
             position.x = node.position.x
         }
-        if(node.position.y<512){
-            position.y = 512
-        }else if(node.position.y > background!.frame.height - 512){
-            position.y = background!.frame.height - 512
+        if(node.position.y<256){
+            position.y = 256
+        }else if(node.position.y > background!.frame.height - 256){
+            position.y = background!.frame.height - 256
         }else{
             position.y = node.position.y
         }
@@ -90,7 +106,7 @@ class MapGame: SKScene {
     
     func updateButtonsScene(){
         let buttonEditAvatar = self.childNodeWithName("editAvatar") as! SKSpriteNode
-        buttonEditAvatar.position.x = 50 + self.camera!.position.x - 512
+        buttonEditAvatar.position.x = 50 + self.camera!.position.x - 256
     }
     
     func addSwipes(){

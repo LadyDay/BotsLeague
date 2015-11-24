@@ -13,6 +13,12 @@ let NumRows = 7
 
 class Level: SKScene {
     
+    var lifeAvatar = 0
+    var lifeEnemy = 0
+    var maximumMovesToEnemy = 0
+    
+    var comboMultiplier = 0
+    
     private var tiles = Array2D<Tile>(columns: NumColumns, rows: NumRows)
     private var skills = Array2D<Skill>(columns: NumColumns, rows: NumRows)
     var durationSwipe: NSTimeInterval = 0.2
@@ -20,24 +26,22 @@ class Level: SKScene {
     var rows: Int = 0
     var columns: Int = 0
     
-    let TileWidth: CGFloat = 83.0
-    let TileHeight: CGFloat = 85.0
+    let TileWidth: CGFloat = 86.0
+    let TileHeight: CGFloat = 86.0
     
     var swipeFromColumn: Int?
     var swipeFromRow: Int?
     var swipeHandler: ((Swap) -> ())?
     
     var selectionSprite = SKSpriteNode()
-    private var possibleSwaps = Set<Swap>()
+    var possibleSwaps = Set<Swap>()
     
-    let swapSound = SKAction.playSoundFileNamed("Click.mp3", waitForCompletion: false)
-    let invalidSwapSound = SKAction.playSoundFileNamed("Erro.mp3", waitForCompletion: false)
     var matchSound = SKAction.playSoundFileNamed("", waitForCompletion: false)
-    let fallingCookieSound = SKAction.playSoundFileNamed("", waitForCompletion: false)
-    let addCookieSound = SKAction.playSoundFileNamed("", waitForCompletion: false)
+    let fallingSkillSound = SKAction.playSoundFileNamed("", waitForCompletion: false)
+    let addSkillSound = SKAction.playSoundFileNamed("", waitForCompletion: false)
     
     init(filename: String) {
-        super.init(size: CGSize(width: 631, height: 633))
+        super.init(size: CGSize(width: 602, height: 602))
         self.backgroundColor = UIColor.clearColor()
         self.blendMode = SKBlendMode.MultiplyX2
         
@@ -49,6 +53,9 @@ class Level: SKScene {
             // 2
             if let tilesArray: AnyObject = dictionary["tiles"] {
                 // 3
+                lifeAvatar = dictionary["lifeAvatar"] as! Int
+                lifeEnemy = dictionary["lifeEnemy"] as! Int
+                maximumMovesToEnemy = dictionary["movesToEnemy"] as! Int
                 for (row, rowArray) in (tilesArray as! [[Int]]).enumerate() {
                     // 4
                     let tileRow = NumRows - row - 1
@@ -91,6 +98,39 @@ class Level: SKScene {
         return set
     }
     
+    private func calculateScores(chains: Set<Chain>) {
+        // 3-chain is 60 pts, 4-chain is 120, 5-chain is 180, and so on
+        for chain in chains {
+            chain.score = 18 * (chain.length - 2) * comboMultiplier
+            ++comboMultiplier
+        }
+    }
+    
+    func resetComboMultiplier() {
+        comboMultiplier = 1
+    }
+    
+    func animateScoreForChain(chain: Chain) {
+        // Figure out what the midpoint of the chain is.
+        let firstSprite = chain.firstSkill().sprite!
+        let lastSprite = chain.lastSkill().sprite!
+        let centerPosition = CGPoint(
+            x: (firstSprite.position.x + lastSprite.position.x)/2,
+            y: (firstSprite.position.y + lastSprite.position.y)/2 - 8)
+        
+        // Add a label for the score that slowly floats up.
+        let scoreLabel = SKLabelNode(fontNamed: "GillSans-BoldItalic")
+        scoreLabel.fontSize = 30
+        scoreLabel.text = String(format: "%ld", chain.score)
+        scoreLabel.position = centerPosition
+        scoreLabel.zPosition = 300
+        self.addChild(scoreLabel)
+        
+        let moveAction = SKAction.moveBy(CGVector(dx: 0, dy: 3), duration: 0.7)
+        moveAction.timingMode = .EaseOut
+        scoreLabel.runAction(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
+    }
+    
     func isPossibleSwap(swap: Swap) -> Bool {
         return possibleSwaps.contains(swap)
     }
@@ -102,15 +142,15 @@ class Level: SKScene {
             for column in 0..<NumColumns {
                 if let skill = skills[column, row] {
                     
-                    // Is it possible to swap this cookie with the one on the right?
+                    // Is it possible to swap this skill with the one on the right?
                     if column < NumColumns - 1 {
-                        // Have a cookie in this spot? If there is no tile, there is no cookie.
+                        // Have a skill in this spot? If there is no tile, there is no skill.
                         if let other = skills[column + 1, row] {
                             // Swap them
                             skills[column, row] = other
                             skills[column + 1, row] = skill
                             
-                            // Is either cookie now part of a chain?
+                            // Is either skill now part of a chain?
                             if hasChainAtColumn(column + 1, row: row) ||
                                 hasChainAtColumn(column, row: row) {
                                     set.insert(Swap(skillA: skill, skillB: other))
@@ -127,7 +167,7 @@ class Level: SKScene {
                             skills[column, row] = other
                             skills[column, row + 1] = skill
                             
-                            // Is either cookie now part of a chain?
+                            // Is either skill now part of a chain?
                             if hasChainAtColumn(column, row: row + 1) ||
                                 hasChainAtColumn(column, row: row) {
                                     set.insert(Swap(skillA: skill, skillB: other))
@@ -143,6 +183,114 @@ class Level: SKScene {
         }
         
         possibleSwaps = set
+    }
+    
+    func removeMatches() -> Set<Chain> {
+        let horizontalChains = detectHorizontalMatches()
+        let verticalChains = detectVerticalMatches()
+        
+        calculateScores(horizontalChains)
+        calculateScores(verticalChains)
+        
+        removeSkills(horizontalChains)
+        removeSkills(verticalChains)
+        
+        return horizontalChains.union(verticalChains)
+    }
+    
+    private func removeSkills(chains: Set<Chain>) {
+        for chain in chains {
+            for skill in chain.skills {
+                skills[skill.column, skill.row] = nil
+            }
+        }
+    }
+    
+    func animateMatchedSkills(chains: Set<Chain>, completion: () -> ()) {
+        for chain in chains {
+            animateScoreForChain(chain)
+            for skill in chain.skills {
+                if let sprite = skill.sprite {
+                    if sprite.actionForKey("removing") == nil {
+                        let nameType: String = skill.skillType.spriteName
+                        var skillTypeSpriteArray = Array<SKTexture>()
+                        for(var j = 1; j<5; j++){
+                            let nameTexture = nameType + String(j)
+                            skillTypeSpriteArray.append(SKTexture(imageNamed: nameTexture))
+                        }
+                        let changeSprite = SKAction.animateWithTextures(skillTypeSpriteArray, timePerFrame: 0.075)
+                        let scaleAction = SKAction.scaleTo(0.1, duration: 0.3)
+                        scaleAction.timingMode = .EaseOut
+                        print(nameType)
+                        matchSound = SKAction.playSoundFileNamed(nameType, waitForCompletion: false)
+                        runAction(matchSound)
+                        sprite.runAction(SKAction.sequence([changeSprite ,scaleAction, SKAction.removeFromParent()]),
+                            withKey:"removing")
+                    }
+                }
+            }
+        }
+        //runAction(matchSound)
+        runAction(SKAction.waitForDuration(0.3), completion: completion)
+    }
+    
+    private func detectHorizontalMatches() -> Set<Chain> {
+        // 1
+        var set = Set<Chain>()
+        // 2
+        for row in 0..<NumRows {
+            for var column = 0; column < NumColumns - 2 ; {
+                // 3
+                if let skill = skills[column, row] {
+                    let matchType = skill.skillType
+                    // 4
+                    if skills[column + 1, row]?.skillType == matchType &&
+                        skills[column + 2, row]?.skillType == matchType {
+                            // 5
+                            let chain = Chain(chainType: .Horizontal)
+                            
+                            repeat {
+                                chain.addSkill(skills[column, row]!)
+                                ++column
+                            } while column < NumColumns && skills[column, row]?.skillType == matchType
+                            
+                            set.insert(chain)
+                            continue
+                    }
+                }
+                // 6
+                ++column
+            }
+        }
+        return set
+    }
+    
+    private func detectVerticalMatches() -> Set<Chain> {
+        var set = Set<Chain>()
+        
+        for column in 0..<NumColumns {
+            for var row = 0; row < NumRows - 2; {
+                if let skill = skills[column, row] {
+                    let matchType = skill.skillType
+                    
+                    if skills[column, row + 1]?.skillType == matchType &&
+                        skills[column, row + 2]?.skillType == matchType {
+                            
+                            let chain = Chain(chainType: .Vertical)
+                            
+                            repeat {
+                                chain.addSkill(skills[column, row]!)
+                                ++row
+                            } while row < NumRows && skills[column, row]?.skillType == matchType
+                            
+                            set.insert(chain)
+                            continue
+                    }
+                }
+                ++row
+            }
+        }
+        return set
     }
     
     private func createInitialSkills() -> Set<Skill> {
@@ -198,7 +346,7 @@ class Level: SKScene {
         return vertLength >= 3
     }
     
-    func showSelectionIndicatorForCookie(skill: Skill) {
+    func showSelectionIndicatorForSkill(skill: Skill) {
         if selectionSprite.parent != nil {
             selectionSprite.removeFromParent()
         }
@@ -229,7 +377,7 @@ class Level: SKScene {
         if success {
             // 3
             if let skill = self.skillAtColumn(column, row: row) {
-                showSelectionIndicatorForCookie(skill)
+                showSelectionIndicatorForSkill(skill)
                 // 4
                 swipeFromColumn = column
                 swipeFromRow = row
@@ -311,6 +459,135 @@ class Level: SKScene {
         }
     }
     
+    //tapar buracos
+    func fillHoles() -> [[Skill]] {
+        var columns = [[Skill]]()
+        // 1
+        for column in 0..<NumColumns {
+            var array = [Skill]()
+            for row in 0..<NumRows {
+                // 2
+                if tiles[column, row] != nil && skills[column, row] == nil {
+                    // 3
+                    for lookup in (row + 1)..<NumRows {
+                        if let skill = skills[column, lookup] {
+                            // 4
+                            skills[column, lookup] = nil
+                            skills[column, row] = skill
+                            skill.row = row
+                            // 5
+                            array.append(skill)
+                            // 6
+                            break
+                        }
+                    }
+                }
+            }
+            // 7
+            if !array.isEmpty {
+                columns.append(array)
+            }
+        }
+        return columns
+    }
+    
+    //animação da queda dos itens
+    func animateFallingSkills(columns: [[Skill]], completion: () -> ()) {
+        // 1
+        var longestDuration: NSTimeInterval = 0
+        for array in columns {
+            for (idx, skill) in array.enumerate() {
+                let newPosition = pointForColumn(skill.column, row: skill.row)
+                // 2
+                let delay = 0.05 + 0.15*NSTimeInterval(idx)
+                // 3
+                let sprite = skill.sprite!
+                let duration = NSTimeInterval(((sprite.position.y - newPosition.y) / TileHeight) * 0.1)
+                // 4
+                longestDuration = max(longestDuration, duration + delay)
+                // 5
+                let moveAction = SKAction.moveTo(newPosition, duration: duration)
+                moveAction.timingMode = .EaseOut
+                sprite.runAction(
+                    SKAction.sequence([
+                        SKAction.waitForDuration(delay),
+                        //SKAction.group([moveAction, fallingSkillSound])
+                        moveAction]))
+            }
+        }
+        // 6
+        runAction(SKAction.waitForDuration(longestDuration), completion: completion)
+    }
+    
+    func topUpSkills() -> [[Skill]] {
+        var columns = [[Skill]]()
+        var skillType: SkillType = .Unknown
+        
+        for column in 0..<NumColumns {
+            var array = [Skill]()
+            // 1
+            for var row = NumRows - 1; row >= 0 && skills[column, row] == nil; --row {
+                // 2
+                if tiles[column, row] != nil {
+                    // 3
+                    var newSkillType: SkillType
+                    repeat {
+                        newSkillType = SkillType.random()
+                    } while newSkillType == skillType
+                    skillType = newSkillType
+                    // 4
+                    let skill = Skill(column: column, row: row, skillType: skillType)
+                    skills[column, row] = skill
+                    array.append(skill)
+                }
+            }
+            // 5
+            if !array.isEmpty {
+                columns.append(array)
+            }
+        }
+        return columns
+    }
+    
+    func animateNewSkills(columns: [[Skill]], completion: () -> ()) {
+        // 1
+        var longestDuration: NSTimeInterval = 0
+        
+        for array in columns {
+            // 2
+            let startRow = array[0].row + 1
+            
+            for (idx, skill) in array.enumerate() {
+                // 3
+                let sprite = SKSpriteNode(imageNamed: skill.skillType.spriteName)
+                sprite.position = pointForColumn(skill.column, row: startRow)
+                self.addChild(sprite)
+                skill.sprite = sprite
+                // 4
+                let delay = 0.1 + 0.2 * NSTimeInterval(array.count - idx - 1)
+                // 5
+                let duration = NSTimeInterval(startRow - skill.row) * 0.1
+                longestDuration = max(longestDuration, duration + delay)
+                // 6
+                let newPosition = pointForColumn(skill.column, row: skill.row)
+                let moveAction = SKAction.moveTo(newPosition, duration: duration)
+                moveAction.timingMode = .EaseOut
+                sprite.alpha = 0
+                sprite.runAction(
+                    SKAction.sequence([
+                        SKAction.waitForDuration(delay),
+                        SKAction.group([
+                            SKAction.fadeInWithDuration(0.05),
+                            moveAction//,
+                            //addSkillSound
+                            ])
+                        ]))
+            }
+        }
+        // 7
+        runAction(SKAction.waitForDuration(longestDuration), completion: completion)
+    }
+    
     func animateSwap(swap: Swap, completion: () -> ()) {
         let spriteA = swap.skillA.sprite!
         let spriteB = swap.skillB.sprite!
@@ -320,7 +597,7 @@ class Level: SKScene {
         
         let Duration: NSTimeInterval = 0.3
         
-        runAction(swapSound)
+        //runAction(swapSound)
         
         let moveA = SKAction.moveTo(spriteB.position, duration: Duration)
         moveA.timingMode = .EaseOut
@@ -340,7 +617,7 @@ class Level: SKScene {
         
         let Duration: NSTimeInterval = 0.2
         
-        runAction(invalidSwapSound)
+        //runAction(invalidSwapSound)
         
         let moveA = SKAction.moveTo(spriteB.position, duration: Duration)
         moveA.timingMode = .EaseOut
@@ -365,6 +642,12 @@ class Level: SKScene {
         skills[columnB, rowB] = swap.skillA
         swap.skillA.column = columnB
         swap.skillA.row = rowB
+    }
+    
+    func pointForColumn(column: Int, row: Int) -> CGPoint {
+        return CGPoint(
+            x: CGFloat(column)*TileWidth + TileWidth/2,
+            y: CGFloat(row)*TileHeight + TileHeight/2)
     }
     
 }
