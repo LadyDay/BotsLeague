@@ -74,7 +74,7 @@ class GameScene: SKScene {
         gameOverPanel = SKSpriteNode(color: UIColor.clearColor(), size: CGSizeMake(768, 1024))
         gameOverPanel.position = CGPointMake(384, 512)
         gameOverPanel.zPosition = 30
-        level.view?.removeFromSuperview()
+        //level.view?.removeFromSuperview()
         self.addChild(gameOverPanel)
         level.userInteractionEnabled = false
         
@@ -112,6 +112,7 @@ class GameScene: SKScene {
         }else{
             gameScene!.currentLevel = self.currentLevel
         }
+        level.view!.removeFromSuperview()
         self.view?.presentScene(gameScene!, transition: fadeScene)
     }
 /*
