@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>antenna</key>
+	<string>antenna-00</string>
+	<key>head</key>
+	<string>head-00</string>
+	<key>eyes</key>
+	<string>eyes-00</string>
+	<key>rightArm</key>
+	<string>rightArm-00</string>
+	<key>leftArm</key>
+	<string>leftArm-00</string>
+	<key>legs</key>
+	<string>legs-00</string>
+	<key>body</key>
+	<string>body-00</string>
+</dict>
+</plist>

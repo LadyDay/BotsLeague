@@ -13,9 +13,15 @@ let NumRows = 7
 
 class Level: SKScene {
     
+    var fileName: String!
+    
     var lifeAvatar = 0
     var lifeEnemy = 0
+    var bgEnemyPresent = false
     var maximumMovesToEnemy = 0
+    
+    var zPositionSkillA: CGFloat = 100
+    var zPositionSkillB: CGFloat = 90
     
     var comboMultiplier = 0
     
@@ -42,6 +48,7 @@ class Level: SKScene {
     
     init(filename: String) {
         super.init(size: CGSize(width: 602, height: 602))
+        self.fileName = filename
         self.backgroundColor = UIColor.clearColor()
         self.blendMode = SKBlendMode.MultiplyX2
         
@@ -355,7 +362,7 @@ class Level: SKScene {
             let texture = SKTexture(imageNamed: skill.skillType.highlightedSpriteName)
             selectionSprite.size = texture.size()
             selectionSprite.runAction(SKAction.setTexture(texture))
-            
+            selectionSprite.zPosition = 15
             sprite.addChild(selectionSprite)
             selectionSprite.alpha = 1.0
         }
@@ -416,6 +423,43 @@ class Level: SKScene {
                 // 5
                 swipeFromColumn = nil
             }
+        }
+    }
+    
+    func enemyPlay(){
+        //escurecer a tela pra jogada do inimigo
+        let bgBackground = SKSpriteNode(color: UIColor(red: 205/256, green: 205/256, blue: 205/256, alpha: 0.5), size: CGSizeMake(600, 600))
+        bgBackground.name = "bgEnemy"
+        bgBackground.blendMode = SKBlendMode.Multiply
+        bgBackground.position = CGPointMake(301, 301)
+        bgBackground.zPosition = 20
+        addChild(bgBackground)
+        self.bgEnemyPresent = true
+        
+        detectPossibleSwaps()
+        let swap : Swap = possibleSwaps.first!
+        print(swap.skillA.description)
+        print(swap.skillB.description)
+        showSelectionIndicatorForSkill(swap.skillA)
+        
+        swipeFromColumn = swap.skillA.column
+        swipeFromRow = swap.skillA.row
+        
+        var horzDelta = 0, vertDelta = 0
+        if swap.skillB.column < swipeFromColumn! {          // swipe left
+            horzDelta = -1
+        } else if swap.skillB.column > swipeFromColumn! {   // swipe right
+            horzDelta = 1
+        } else if swap.skillB.row < swipeFromRow! {         // swipe down
+            vertDelta = -1
+        } else if swap.skillB.row > swipeFromRow! {         // swipe up
+            vertDelta = 1
+        }
+        
+        // 4
+        if horzDelta != 0 || vertDelta != 0 {
+            trySwapHorizontal(horzDelta, vertical: vertDelta)
+            hideSelectionIndicator()
         }
     }
     
@@ -502,6 +546,7 @@ class Level: SKScene {
                 let delay = 0.05 + 0.15*NSTimeInterval(idx)
                 // 3
                 let sprite = skill.sprite!
+                sprite.zPosition = 15
                 let duration = NSTimeInterval(((sprite.position.y - newPosition.y) / TileHeight) * 0.1)
                 // 4
                 longestDuration = max(longestDuration, duration + delay)
@@ -561,6 +606,7 @@ class Level: SKScene {
                 // 3
                 let sprite = SKSpriteNode(imageNamed: skill.skillType.spriteName)
                 sprite.position = pointForColumn(skill.column, row: startRow)
+                sprite.zPosition = 15
                 self.addChild(sprite)
                 skill.sprite = sprite
                 // 4
@@ -592,8 +638,8 @@ class Level: SKScene {
         let spriteA = swap.skillA.sprite!
         let spriteB = swap.skillB.sprite!
         
-        spriteA.zPosition = 100
-        spriteB.zPosition = 90
+        spriteA.zPosition = self.zPositionSkillA
+        spriteB.zPosition = self.zPositionSkillB
         
         let Duration: NSTimeInterval = 0.3
         
@@ -612,8 +658,8 @@ class Level: SKScene {
         let spriteA = swap.skillA.sprite!
         let spriteB = swap.skillB.sprite!
         
-        spriteA.zPosition = 100
-        spriteB.zPosition = 90
+        spriteA.zPosition = self.zPositionSkillA
+        spriteB.zPosition = self.zPositionSkillB
         
         let Duration: NSTimeInterval = 0.2
         

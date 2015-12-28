@@ -39,4 +39,20 @@ class Robot: SKNode {
         super.init()
     }
     
+    func loadRobotFromFile(){
+        if let dictionary = Dictionary<String, AnyObject>.loadGameData("Robot") {
+            self.antenna.texture = SKTexture(imageNamed: dictionary["antenna"] as! String)
+            self.head.texture = SKTexture(imageNamed: dictionary["head"] as! String)
+            self.eyes.texture = SKTexture(imageNamed: dictionary["eyes"] as! String)
+            self.rightArm.texture = SKTexture(imageNamed: dictionary["rightArm"] as! String)
+            self.leftArm.texture = SKTexture(imageNamed: dictionary["leftArm"] as! String)
+            self.legs.texture = SKTexture(imageNamed: dictionary["legs"] as! String)
+            self.body.texture = SKTexture(imageNamed: dictionary["body"] as! String)
+        }
+    }
+    
+    func saveRobotFromFile(){
+        
+    }
+    
 }

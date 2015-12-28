@@ -19,7 +19,10 @@
 		3D0991541BC9B7D1009C3C06 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D0991531BC9B7D1009C3C06 /* Images.xcassets */; };
 		3D0991571BC9B7D1009C3C06 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D0991551BC9B7D1009C3C06 /* LaunchScreen.xib */; };
 		3D0991631BC9B7D1009C3C06 /* tcc_kelleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0991621BC9B7D1009C3C06 /* tcc_kelleTests.swift */; };
-		3D26744E1BCFA52400B8F8E7 /* MainScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D26744D1BCFA52400B8F8E7 /* MainScreen.sks */; };
+		3D1110DE1C30867F00EA3E83 /* Robot.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110DD1C30867F00EA3E83 /* Robot.plist */; };
+		3D1110E01C30A64800EA3E83 /* CurrentGame.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110DF1C30A64800EA3E83 /* CurrentGame.plist */; };
+		3D1110E41C30B92500EA3E83 /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1110E31C30B92500EA3E83 /* Base.swift */; };
+		3D1C9E481C1B656700B4D8B4 /* teste.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D1C9E471C1B656700B4D8B4 /* teste.sks */; };
 		3D2AA67D1BFE05340019FDA5 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA67C1BFE05340019FDA5 /* Skill.swift */; };
 		3D2AA67F1BFE0EFA0019FDA5 /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA67E1BFE0EFA0019FDA5 /* Array2D.swift */; };
 		3D2AA6811C012BF90019FDA5 /* MapGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA6801C012BF90019FDA5 /* MapGame.swift */; };
@@ -64,7 +67,6 @@
 		3D2AA7031C0264360019FDA5 /* Level_10.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AA6FD1C0264360019FDA5 /* Level_10.json */; };
 		3D4CC9321BF9F8BB0022511E /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CC9311BF9F8BB0022511E /* Level.swift */; };
 		3D4CC9341BFA34330022511E /* MapGame.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D4CC9331BFA34330022511E /* MapGame.sks */; };
-		3D6E20B81BCA873A009029E8 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E20B71BCA873A009029E8 /* MainScreen.swift */; };
 		3D6E20BA1BCA87B0009029E8 /* Robot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E20B91BCA87B0009029E8 /* Robot.swift */; };
 		3D6E20BC1BCA941A009029E8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E20BB1BCA941A009029E8 /* User.swift */; };
 		3D6E20BE1BCA97EB009029E8 /* MyButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E20BD1BCA97EB009029E8 /* MyButtonNode.swift */; };
@@ -99,7 +101,10 @@
 		3D09915C1BC9B7D1009C3C06 /* tcc_kelleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tcc_kelleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D0991611BC9B7D1009C3C06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D0991621BC9B7D1009C3C06 /* tcc_kelleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tcc_kelleTests.swift; sourceTree = "<group>"; };
-		3D26744D1BCFA52400B8F8E7 /* MainScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MainScreen.sks; path = ../MainScreen.sks; sourceTree = "<group>"; };
+		3D1110DD1C30867F00EA3E83 /* Robot.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Robot.plist; sourceTree = "<group>"; };
+		3D1110DF1C30A64800EA3E83 /* CurrentGame.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CurrentGame.plist; sourceTree = "<group>"; };
+		3D1110E31C30B92500EA3E83 /* Base.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
+		3D1C9E471C1B656700B4D8B4 /* teste.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = teste.sks; sourceTree = "<group>"; };
 		3D2AA67C1BFE05340019FDA5 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Skill.swift; path = ../Skill.swift; sourceTree = "<group>"; };
 		3D2AA67E1BFE0EFA0019FDA5 /* Array2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
 		3D2AA6801C012BF90019FDA5 /* MapGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapGame.swift; sourceTree = "<group>"; };
@@ -144,7 +149,6 @@
 		3D2AA6FD1C0264360019FDA5 /* Level_10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Level_10.json; sourceTree = "<group>"; };
 		3D4CC9311BF9F8BB0022511E /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		3D4CC9331BFA34330022511E /* MapGame.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapGame.sks; sourceTree = "<group>"; };
-		3D6E20B71BCA873A009029E8 /* MainScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		3D6E20B91BCA87B0009029E8 /* Robot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Robot.swift; sourceTree = "<group>"; };
 		3D6E20BB1BCA941A009029E8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3D6E20BD1BCA97EB009029E8 /* MyButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyButtonNode.swift; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 				3D09914E1BC9B7D1009C3C06 /* GameViewController.swift */,
 				3D0991501BC9B7D1009C3C06 /* Main.storyboard */,
 				3D0991531BC9B7D1009C3C06 /* Images.xcassets */,
+				3D1C9E471C1B656700B4D8B4 /* teste.sks */,
 				3D0991551BC9B7D1009C3C06 /* LaunchScreen.xib */,
 				3D0991461BC9B7D1009C3C06 /* Supporting Files */,
 			);
@@ -240,9 +245,11 @@
 			children = (
 				3D6E20BB1BCA941A009029E8 /* User.swift */,
 				3D6E20B91BCA87B0009029E8 /* Robot.swift */,
+				3D1110DD1C30867F00EA3E83 /* Robot.plist */,
 				3D2AA6A41C01509B0019FDA5 /* Extensions.swift */,
 				3D2AA6A81C0150D30019FDA5 /* Tile.swift */,
 				3D2AA67C1BFE05340019FDA5 /* Skill.swift */,
+				3D1110E31C30B92500EA3E83 /* Base.swift */,
 				3D2AA6C21C01EAE30019FDA5 /* Swap.swift */,
 				3D2AA67E1BFE0EFA0019FDA5 /* Array2D.swift */,
 				3D2AA6C91C0210FA0019FDA5 /* Chain.swift */,
@@ -325,10 +332,9 @@
 		3D2AA7041C0307370019FDA5 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				3D26744D1BCFA52400B8F8E7 /* MainScreen.sks */,
-				3D6E20B71BCA873A009029E8 /* MainScreen.swift */,
 				3D6E20BF1BCBF699009029E8 /* EditAvatar.sks */,
 				3D6E20C51BCC0DE3009029E8 /* EditAvatar.swift */,
+				3D1110DF1C30A64800EA3E83 /* CurrentGame.plist */,
 				3D05453B1BE819FC00D1DC0A /* MenuView.sks */,
 				3D05453D1BE81A1000D1DC0A /* MenuView.swift */,
 			);
@@ -444,12 +450,14 @@
 				3D2AA6D91C02605B0019FDA5 /* Fase 1.mp3 in Resources */,
 				3D2AA6D21C025FCE0019FDA5 /* Bolt.mp3 in Resources */,
 				3D0991541BC9B7D1009C3C06 /* Images.xcassets in Resources */,
+				3D1110E01C30A64800EA3E83 /* CurrentGame.plist in Resources */,
 				3D05453A1BE0F94D00D1DC0A /* Home.sks in Resources */,
 				3D2AA6C81C020E2F0019FDA5 /* Click.mp3 in Resources */,
 				3D2AA6C61C020E270019FDA5 /* Erro.mp3 in Resources */,
 				3D2AA6D61C025FCE0019FDA5 /* Life.mp3 in Resources */,
 				3D2AA6C11C015DB70019FDA5 /* Level_04.json in Resources */,
 				3D2AA6BE1C015DB70019FDA5 /* Level_01.json in Resources */,
+				3D1C9E481C1B656700B4D8B4 /* teste.sks in Resources */,
 				3D2AA6F61C0260D30019FDA5 /* Pergunta.mp3 in Resources */,
 				3D4CC9341BFA34330022511E /* MapGame.sks in Resources */,
 				3D2AA6C01C015DB70019FDA5 /* Level_03.json in Resources */,
@@ -466,7 +474,6 @@
 				3D2AA6D31C025FCE0019FDA5 /* Fire.mp3 in Resources */,
 				3D2AA7001C0264360019FDA5 /* Level_07.json in Resources */,
 				3D2AA6E81C0260A30019FDA5 /* Combo2.mp3 in Resources */,
-				3D26744E1BCFA52400B8F8E7 /* MainScreen.sks in Resources */,
 				3D2AA6F41C0260D30019FDA5 /* Compra.mp3 in Resources */,
 				3D2AA6EB1C0260A30019FDA5 /* Combo5.mp3 in Resources */,
 				3D2AA6EE1C0260A30019FDA5 /* Combo8.mp3 in Resources */,
@@ -476,6 +483,7 @@
 				3D2AA7031C0264360019FDA5 /* Level_10.json in Resources */,
 				3D2AA6EA1C0260A30019FDA5 /* Combo4.mp3 in Resources */,
 				3D2AA7011C0264360019FDA5 /* Level_08.json in Resources */,
+				3D1110DE1C30867F00EA3E83 /* Robot.plist in Resources */,
 				3D2AA6DD1C0260640019FDA5 /* Fase 3.mp3 in Resources */,
 				3D0991521BC9B7D1009C3C06 /* Main.storyboard in Resources */,
 				3D2AA6BF1C015DB70019FDA5 /* Level_02.json in Resources */,
@@ -497,7 +505,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D6E20B81BCA873A009029E8 /* MainScreen.swift in Sources */,
 				3D2AA6811C012BF90019FDA5 /* MapGame.swift in Sources */,
 				3D6E20BA1BCA87B0009029E8 /* Robot.swift in Sources */,
 				3D2AA67D1BFE05340019FDA5 /* Skill.swift in Sources */,
@@ -507,6 +514,7 @@
 				3D6E20BC1BCA941A009029E8 /* User.swift in Sources */,
 				3D05453E1BE81A1000D1DC0A /* MenuView.swift in Sources */,
 				3D2AA6C31C01EAE30019FDA5 /* Swap.swift in Sources */,
+				3D1110E41C30B92500EA3E83 /* Base.swift in Sources */,
 				3D2AA67F1BFE0EFA0019FDA5 /* Array2D.swift in Sources */,
 				3D4CC9321BF9F8BB0022511E /* Level.swift in Sources */,
 				3D09914F1BC9B7D1009C3C06 /* GameViewController.swift in Sources */,

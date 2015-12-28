@@ -17,7 +17,7 @@ class MapGame: SKScene {
         /* Setup your scene here */
         //addSwipes()
         if(currentLevel > 10){
-            currentLevel = 1
+            currentLevel = 10
         }
         var level: String!
         if(currentLevel < 10){
@@ -45,16 +45,6 @@ class MapGame: SKScene {
                 
                 if let name: String = body.name {
                     switch name {
-                        
-                    case "editAvatar":
-                        
-                        let fadeScene = SKTransition.crossFadeWithDuration(1.5)
-                        let gameScene = MainScreen(fileNamed: "MainScreen")
-                        gameScene?.currentLevel = self.currentLevel
-                        self.view?.presentScene(gameScene!, transition: fadeScene)
-                        gameScene!.scaleMode = .AspectFill
-                        
-                        break
                     
                     case "backgroundMap":
                         break
@@ -62,16 +52,21 @@ class MapGame: SKScene {
                     default:
                         let index1 = name.startIndex.advancedBy(5)
                         let index2 = name.startIndex.advancedBy(6)
-                        self.first = false
-                        let fadeScene = SKTransition.crossFadeWithDuration(1.5)
-                        let gameScene = GameScene(fileNamed: "GameScene")
                         let numberLevel = Int(String(name[index1]))! * 10 + Int(String(name[index2]))!
-                        gameScene!.currentLevel = numberLevel
-                        let level = "Level_" + String(name[index1]) + String(name[index2])
-                        gameScene!.level = Level(filename: level)
-                        self.view!.presentScene(gameScene!, transition: fadeScene)
-                        print("nn foi dessa vez")
-                        
+                        if let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame"){
+                            if (dictionary["currentLevel"] as! Int) >= numberLevel{
+                                self.first = false
+                                let fadeScene = SKTransition.crossFadeWithDuration(1.5)
+                                let gameScene = GameScene(fileNamed: "GameScene")
+                                gameScene!.currentLevel = numberLevel
+                                let level = "Level_" + String(name[index1]) + String(name[index2])
+                                gameScene!.level = Level(filename: level)
+                                self.view!.presentScene(gameScene!, transition: fadeScene)
+                            }else{
+                                //avisar que esse level não está liberado
+                                print("não tá liberado")
+                            }
+                        }
                     }
                 }
         }

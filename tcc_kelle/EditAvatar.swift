@@ -12,7 +12,7 @@ class EditAvatar: SKScene {
     
     var currentLevel: Int!
     
-    var myRobot: Robot!
+    var myRobot: Robot = Robot()
     var currentRobot: Robot = Robot()
     var selectedPart: SKSpriteNode!
     
@@ -28,9 +28,8 @@ class EditAvatar: SKScene {
     var lotTree: SKSpriteNode!
     
     //cenary
-    var power: SKSpriteNode!
-    var money: SKSpriteNode!
-    var armario: SKSpriteNode!
+    var power: SKLabelNode!
+    var money: SKLabelNode!
     var basedRobot: SKSpriteNode!
     
     //buttons
@@ -59,14 +58,14 @@ class EditAvatar: SKScene {
         viewRecognizer.addGestureRecognizer(swipeRight)
         
         self.selectedPart = self.childNodeWithName("head") as! SKSpriteNode
+        self.myRobot.loadRobotFromFile()
         initializeNodesInTheView()
-        initializeTexturesOfNodesInView()
+        //initializeTexturesOfNodesInView()
         initializeTexturesOfRobotAndLots()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
-        
         
     }
     
@@ -76,9 +75,8 @@ class EditAvatar: SKScene {
         self.lotTwo = self.childNodeWithName("lotTwo") as! SKSpriteNode
         self.lotTree = self.childNodeWithName("lotTree") as! SKSpriteNode
         
-        self.power = self.childNodeWithName("power") as! SKSpriteNode
-        self.money = self.childNodeWithName("money") as! SKSpriteNode
-        self.armario = self.childNodeWithName("armario") as! SKSpriteNode
+        self.power = self.childNodeWithName("power") as! SKLabelNode
+        self.money = self.childNodeWithName("money") as! SKLabelNode
         self.basedRobot = self.childNodeWithName("basedRobot") as! SKSpriteNode
         
         self.buttonMenu = self.childNodeWithName("buttonMenu") as! SKSpriteNode
@@ -100,11 +98,6 @@ class EditAvatar: SKScene {
     }
     
     func initializeTexturesOfNodesInView(){
-        //cenary
-        self.power.texture = SKTexture(imageNamed: "bg_energia_restante")
-        self.money.texture = SKTexture(imageNamed: "bg_dinheiro_atual")
-        self.armario.texture = SKTexture(imageNamed: "bodyPartsShelf")
-        self.basedRobot.texture = SKTexture(imageNamed: "basedRobot")
         
         //buttons
         self.buttonMenu.texture = SKTexture(imageNamed: "buttonMenu")
@@ -151,105 +144,123 @@ class EditAvatar: SKScene {
         if let touch = touches.first {
             let location = touch.locationInNode(self)
             
-            //let body = self.nodeAtPoint(location) as? SKSpriteNode
+            let body = self.nodeAtPoint(location) as? SKSpriteNode
             
-            if let node = self.physicsWorld.bodyAtPoint(location)?.node {
-                if(node.name == "antenna"){
+            if let name: String = body!.name {
+                switch name {
+                    
+                case "antenna":
                     print("antenna Touched")
-                    self.selectedPart = self.currentRobot.antenna
-                    updateLots()
-                
-                }else{
-            
-                let body = self.nodeAtPoint(location) as? SKSpriteNode
-                
-                if let name: String = body!.name {
-                    switch name {
-                        
-                    case "head":
-                        print("head Touched")
+                    if(self.selectedPart != self.currentRobot.antenna){
+                        if(!(self.selectedPart.texture!.isEqual(self.lotTwo.texture!))){
+                            self.confirmar(false)
+                        }
+                        self.selectedPart = self.currentRobot.antenna
+                        updateLots()
+                    }
+                    break
+                    
+                case "head":
+                    print("head Touched")
+                    if(self.selectedPart != self.currentRobot.head){
+                        if(!(self.selectedPart.texture!.isEqual(self.lotTwo.texture!))){
+                            self.confirmar(false)
+                        }
                         self.selectedPart = self.currentRobot.head
                         updateLots()
-                        break
-                        
-                    case "eyes":
-                        print("eyes Touched")
+                    }
+                    break
+                    
+                case "eyes":
+                    print("eyes Touched")
+                    if(self.selectedPart != self.currentRobot.eyes){
+                        if(!(self.selectedPart.texture!.isEqual(self.lotTwo.texture!))){
+                            self.confirmar(false)
+                        }
                         self.selectedPart = self.currentRobot.eyes
                         updateLots()
-                        break
-                        
-                    case "body":
-                        print("body Touched")
+                    }
+                    break
+                    
+                case "body":
+                    print("body Touched")
+                    if(self.selectedPart != self.currentRobot.body){
+                        if(!(self.selectedPart.texture!.isEqual(self.lotTwo.texture!))){
+                            self.confirmar(false)
+                        }
                         self.selectedPart = self.currentRobot.body
                         updateLots()
-                        break
-                        
-                    case "rightArm":
-                        print("rightArm Touched")
+                    }
+                    break
+                    
+                case "rightArm":
+                    if(self.selectedPart != self.currentRobot.rightArm){
+                        if(!(self.selectedPart.texture!.isEqual(self.lotTwo.texture!))){
+                            self.confirmar(false)
+                        }
                         self.selectedPart = self.currentRobot.rightArm
                         updateLots()
-                        break
-                        
-                    case "leftArm":
-                        print("leftArm Touched")
+                    }
+                    break
+                    
+                case "leftArm":
+                    if(self.selectedPart != self.currentRobot.leftArm){
+                        if(!(self.selectedPart.texture!.isEqual(self.lotTwo.texture!))){
+                            self.confirmar(false)
+                        }
                         self.selectedPart = self.currentRobot.leftArm
                         updateLots()
-                        break
-                        
-                    case "legs":
-                        print("legs Touched")
+                    }
+                    break
+                    
+                case "legs":
+                    print("legs Touched")
+                    if(self.selectedPart != self.currentRobot.legs){
+                        if(!(self.selectedPart.texture!.isEqual(self.lotTwo.texture!))){
+                            self.confirmar(false)
+                        }
                         self.selectedPart = self.currentRobot.legs
                         updateLots()
-                        break
-                        
-                    case "buttonNext":
-                        print("buttonNext Touched")
-                        buttonNextPressed()
-                        break
-                        
-                    case "buttonBack":
-                        print("buttonBack Touched")
-                        buttonBackPressed()
-                        break
-                        
-                    case "buttonHome":
-                        print("buttonHome Touched")
-                        goToMainScreen()
-                        break
-                        
-                    case "buttonMenu":
-                        print("buttonMenu Touched")
-                        displayMenu()
-                        break
-                        
-                    case "lotOne":
-                        print("lotOne Touched")
-                        self.selectedPart.texture = self.lotOne.texture
-                        updateLots()
-                        break
-                        
-                    case "lotTwo":
-                        print("lotTwo Touched")
-                        self.selectedPart.texture = self.lotTwo.texture
-                        updateLots()
-                        break
-                        
-                    case "lotTree":
-                        print("lotTree Touched")
-                        self.selectedPart.texture = self.lotTree.texture
-                        updateLots()
-                        break
-                        
-                    default:
-                        print("nn foi dessa vez")
-
                     }
-                }
+                    break
+                    
+                case "buttonNext":
+                    print("buttonNext Touched")
+                    buttonNextPressed()
+                    break
+                    
+                case "buttonBack":
+                    print("buttonBack Touched")
+                    buttonBackPressed()
+                    break
+                    
+                case "buttonHome":
+                    print("buttonHome Touched")
+                    goToHome()
+                    break
+                    
+                case "buttonMenu":
+                    print("buttonMenu Touched")
+                    displayMenu()
+                    break
+                    
+                case "confirmar":
+                    print("peca lotTwo confirmada")
+                    self.confirmar(true)
+                    updateLots()
+                    break
+                    
+                case "cancelar":
+                    print("peca lotTwo confirmada")
+                    updateLots()
+                    break
+                    
+                default:
+                    print("nn foi dessa vez")
+                    
                 }
             }
-            
         }
-        
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -286,7 +297,6 @@ class EditAvatar: SKScene {
             self.colorPart3 = self.totalPieces-1
         }
         updateLots()
-        
     }
     
     func updateLots(){
@@ -300,14 +310,25 @@ class EditAvatar: SKScene {
         self.lotTree.texture = SKTexture(imageNamed: stringColor as String)
     }
     
-    func goToMainScreen(){
+    func goToHome(){
         
         let transition = SKTransition.crossFadeWithDuration(1.5)
-        let mainScreen = MainScreen(fileNamed: "MainScreen")
-        mainScreen?.currentLevel = self.currentLevel
-        mainScreen?.currentRobot = self.currentRobot
+        let mainScreen = Home(fileNamed: "Home")
         self.view?.presentScene(mainScreen!, transition: transition)
         mainScreen!.scaleMode = .AspectFill
+    }
+    
+    func confirmar(sim: Bool){
+        if(sim){
+            self.selectedPart.texture = self.lotTwo.texture!
+            Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString(self.selectedPart.name!), object: SKTexture.returnNameTexture(self.lotTwo.texture!))
+        }else{
+            print("foi")
+        }
+    }
+    
+    func cancelar(){
+        
     }
     
     func displayMenu(){

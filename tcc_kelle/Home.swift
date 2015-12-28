@@ -31,12 +31,29 @@ class Home: SKScene {
                         
                         break
                         
+                    case "buttonConfiguration":
+                        
+                        print("buttonConfiguration Touched")
+                        
+                        break
+                        
                     case "buttonStart":
                         
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
                         let gameScene = MapGame(fileNamed: "MapGame")
                         gameScene!.first = true
-                        gameScene!.currentLevel = 1
+                        if let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame"){
+                            gameScene!.currentLevel = dictionary["currentLevel"] as! Int
+                        }
+                        self.view?.presentScene(gameScene!, transition: fadeScene)
+                        gameScene!.scaleMode = .AspectFill
+                        
+                        break
+                        
+                    case "buttonEditAvatar":
+                        
+                        let fadeScene = SKTransition.crossFadeWithDuration(1.5)
+                        let gameScene = EditAvatar(fileNamed: "EditAvatar")
                         self.view?.presentScene(gameScene!, transition: fadeScene)
                         gameScene!.scaleMode = .AspectFill
                         

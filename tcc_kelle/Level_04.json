@@ -9,5 +9,6 @@
     
     "lifeAvatar" : 350,
     "lifeEnemy" : 270,
-    "movesToEnemy": 2,
+    "basedEnemy" : 1,
+    "movesToEnemy": 1,
 }

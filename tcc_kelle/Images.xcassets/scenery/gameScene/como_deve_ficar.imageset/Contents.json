@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "MAPA_02.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "como_deve_ficar.png",
       "scale" : "2x"
     },
     {

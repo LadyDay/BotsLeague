@@ -125,7 +125,7 @@ class MainScreen: SKScene {
         let transition = SKTransition.crossFadeWithDuration(1.5)
         let scene = EditAvatar(fileNamed: "EditAvatar")
         scene!.currentLevel = self.currentLevel
-        scene?.myRobot = self.myRobot
+        scene?.myRobot = self.myRobot!
         self.view?.presentScene(scene!, transition: transition)
         scene!.scaleMode = .AspectFill
     }
