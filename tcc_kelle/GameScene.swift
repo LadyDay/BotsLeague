@@ -15,6 +15,9 @@ class GameScene: SKScene {
     var gameOverPanel: SKSpriteNode!
     var tapGestureRecognizer: UITapGestureRecognizer!
     
+    var boolPause: Bool = false
+    var viewPause: SKView!
+    
     let TileWidth: CGFloat = 86.0
     let TileHeight: CGFloat = 86.0
     
@@ -40,10 +43,20 @@ class GameScene: SKScene {
         /* Setup your scene here */
         
         let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame")
+        let dictionaryRobot = Dictionary<String, AnyObject>.loadGameData("Robot")
         
         basedRobot = Base(baseType: BaseType(rawValue: dictionary!["currentBase"] as! Int)!)
         basedRobot.sprite = self.childNodeWithName("myRobot-base") as! SKSpriteNode
         basedRobot.sprite!.texture = SKTexture(imageNamed: basedRobot.baseType.highlightedSpriteName)
+        
+        //set texture parts of my robot
+        setTexturePartRobot("antenna", dictionary: dictionaryRobot!)
+        setTexturePartRobot("head", dictionary: dictionaryRobot!)
+        setTexturePartRobot("eyes", dictionary: dictionaryRobot!)
+        setTexturePartRobot("body", dictionary: dictionaryRobot!)
+        setTexturePartRobot("leftArm", dictionary: dictionaryRobot!)
+        setTexturePartRobot("rightArm", dictionary: dictionaryRobot!)
+        setTexturePartRobot("legs", dictionary: dictionaryRobot!)
         
         if let dictionary = Dictionary<String, AnyObject>.loadJSONFromBundle(level.fileName) {
             basedEnemy = Base(baseType: BaseType(rawValue: dictionary["basedEnemy"] as! Int)!)
@@ -66,6 +79,12 @@ class GameScene: SKScene {
         
         beginGame()
         level.swipeHandler = handleSwipe
+    }
+    
+    func setTexturePartRobot(string: String, dictionary: Dictionary<String, AnyObject>){
+        let namePart = "myRobot-" + string
+        let spritePart = self.childNodeWithName(namePart) as! SKSpriteNode
+        spritePart.texture = SKTexture(imageNamed: dictionary[string] as! String)
     }
     
     //função chamada quando avatar ganha ou perde
@@ -115,14 +134,30 @@ class GameScene: SKScene {
         level.view!.removeFromSuperview()
         self.view?.presentScene(gameScene!, transition: fadeScene)
     }
-/*
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        // 1
-        let touch = touches.first! as UITouch
-        let location = touch.locationInNode(self)
-        let nodeTouched = self.nodeAtPoint(location)
+
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        if let touch = touches.first {
+            let location = touch.locationInNode(self)
+            
+            let body = self.nodeAtPoint(location) as? SKSpriteNode
+            
+            if let name: String = body!.name {
+                switch name {
+                    
+                case "buttonPause":
+                    print("buttonMenu Touched")
+                    displayPause()
+                    break
+                    
+                default:
+                    print("nn foi dessa vez")
+                    
+                }
+            }
+        }
     }
-*/    
+    
     //sinaliza situação atual do jogo em pontos
     func updateLabels() {
         lifeAvatarLabel.text = String(format: "%ld", level.lifeAvatar)
@@ -324,6 +359,23 @@ class GameScene: SKScene {
         return CGPoint(
             x: CGFloat(column)*TileWidth + TileWidth/2,
             y: CGFloat(row)*TileHeight + TileHeight/2)
+    }
+    
+    func displayPause(){
+        if(boolPause){
+            boolPause = false
+            self.viewPause.removeFromSuperview()
+        }else{
+            boolPause = true
+            self.viewPause = SKView(frame: CGRectMake(474.12, 6, 284.88, 306.48))
+            self.view?.addSubview(self.viewPause as UIView)
+            
+            let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
+            let gameScene = PauseView(fileNamed: "PauseView")!
+            gameScene.gameScene = self
+            viewPause.presentScene(gameScene, transition: transition)
+            
+        }
     }
 
     override func update(currentTime: CFTimeInterval) {

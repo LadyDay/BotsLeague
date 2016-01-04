@@ -18,24 +18,24 @@ class Robot: SKNode {
     var body: SKSpriteNode
 
     required init?(coder aDecoder: NSCoder) {
-        self.antenna = SKSpriteNode(imageNamed: "antenna-00")
-        self.head = SKSpriteNode(imageNamed: "head-00")
-        self.eyes = SKSpriteNode(imageNamed: "eyes-00")
-        self.rightArm = SKSpriteNode(imageNamed: "rightArm-00")
-        self.leftArm = SKSpriteNode(imageNamed: "leftArm-00")
-        self.legs = SKSpriteNode(imageNamed: "legs-00")
-        self.body = SKSpriteNode(imageNamed: "body-00")
+        self.antenna = SKSpriteNode(imageNamed: "antenna-0")
+        self.head = SKSpriteNode(imageNamed: "head-0")
+        self.eyes = SKSpriteNode(imageNamed: "eyes-0")
+        self.rightArm = SKSpriteNode(imageNamed: "rightArm-0")
+        self.leftArm = SKSpriteNode(imageNamed: "leftArm-0")
+        self.legs = SKSpriteNode(imageNamed: "legs-0")
+        self.body = SKSpriteNode(imageNamed: "body-0")
         fatalError("init(coder:) has not been implemented")
     }
     
     override init(){
-        self.antenna = SKSpriteNode(imageNamed: "antenna-00")
-        self.head = SKSpriteNode(imageNamed: "head-00")
-        self.eyes = SKSpriteNode(imageNamed: "eyes-00")
-        self.rightArm = SKSpriteNode(imageNamed: "rightArm-00")
-        self.leftArm = SKSpriteNode(imageNamed: "leftArm-00")
-        self.legs = SKSpriteNode(imageNamed: "legs-00")
-        self.body = SKSpriteNode(imageNamed: "body-00")
+        self.antenna = SKSpriteNode(imageNamed: "antenna-0")
+        self.head = SKSpriteNode(imageNamed: "head-0")
+        self.eyes = SKSpriteNode(imageNamed: "eyes-0")
+        self.rightArm = SKSpriteNode(imageNamed: "rightArm-0")
+        self.leftArm = SKSpriteNode(imageNamed: "leftArm-0")
+        self.legs = SKSpriteNode(imageNamed: "legs-0")
+        self.body = SKSpriteNode(imageNamed: "body-0")
         super.init()
     }
     

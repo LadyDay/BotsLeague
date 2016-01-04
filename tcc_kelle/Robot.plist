@@ -3,18 +3,18 @@
 <plist version="1.0">
 <dict>
 	<key>antenna</key>
-	<string>antenna-00</string>
+	<string>antenna-0</string>
 	<key>head</key>
-	<string>head-00</string>
+	<string>head-0</string>
 	<key>eyes</key>
-	<string>eyes-00</string>
+	<string>eyes-0</string>
 	<key>rightArm</key>
-	<string>rightArm-00</string>
+	<string>rightArm-0</string>
 	<key>leftArm</key>
-	<string>leftArm-00</string>
+	<string>leftArm-0</string>
 	<key>legs</key>
-	<string>legs-00</string>
+	<string>legs-0</string>
 	<key>body</key>
-	<string>body-00</string>
+	<string>body-0</string>
 </dict>
 </plist>
