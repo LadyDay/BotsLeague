@@ -7,8 +7,10 @@
                [0, 1, 1, 1, 1, 1, 0 ],
                [0, 0, 0, 0, 0, 0, 0 ] ],
     
+    "myHighScore": 0,
     "lifeAvatar" : 350,
     "lifeEnemy" : 270,
+    "offset": 49,
     "basedEnemy" : 1,
     "movesToEnemy": 1,
     

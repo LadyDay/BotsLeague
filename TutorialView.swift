@@ -21,7 +21,10 @@ class TutorialView: SKScene {
     override func didMoveToView(view: SKView) {
 
         self.background = self.childNodeWithName("background") as! SKSpriteNode
-        
+        comecaEssaPorra()
+    }
+    
+    func comecaEssaPorra(){
         if(numberView>=3){
             let nameBackground = "tutorial0" + String(numberView)
             self.background.texture = SKTexture(imageNamed: nameBackground)
@@ -100,7 +103,7 @@ class TutorialView: SKScene {
                         Dictionary<String, AnyObject>.saveGameData("CurrentGame", key: String.returnString("currentBase"), object: self.selectedBase)
                         self.viewAux.removeFromSuperview()
                         
-                        let transition = SKTransition.crossFadeWithDuration(3)
+                        let transition = SKTransition.crossFadeWithDuration(1.5)
                         let mainScreen = Home(fileNamed: "Home")
                         self.tutorial.view!.presentScene(mainScreen!, transition: transition)
                         mainScreen!.scaleMode = .AspectFill

@@ -117,7 +117,6 @@ class EditAvatar: SKScene {
         self.buttonMenu = self.childNodeWithName("buttonMenu") as! SKSpriteNode
         self.buttonNext = self.childNodeWithName("buttonNext") as! SKSpriteNode
         self.buttonBack = self.childNodeWithName("buttonBack") as! SKSpriteNode
-        self.buttonHome = self.childNodeWithName("buttonHome") as! SKSpriteNode
         self.buttonPower = self.childNodeWithName("buttonPower") as! SKSpriteNode
         self.buttonMoney = self.childNodeWithName("buttonMoney") as! SKSpriteNode
 
@@ -129,7 +128,18 @@ class EditAvatar: SKScene {
         self.currentRobot.rightArm = childNodeWithName("rightArm") as! SKSpriteNode
         self.currentRobot.leftArm = childNodeWithName("leftArm") as! SKSpriteNode
         self.currentRobot.legs = childNodeWithName("legs") as! SKSpriteNode
-        
+        zerarAlphaRobot()
+    }
+    
+    func zerarAlphaRobot(){
+        self.currentRobot.antenna.blendMode = SKBlendMode.Alpha
+        self.currentRobot.head.blendMode = SKBlendMode.Alpha
+        self.currentRobot.eyes.blendMode = SKBlendMode.Alpha
+        self.currentRobot.body.blendMode = SKBlendMode.Alpha
+        self.currentRobot.rightArm.blendMode = SKBlendMode.Alpha
+        self.currentRobot.leftArm.blendMode = SKBlendMode.Alpha
+        self.currentRobot.legs.blendMode = SKBlendMode.Alpha
+        self.selectedPart.blendMode = SKBlendMode.Replace
     }
     
     func initializeTexturesOfNodesInView(){
@@ -138,7 +148,6 @@ class EditAvatar: SKScene {
         self.buttonMenu.texture = SKTexture(imageNamed: "buttonMenu")
         self.buttonNext.texture = SKTexture(imageNamed: "buttonNext")
         self.buttonBack.texture = SKTexture(imageNamed: "buttonBack")
-        self.buttonHome.texture = SKTexture(imageNamed: "buttonHome")
         self.buttonPower.texture = SKTexture(imageNamed: "buttonPlus")
         self.buttonMoney.texture = SKTexture(imageNamed: "buttonPlus")
     }
@@ -178,6 +187,7 @@ class EditAvatar: SKScene {
                 case "antenna":
                     print("antenna Touched")
                     self.selectedPart = self.currentRobot.antenna
+                    zerarAlphaRobot()
                     positionLots()
                     updateLots()
                     break
@@ -185,6 +195,7 @@ class EditAvatar: SKScene {
                 case "head":
                     print("head Touched")
                     self.selectedPart = self.currentRobot.head
+                    zerarAlphaRobot()
                     positionLots()
                     updateLots()
                     break
@@ -192,6 +203,7 @@ class EditAvatar: SKScene {
                 case "eyes":
                     print("eyes Touched")
                     self.selectedPart = self.currentRobot.eyes
+                    zerarAlphaRobot()
                     positionLots()
                     updateLots()
                     break
@@ -199,18 +211,21 @@ class EditAvatar: SKScene {
                 case "body":
                     print("body Touched")
                     self.selectedPart = self.currentRobot.body
+                    zerarAlphaRobot()
                     positionLots()
                     updateLots()
                     break
                     
                 case "rightArm":
                     self.selectedPart = self.currentRobot.rightArm
+                    zerarAlphaRobot()
                     positionLots()
                     updateLots()
                     break
                     
                 case "leftArm":
                     self.selectedPart = self.currentRobot.leftArm
+                    zerarAlphaRobot()
                     positionLots()
                     updateLots()
                     break
@@ -218,6 +233,7 @@ class EditAvatar: SKScene {
                 case "legs":
                     print("legs Touched")
                     self.selectedPart = self.currentRobot.legs
+                    zerarAlphaRobot()
                     positionLots()
                     updateLots()
                     break
@@ -244,6 +260,7 @@ class EditAvatar: SKScene {
                     
                 case "confirmar":
                     print("peca lotTwo confirmada")
+                    self.selectedPart.blendMode = SKBlendMode.Alpha
                     self.confirmar()
                     goToHome()
                     break
@@ -251,8 +268,7 @@ class EditAvatar: SKScene {
                 case "cancelar":
                     print("peca lotTwo confirmada")
                     self.cancelar()
-                    positionLots()
-                    updateLots()
+                    goToHome()
                     break
                     
                 default:

@@ -122,7 +122,5 @@ class MapGame: SKScene {
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view!.addGestureRecognizer(swipeRight)
     }
-
-    
 }
 

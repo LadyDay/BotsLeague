@@ -17,6 +17,7 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         if let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame") {
             if((dictionary["currentBase"] as! Int)==0){
                 if let scene = Tutorial(fileNamed:"Tutorial") {

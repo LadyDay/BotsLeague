@@ -48,14 +48,12 @@
 		3D1111141C30CDAF00EA3E83 /* Confirmar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1111131C30CDAF00EA3E83 /* Confirmar.mp3 */; };
 		3D1111161C3AD62C00EA3E83 /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1111151C3AD62C00EA3E83 /* Tutorial.swift */; };
 		3D1111191C3AD66300EA3E83 /* Tutorial.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D1111181C3AD66300EA3E83 /* Tutorial.sks */; };
-		3D11111B1C3AD9D900EA3E83 /* robot in Resources */ = {isa = PBXBuildFile; fileRef = 3D11111A1C3AD9D900EA3E83 /* robot */; };
 		3D11111D1C3ADA7D00EA3E83 /* TutorialView01.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D11111C1C3ADA7D00EA3E83 /* TutorialView01.sks */; };
 		3D11111F1C3ADCEE00EA3E83 /* TutorialView02.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D11111E1C3ADCEE00EA3E83 /* TutorialView02.sks */; };
 		3D1111211C3ADEF100EA3E83 /* TutorialView03.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D1111201C3ADEF100EA3E83 /* TutorialView03.sks */; };
 		3D1111231C3AE67400EA3E83 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1111221C3AE67400EA3E83 /* TutorialView.swift */; };
 		3D1111251C3B018200EA3E83 /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1111241C3B018200EA3E83 /* PauseView.swift */; };
 		3D1111271C3B019000EA3E83 /* PauseView.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D1111261C3B019000EA3E83 /* PauseView.sks */; };
-		3D1C9E481C1B656700B4D8B4 /* teste.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D1C9E471C1B656700B4D8B4 /* teste.sks */; };
 		3D2AA67D1BFE05340019FDA5 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA67C1BFE05340019FDA5 /* Skill.swift */; };
 		3D2AA67F1BFE0EFA0019FDA5 /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA67E1BFE0EFA0019FDA5 /* Array2D.swift */; };
 		3D2AA6811C012BF90019FDA5 /* MapGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA6801C012BF90019FDA5 /* MapGame.swift */; };
@@ -82,6 +80,10 @@
 		3D6E20BE1BCA97EB009029E8 /* MyButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E20BD1BCA97EB009029E8 /* MyButtonNode.swift */; };
 		3D6E20C01BCBF699009029E8 /* EditAvatar.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D6E20BF1BCBF699009029E8 /* EditAvatar.sks */; };
 		3D6E20C61BCC0DE3009029E8 /* EditAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E20C51BCC0DE3009029E8 /* EditAvatar.swift */; };
+		3DA1BDF41C3C32A300E6D302 /* EndGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF31C3C32A300E6D302 /* EndGame.swift */; };
+		3DA1BDF61C3C32B900E6D302 /* GameWin.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF51C3C32B900E6D302 /* GameWin.sks */; };
+		3DA1BDF81C3C32F000E6D302 /* GameLost.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF71C3C32F000E6D302 /* GameLost.sks */; };
+		3DA1BDFA1C3C330100E6D302 /* GameLost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF91C3C330100E6D302 /* GameLost.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,14 +142,12 @@
 		3D1111131C30CDAF00EA3E83 /* Confirmar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Confirmar.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Confirmar.mp3"; sourceTree = "<group>"; };
 		3D1111151C3AD62C00EA3E83 /* Tutorial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		3D1111181C3AD66300EA3E83 /* Tutorial.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tutorial.sks; sourceTree = "<group>"; };
-		3D11111A1C3AD9D900EA3E83 /* robot */ = {isa = PBXFileReference; lastKnownFileType = folder; name = robot; path = "../../../../Downloads/Bot_Fight_TCC-2/00_tutorial/animação_robozinho_e_tela_preta/robot"; sourceTree = "<group>"; };
 		3D11111C1C3ADA7D00EA3E83 /* TutorialView01.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TutorialView01.sks; sourceTree = "<group>"; };
 		3D11111E1C3ADCEE00EA3E83 /* TutorialView02.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TutorialView02.sks; sourceTree = "<group>"; };
 		3D1111201C3ADEF100EA3E83 /* TutorialView03.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TutorialView03.sks; sourceTree = "<group>"; };
 		3D1111221C3AE67400EA3E83 /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		3D1111241C3B018200EA3E83 /* PauseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
 		3D1111261C3B019000EA3E83 /* PauseView.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PauseView.sks; sourceTree = "<group>"; };
-		3D1C9E471C1B656700B4D8B4 /* teste.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = teste.sks; sourceTree = "<group>"; };
 		3D2AA67C1BFE05340019FDA5 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Skill.swift; path = ../Skill.swift; sourceTree = "<group>"; };
 		3D2AA67E1BFE0EFA0019FDA5 /* Array2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
 		3D2AA6801C012BF90019FDA5 /* MapGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapGame.swift; sourceTree = "<group>"; };
@@ -174,6 +174,10 @@
 		3D6E20BD1BCA97EB009029E8 /* MyButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyButtonNode.swift; sourceTree = "<group>"; };
 		3D6E20BF1BCBF699009029E8 /* EditAvatar.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EditAvatar.sks; sourceTree = "<group>"; };
 		3D6E20C51BCC0DE3009029E8 /* EditAvatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAvatar.swift; sourceTree = "<group>"; };
+		3DA1BDF31C3C32A300E6D302 /* EndGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndGame.swift; sourceTree = "<group>"; };
+		3DA1BDF51C3C32B900E6D302 /* GameWin.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameWin.sks; sourceTree = "<group>"; };
+		3DA1BDF71C3C32F000E6D302 /* GameLost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameLost.sks; sourceTree = "<group>"; };
+		3DA1BDF91C3C330100E6D302 /* GameLost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLost.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,9 +231,7 @@
 				3D0426C41BC9CB3600F72B2F /* Home.swift */,
 				3D09914E1BC9B7D1009C3C06 /* GameViewController.swift */,
 				3D0991501BC9B7D1009C3C06 /* Main.storyboard */,
-				3D11111A1C3AD9D900EA3E83 /* robot */,
 				3D0991531BC9B7D1009C3C06 /* Images.xcassets */,
-				3D1C9E471C1B656700B4D8B4 /* teste.sks */,
 				3D0991551BC9B7D1009C3C06 /* LaunchScreen.xib */,
 				3D0991461BC9B7D1009C3C06 /* Supporting Files */,
 			);
@@ -266,8 +268,8 @@
 			isa = PBXGroup;
 			children = (
 				3D1111151C3AD62C00EA3E83 /* Tutorial.swift */,
-				3D1111221C3AE67400EA3E83 /* TutorialView.swift */,
 				3D1111181C3AD66300EA3E83 /* Tutorial.sks */,
+				3D1111221C3AE67400EA3E83 /* TutorialView.swift */,
 				3D11111C1C3ADA7D00EA3E83 /* TutorialView01.sks */,
 				3D11111E1C3ADCEE00EA3E83 /* TutorialView02.sks */,
 				3D1111201C3ADEF100EA3E83 /* TutorialView03.sks */,
@@ -390,6 +392,10 @@
 		3D4CC92C1BF9F6E10022511E /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				3DA1BDF51C3C32B900E6D302 /* GameWin.sks */,
+				3DA1BDF31C3C32A300E6D302 /* EndGame.swift */,
+				3DA1BDF71C3C32F000E6D302 /* GameLost.sks */,
+				3DA1BDF91C3C330100E6D302 /* GameLost.swift */,
 				3D4CC9331BFA34330022511E /* MapGame.sks */,
 				3D2AA6801C012BF90019FDA5 /* MapGame.swift */,
 				3D09914A1BC9B7D1009C3C06 /* GameScene.sks */,
@@ -493,7 +499,6 @@
 				3D2AA6C11C015DB70019FDA5 /* Level_04.json in Resources */,
 				3D2AA6BE1C015DB70019FDA5 /* Level_01.json in Resources */,
 				3D1111041C30CD2E00EA3E83 /* Fase1.mp3 in Resources */,
-				3D1C9E481C1B656700B4D8B4 /* teste.sks in Resources */,
 				3D11110E1C30CD8800EA3E83 /* Principal.mp3 in Resources */,
 				3D1110EB1C30CC2A00EA3E83 /* Bolt.mp3 in Resources */,
 				3D4CC9341BFA34330022511E /* MapGame.sks in Resources */,
@@ -508,12 +513,13 @@
 				3D6E20C01BCBF699009029E8 /* EditAvatar.sks in Resources */,
 				3D2AA6FE1C0264360019FDA5 /* Level_05.json in Resources */,
 				3D1110F01C30CC9F00EA3E83 /* Life.mp3 in Resources */,
-				3D11111B1C3AD9D900EA3E83 /* robot in Resources */,
 				3D1111081C30CD5400EA3E83 /* Erro.mp3 in Resources */,
+				3DA1BDF81C3C32F000E6D302 /* GameLost.sks in Resources */,
 				3D1110FB1C30CCE000EA3E83 /* Combo3.mp3 in Resources */,
 				3D2AA7021C0264360019FDA5 /* Level_09.json in Resources */,
 				3D09914B1BC9B7D1009C3C06 /* GameScene.sks in Resources */,
 				3D1110FD1C30CCE000EA3E83 /* Combo5.mp3 in Resources */,
+				3DA1BDF61C3C32B900E6D302 /* GameWin.sks in Resources */,
 				3D2AA7001C0264360019FDA5 /* Level_07.json in Resources */,
 				3D1110EA1C30CC2A00EA3E83 /* Water.mp3 in Resources */,
 				3D1110F91C30CCE000EA3E83 /* Combo1.mp3 in Resources */,
@@ -553,6 +559,7 @@
 				3D2AA6811C012BF90019FDA5 /* MapGame.swift in Sources */,
 				3D6E20BA1BCA87B0009029E8 /* Robot.swift in Sources */,
 				3D2AA67D1BFE05340019FDA5 /* Skill.swift in Sources */,
+				3DA1BDF41C3C32A300E6D302 /* EndGame.swift in Sources */,
 				3D6E20C61BCC0DE3009029E8 /* EditAvatar.swift in Sources */,
 				3D09914D1BC9B7D1009C3C06 /* GameScene.swift in Sources */,
 				3D2AA6CA1C0210FA0019FDA5 /* Chain.swift in Sources */,
@@ -562,6 +569,7 @@
 				3D1111251C3B018200EA3E83 /* PauseView.swift in Sources */,
 				3D1111161C3AD62C00EA3E83 /* Tutorial.swift in Sources */,
 				3D1110E41C30B92500EA3E83 /* Base.swift in Sources */,
+				3DA1BDFA1C3C330100E6D302 /* GameLost.swift in Sources */,
 				3D2AA67F1BFE0EFA0019FDA5 /* Array2D.swift in Sources */,
 				3D4CC9321BF9F8BB0022511E /* Level.swift in Sources */,
 				3D09914F1BC9B7D1009C3C06 /* GameViewController.swift in Sources */,

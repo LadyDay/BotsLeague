@@ -17,13 +17,15 @@ class Level: SKScene {
     
     var lifeAvatar = 0
     var lifeEnemy = 0
-    var bgEnemyPresent = false
+    var bgEnemyPresent: SKView!
     var maximumMovesToEnemy = 0
     
     var zPositionSkillA: CGFloat = 100
     var zPositionSkillB: CGFloat = 90
     
     var comboMultiplier = 0
+    
+    var offsetTiles: CGFloat = 0.0
     
     private var tiles = Array2D<Tile>(columns: NumColumns, rows: NumRows)
     private var skills = Array2D<Skill>(columns: NumColumns, rows: NumRows)
@@ -89,6 +91,7 @@ class Level: SKScene {
     
     func skillAtColumn(column: Int, row: Int) -> Skill? {
         assert(column >= 0 && column < NumColumns)
+        print(row)
         assert(row >= 0 && row < NumRows)
         return skills[column, row]
     }
@@ -380,7 +383,7 @@ class Level: SKScene {
         let touch = touches.first! as UITouch
         let location = touch.locationInNode(self)
         // 2
-        let (success, column, row) = convertPoint(location)
+        let (success, column, row) = convertPoint(CGPointMake(location.x, location.y + self.offsetTiles))
         if success {
             // 3
             if let skill = self.skillAtColumn(column, row: row) {
@@ -400,7 +403,7 @@ class Level: SKScene {
         let touch = touches.first! as UITouch
         let location = touch.locationInNode(self)
         
-        let (success, column, row) = convertPoint(location)
+        let (success, column, row) = convertPoint(CGPointMake(location.x, location.y + self.offsetTiles))
         if success {
             
             // 3
@@ -428,14 +431,15 @@ class Level: SKScene {
     
     func enemyPlay(){
         //escurecer a tela pra jogada do inimigo
+        /*
         let bgBackground = SKSpriteNode(color: UIColor(red: 205/256, green: 205/256, blue: 205/256, alpha: 0.5), size: CGSizeMake(600, 600))
         bgBackground.name = "bgEnemy"
         bgBackground.blendMode = SKBlendMode.Multiply
         bgBackground.position = CGPointMake(301, 301)
         bgBackground.zPosition = 20
         addChild(bgBackground)
-        self.bgEnemyPresent = true
-        
+        */
+        //chamar display
         detectPossibleSwaps()
         let swap : Swap = possibleSwaps.first!
         print(swap.skillA.description)
@@ -693,7 +697,7 @@ class Level: SKScene {
     func pointForColumn(column: Int, row: Int) -> CGPoint {
         return CGPoint(
             x: CGFloat(column)*TileWidth + TileWidth/2,
-            y: CGFloat(row)*TileHeight + TileHeight/2)
+            y: CGFloat(row)*TileHeight + TileHeight/2 - self.offsetTiles)
     }
     
 }

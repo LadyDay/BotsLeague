@@ -30,6 +30,14 @@ class GameScene: SKScene {
     var basedRobot: Base!
     var basedEnemy: Base!
     
+    var barraLifeAvatar: SKSpriteNode!
+    var barraLifeEnemy: SKSpriteNode!
+    
+    var piscarBool = false
+    
+    var totalLifeAvatar: Int!
+    var totalLifeEnemy: Int!
+    
     var lifeAvatarLabel: SKLabelNode!
     var lifeEnemyLabel: SKLabelNode!
     var scoreLabel: SKLabelNode!
@@ -62,12 +70,19 @@ class GameScene: SKScene {
             basedEnemy = Base(baseType: BaseType(rawValue: dictionary["basedEnemy"] as! Int)!)
             basedEnemy.sprite = self.childNodeWithName("robotEnemy-base") as! SKSpriteNode
             basedEnemy.sprite!.texture = SKTexture(imageNamed: basedEnemy.baseType.spriteName)
+            
+            //ler o offset
+            level.offsetTiles = dictionary["offset"] as! CGFloat
         }
-        
         
         lifeAvatarLabel = self.childNodeWithName("lifeAvatarLabel") as! SKLabelNode
         lifeEnemyLabel = self.childNodeWithName("lifeEnemyLabel") as! SKLabelNode
         scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
+        barraLifeAvatar = self.childNodeWithName("lifeMyRobot") as! SKSpriteNode
+        barraLifeEnemy = self.childNodeWithName("lifeEnemy") as! SKSpriteNode
+        
+        totalLifeAvatar = level.lifeAvatar
+        totalLifeEnemy = level.lifeEnemy
         //movesLabel = self.childNodeWithName("movesLabel") as! SKLabelNode
         
         displayLevel(level)
@@ -93,12 +108,43 @@ class GameScene: SKScene {
         gameOverPanel = SKSpriteNode(color: UIColor.clearColor(), size: CGSizeMake(768, 1024))
         gameOverPanel.position = CGPointMake(384, 512)
         gameOverPanel.zPosition = 30
-        //level.view?.removeFromSuperview()
+
         self.addChild(gameOverPanel)
         level.userInteractionEnabled = false
         
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideGameOver")
         self.view!.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func porcentagemLifeSprite(){
+        let porcentagemAvatar = Float(level.lifeAvatar) / Float(totalLifeAvatar)
+        let porcentagemEnemy = Float(level.lifeEnemy) / Float(totalLifeEnemy)
+        diminuiBarra(barraLifeAvatar, porcentagem: porcentagemAvatar)
+        diminuiBarra(barraLifeEnemy, porcentagem: porcentagemEnemy)
+    }
+    
+    func diminuiBarra(barra: SKSpriteNode, porcentagem: Float){
+        while(porcentagem < Float(barra.xScale) && barra.xScale>=0){
+            barra.xScale = barra.xScale - 0.1
+            if(barra.xScale <= 0.15){
+                barra.color = UIColor.redColor()
+                if(barra.name! == "lifeMyRobot" && piscarBool==false){
+                    piscarLife()
+                }
+            }
+        }
+    }
+    
+    func piscarLife(){
+        let piscar = SKSpriteNode(imageNamed: "piscar-vermelho")
+        piscar.position = CGPoint(x: 384.5, y: 855.5)
+        piscar.zPosition = 1
+        piscarBool = true
+        self.addChild(piscar)
+        
+        let vaiNaFe = SKAction.sequence([SKAction.fadeOutWithDuration(0.5), SKAction.waitForDuration(0.1), SKAction.fadeInWithDuration(0.5), SKAction.waitForDuration(0.1)])
+        
+        piscar.runAction(SKAction.repeatActionForever(vaiNaFe))
     }
     
     func hideGameOver() {
@@ -160,9 +206,11 @@ class GameScene: SKScene {
     
     //sinaliza situação atual do jogo em pontos
     func updateLabels() {
+        porcentagemLifeSprite()
         lifeAvatarLabel.text = String(format: "%ld", level.lifeAvatar)
         lifeEnemyLabel.text = String(format: "%ld", level.lifeEnemy)
         scoreLabel.text = String(format: "%ld", score)
+        
         //movesLabel.text = String(format: "%ld", movesToEnemy)
     }
     
@@ -184,13 +232,14 @@ class GameScene: SKScene {
             level.zPositionSkillB = 16
             basedRobot.sprite!.texture = SKTexture(imageNamed: basedRobot.baseType.spriteName)
             basedEnemy.sprite!.texture = SKTexture(imageNamed: basedEnemy.baseType.highlightedSpriteName)
+            displayLayerEnemy()
             level.enemyPlay()
         }else{
             level.zPositionSkillA = 100
             level.zPositionSkillB = 90
-            if(level.bgEnemyPresent){
-                let bg = self.level.childNodeWithName("bgEnemy")
-                bg?.removeFromParent()
+            if(level.bgEnemyPresent != nil){
+                level.bgEnemyPresent.removeFromSuperview()
+                level.bgEnemyPresent = nil
             }
             basedRobot.sprite!.texture = SKTexture(imageNamed: basedRobot.baseType.highlightedSpriteName)
             basedEnemy.sprite!.texture = SKTexture(imageNamed: basedEnemy.baseType.spriteName)
@@ -354,11 +403,27 @@ class GameScene: SKScene {
         viewLevel.presentScene(level)
     }
     
+    func displayLayerEnemy(){
+        let levelName = "Enemy-Level_" + String(currentLevel)
+        let scene = SKScene(size: CGSizeMake(632, 634))
+        let bgBackground = SKSpriteNode(color: UIColor.clearColor(), size: CGSizeMake(632, 634))
+        bgBackground.position = CGPointMake(316, 317)
+        bgBackground.zPosition = 30
+        bgBackground.blendMode = SKBlendMode.Multiply
+        bgBackground.texture = SKTexture(imageNamed: levelName)
+        scene.addChild(bgBackground)
+        let viewLevel = SKView(frame: CGRectMake(68, 367, 632, 634))
+        viewLevel.backgroundColor = UIColor.clearColor()
+        self.view?.addSubview(viewLevel as UIView)
+        level.bgEnemyPresent = viewLevel
+        viewLevel.presentScene(scene)
+    }
+    
     //usa as variáveis de largura e altura da telha para posiciona-las
     func pointForColumn(column: Int, row: Int) -> CGPoint {
         return CGPoint(
             x: CGFloat(column)*TileWidth + TileWidth/2,
-            y: CGFloat(row)*TileHeight + TileHeight/2)
+            y: CGFloat(row)*TileHeight + TileHeight/2 - level.offsetTiles)
     }
     
     func displayPause(){
