@@ -9,10 +9,12 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    var finished: Bool = false
 
     var level: Level!
     var currentLevel: Int!
-    var gameOverPanel: SKSpriteNode!
+    var viewEnd: SKView!
     var tapGestureRecognizer: UITapGestureRecognizer!
     
     var boolPause: Bool = false
@@ -24,25 +26,19 @@ class GameScene: SKScene {
     let tilesLayer = SKNode()
     let skillsLayer = SKNode()
     
-    var movesToEnemy = 0
     var score = 0
-    
-    var basedRobot: Base!
-    var basedEnemy: Base!
     
     var barraLifeAvatar: SKSpriteNode!
     var barraLifeEnemy: SKSpriteNode!
     
     var piscarBool = false
     
-    var totalLifeAvatar: Int!
-    var totalLifeEnemy: Int!
+    
     
     var lifeAvatarLabel: SKLabelNode!
     var lifeEnemyLabel: SKLabelNode!
     var scoreLabel: SKLabelNode!
     //var movesLabel: SKLabelNode!
-    var currentPlayer: Bool!
     
     let swapSound = SKAction.playSoundFileNamed("Click.mp3", waitForCompletion: false)
     let invalidSwapSound = SKAction.playSoundFileNamed("Erro.mp3", waitForCompletion: false)
@@ -53,9 +49,9 @@ class GameScene: SKScene {
         let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame")
         let dictionaryRobot = Dictionary<String, AnyObject>.loadGameData("Robot")
         
-        basedRobot = Base(baseType: BaseType(rawValue: dictionary!["currentBase"] as! Int)!)
-        basedRobot.sprite = self.childNodeWithName("myRobot-base") as! SKSpriteNode
-        basedRobot.sprite!.texture = SKTexture(imageNamed: basedRobot.baseType.highlightedSpriteName)
+        level.basedRobot = Base(baseType: BaseType(rawValue: dictionary!["currentBase"] as! Int)!)
+        level.basedRobot.sprite = self.childNodeWithName("myRobot-base") as! SKSpriteNode
+        level.basedRobot.sprite!.texture = SKTexture(imageNamed: level.basedRobot.baseType.highlightedSpriteName)
         
         //set texture parts of my robot
         setTexturePartRobot("antenna", dictionary: dictionaryRobot!)
@@ -67,9 +63,9 @@ class GameScene: SKScene {
         setTexturePartRobot("legs", dictionary: dictionaryRobot!)
         
         if let dictionary = Dictionary<String, AnyObject>.loadJSONFromBundle(level.fileName) {
-            basedEnemy = Base(baseType: BaseType(rawValue: dictionary["basedEnemy"] as! Int)!)
-            basedEnemy.sprite = self.childNodeWithName("robotEnemy-base") as! SKSpriteNode
-            basedEnemy.sprite!.texture = SKTexture(imageNamed: basedEnemy.baseType.spriteName)
+            level.basedEnemy = Base(baseType: BaseType(rawValue: dictionary["basedEnemy"] as! Int)!)
+            level.basedEnemy.sprite = self.childNodeWithName("robotEnemy-base") as! SKSpriteNode
+            level.basedEnemy.sprite!.texture = SKTexture(imageNamed: level.basedEnemy.baseType.spriteName)
             
             //ler o offset
             level.offsetTiles = dictionary["offset"] as! CGFloat
@@ -81,8 +77,8 @@ class GameScene: SKScene {
         barraLifeAvatar = self.childNodeWithName("lifeMyRobot") as! SKSpriteNode
         barraLifeEnemy = self.childNodeWithName("lifeEnemy") as! SKSpriteNode
         
-        totalLifeAvatar = level.lifeAvatar
-        totalLifeEnemy = level.lifeEnemy
+        level.totalLifeAvatar = level.lifeAvatar
+        level.totalLifeEnemy = level.lifeEnemy
         //movesLabel = self.childNodeWithName("movesLabel") as! SKLabelNode
         
         displayLevel(level)
@@ -104,21 +100,40 @@ class GameScene: SKScene {
     
     //função chamada quando avatar ganha ou perde
     
-    func showGameOver() {
-        gameOverPanel = SKSpriteNode(color: UIColor.clearColor(), size: CGSizeMake(768, 1024))
-        gameOverPanel.position = CGPointMake(384, 512)
-        gameOverPanel.zPosition = 30
-
-        self.addChild(gameOverPanel)
+    func showGameOver(win: Bool) {
+        viewEnd = SKView(frame: CGRect(x: 0, y: 0, width: 768, height: 1024))
+        viewEnd.backgroundColor = UIColor.clearColor()
+        self.view?.addSubview(viewEnd)
+        
+        let endScene: EndGame!
+        
+        if(win){
+            if let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame"){
+                if (dictionary["currentLevel"] as! Int) < self.currentLevel + 1{
+                    Dictionary<String, AnyObject>.saveGameData("CurrentGame", key: "currentLevel", object: self.currentLevel + 1)
+                }
+            }
+            endScene = EndGame(fileNamed: "GameWin")
+            endScene.win = true
+        }else{
+            endScene = EndGame(fileNamed: "GameLost")
+            endScene.win = false
+        }
+        
+        endScene.gamePlay = self
+        endScene.currentScore = self.score
+        
+        self.userInteractionEnabled = false
         level.userInteractionEnabled = false
         
-        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideGameOver")
-        self.view!.addGestureRecognizer(tapGestureRecognizer)
+        let fadeScene = SKTransition.crossFadeWithDuration(1.5)
+        viewEnd.presentScene(endScene, transition: fadeScene)
+        endScene.scaleMode = .AspectFill
     }
     
     func porcentagemLifeSprite(){
-        let porcentagemAvatar = Float(level.lifeAvatar) / Float(totalLifeAvatar)
-        let porcentagemEnemy = Float(level.lifeEnemy) / Float(totalLifeEnemy)
+        let porcentagemAvatar = Float(level.lifeAvatar) / Float(level.totalLifeAvatar)
+        let porcentagemEnemy = Float(level.lifeEnemy) / Float(level.totalLifeEnemy)
         diminuiBarra(barraLifeAvatar, porcentagem: porcentagemAvatar)
         diminuiBarra(barraLifeEnemy, porcentagem: porcentagemEnemy)
     }
@@ -145,40 +160,6 @@ class GameScene: SKScene {
         let vaiNaFe = SKAction.sequence([SKAction.fadeOutWithDuration(0.5), SKAction.waitForDuration(0.1), SKAction.fadeInWithDuration(0.5), SKAction.waitForDuration(0.1)])
         
         piscar.runAction(SKAction.repeatActionForever(vaiNaFe))
-    }
-    
-    func hideGameOver() {
-        var win: Bool
-        if(gameOverPanel.name == "win"){
-            win = true
-        }else{
-            win = false
-        }
-        
-        if(tapGestureRecognizer != nil){
-            self.view!.removeGestureRecognizer(tapGestureRecognizer)
-        }
-        
-        tapGestureRecognizer = nil
-
-        level.userInteractionEnabled = true
-        
-        let fadeScene = SKTransition.crossFadeWithDuration(1.5)
-        let gameScene = MapGame(fileNamed: "MapGame")
-        gameScene?.first = false
-        
-        if(win){
-            if let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame"){
-                if (dictionary["currentLevel"] as! Int) < self.currentLevel + 1{
-                    Dictionary<String, AnyObject>.saveGameData("CurrentGame", key: "currentLevel", object: self.currentLevel + 1)
-                }
-            }
-            gameScene!.currentLevel = self.currentLevel + 1
-        }else{
-            gameScene!.currentLevel = self.currentLevel
-        }
-        level.view!.removeFromSuperview()
-        self.view?.presentScene(gameScene!, transition: fadeScene)
     }
 
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -216,33 +197,37 @@ class GameScene: SKScene {
     
     //decrementa o número de movimentos até o movimento do adversário
     func decrementMoves() {
-        --movesToEnemy
+        --level.movesToEnemy
         updateLabels()
         
         //mudar o jogador
-        if(movesToEnemy==0){
-            movesToEnemy = level.maximumMovesToEnemy
-            currentPlayer = !currentPlayer
+        if(level.movesToEnemy==0){
+            level.movesToEnemy = level.maximumMovesToEnemy
+            level.currentPlayer = !level.currentPlayer
         }
         
-        if(currentPlayer == false){
+        if(level.currentPlayer == false){
             //chama a função pro inimigo atacar
             self.view!.userInteractionEnabled = false
             level.zPositionSkillA = 17
             level.zPositionSkillB = 16
-            basedRobot.sprite!.texture = SKTexture(imageNamed: basedRobot.baseType.spriteName)
-            basedEnemy.sprite!.texture = SKTexture(imageNamed: basedEnemy.baseType.highlightedSpriteName)
-            displayLayerEnemy()
+            level.basedRobot.sprite!.texture = SKTexture(imageNamed: level.basedRobot.baseType.spriteName)
+            level.basedEnemy.sprite!.texture = SKTexture(imageNamed: level.basedEnemy.baseType.highlightedSpriteName)
+            if(level.firstEnemyPlay){
+                level.firstEnemyPlay = false
+                displayLayerEnemy()
+            }
             level.enemyPlay()
         }else{
+            level.firstEnemyPlay = true
             level.zPositionSkillA = 100
             level.zPositionSkillB = 90
             if(level.bgEnemyPresent != nil){
                 level.bgEnemyPresent.removeFromSuperview()
                 level.bgEnemyPresent = nil
             }
-            basedRobot.sprite!.texture = SKTexture(imageNamed: basedRobot.baseType.highlightedSpriteName)
-            basedEnemy.sprite!.texture = SKTexture(imageNamed: basedEnemy.baseType.spriteName)
+            level.basedRobot.sprite!.texture = SKTexture(imageNamed: level.basedRobot.baseType.highlightedSpriteName)
+            level.basedEnemy.sprite!.texture = SKTexture(imageNamed: level.basedEnemy.baseType.spriteName)
         }
         
         updateLabels()
@@ -252,14 +237,12 @@ class GameScene: SKScene {
     func finishedPlay(){
         if (self.level.lifeEnemy < 1) {
             //gameOverPanel.texture = SKTexture(imageNamed: "")
-            showGameOver()
-            gameOverPanel.texture = SKTexture(imageNamed: "ganhou")
-            gameOverPanel.name = "win"
+            finished = true
+            showGameOver(true)
         } else if (self.level.lifeAvatar < 1){
             //gameOverPanel.texture = SKTexture(imageNamed: "")
-            showGameOver()
-            gameOverPanel.texture = SKTexture(imageNamed: "perdeu")
-            gameOverPanel.name = "lose"
+            finished = true
+            showGameOver(false)
         }
     }
     
@@ -275,7 +258,7 @@ class GameScene: SKScene {
         } else {
             level.animateInvalidSwap(swap, completion: {
                 self.runAction(self.invalidSwapSound, completion: {
-                    if(self.currentPlayer == true){
+                    if(self.level.currentPlayer == true){
                         self.view!.userInteractionEnabled = true
                     }
                 })
@@ -292,7 +275,7 @@ class GameScene: SKScene {
         }
         level.animateMatchedSkills(chains) {
             for chain in chains {
-                if(self.currentPlayer == true){
+                if(self.level.currentPlayer == true){
                     self.score += chain.score
                     self.level.lifeEnemy -= chain.score
                 }else{
@@ -330,10 +313,13 @@ class GameScene: SKScene {
         }
         
         level.resetComboMultiplier()
-        decrementMoves()
+        
         //verifica se o jogo acabou
         finishedPlay()
-        if(self.currentPlayer == true){
+        if(finished == false){
+            decrementMoves()
+        }
+        if(level.currentPlayer == true){
             self.view!.userInteractionEnabled = true
         }
     }
@@ -374,10 +360,10 @@ class GameScene: SKScene {
     
     //começa novo jogo
     func beginGame() {
-        currentPlayer = true
+        level.currentPlayer = true
         shuffle()
         level.resetComboMultiplier()
-        movesToEnemy = level.maximumMovesToEnemy
+        level.movesToEnemy = level.maximumMovesToEnemy
         score = 0
         updateLabels()
     }

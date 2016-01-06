@@ -9,16 +9,16 @@
 import SpriteKit
 
 enum SkillType: Int, CustomStringConvertible {
-    case Unknown = 0, Snow, Water, Fire, Magnet, Life, Bolt
+    case Unknown = 0, Water, Fire, Magnet, Bolt, Snow, Life
     
     var spriteName: String {
         let spriteNames = [
-            "Snow",
             "Water",
             "Fire",
             "Magnet",
-            "Life",
-            "Bolt"]
+            "Bolt",
+            "Snow",
+            "Life"]
         
         return spriteNames[rawValue - 1]
     }

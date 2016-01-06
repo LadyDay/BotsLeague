@@ -261,12 +261,14 @@ class EditAvatar: SKScene {
                 case "confirmar":
                     print("peca lotTwo confirmada")
                     self.selectedPart.blendMode = SKBlendMode.Alpha
+                    self.view?.gestureRecognizers?.removeAll()
                     self.confirmar()
                     goToHome()
                     break
                     
                 case "cancelar":
                     print("peca lotTwo confirmada")
+                    self.view?.gestureRecognizers?.removeAll()
                     self.cancelar()
                     goToHome()
                     break

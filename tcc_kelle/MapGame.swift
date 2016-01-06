@@ -13,9 +13,12 @@ class MapGame: SKScene {
     var first: Bool!
     var currentLevel: Int!
     
+    var touchRunning: Bool = false
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        //addSwipes()
+        addSwipes()
+        
         if(currentLevel > 10){
             currentLevel = 10
         }
@@ -29,27 +32,31 @@ class MapGame: SKScene {
             self.camera!.yScale = 2
             self.camera!.xScale = 2
             self.camera!.position = CGPoint(x: 768, y: 1024)
-            let zoomCamera = SKAction.scaleTo(0.5, duration: 1.5)
+            let zoomCamera = SKAction.scaleTo(1, duration: 1.5)
             self.camera!.runAction(zoomCamera)
         }
-        centerOnNode(self.childNodeWithName(level)!)
+        centerOnNode(self.childNodeWithName(level)!.position)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
-        
-        for touch in touches {
-            let location = touch.locationInNode(self)
+        if(!touchRunning){
+            touchRunning = true
             
-            let body = self.nodeAtPoint(location)
+            for touch in touches {
+                let location = touch.locationInNode(self)
+                
+                let body = self.nodeAtPoint(location)
                 
                 if let name: String = body.name {
                     switch name {
-                    
+                        
                     case "backgroundMap":
+                        touchRunning = false
                         break
                         
                     default:
+                        self.view?.gestureRecognizers?.removeAll()
                         let index1 = name.startIndex.advancedBy(5)
                         let index2 = name.startIndex.advancedBy(6)
                         let numberLevel = Int(String(name[index1]))! * 10 + Int(String(name[index2]))!
@@ -69,33 +76,35 @@ class MapGame: SKScene {
                         }
                     }
                 }
+            }
         }
+        
     }
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
     
-    func centerOnNode(node:SKNode){
-        var position: CGPoint = CGPoint(x: 0, y: 0)
+    func centerOnNode(position: CGPoint){
+        var positionTest: CGPoint = CGPoint(x: 0, y: 0)
         let background = self.childNodeWithName("backgroundMap")
         
-        if(node.position.x<192){
-           position.x = 192
-        }else if(node.position.x > background!.frame.width - 192){
-            position.x = background!.frame.width - 192
+        if(position.x<384){
+           positionTest.x = 384
+        }else if(position.x > background!.frame.width - 384){
+            positionTest.x = background!.frame.width - 384
         }else{
-            position.x = node.position.x
+            positionTest.x = position.x
         }
-        if(node.position.y<256){
-            position.y = 256
-        }else if(node.position.y > background!.frame.height - 256){
-            position.y = background!.frame.height - 256
+        if(position.y<512){
+            positionTest.y = 512
+        }else if(position.y > background!.frame.height - 512){
+            positionTest.y = background!.frame.height - 512
         }else{
-            position.y = node.position.y
+            positionTest.y = position.y
         }
         
-        let moveCamera = SKAction.moveTo(position, duration: 1.5)
+        let moveCamera = SKAction.moveTo(positionTest, duration: 1.5)
         self.camera!.runAction(moveCamera)
     }
     
@@ -121,6 +130,12 @@ class MapGame: SKScene {
         let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipe:")
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view!.addGestureRecognizer(swipeRight)
+    }
+    
+    func swipe(sender: UISwipeGestureRecognizer){
+        /* Function to display the inventory */
+        
+        centerOnNode(CGPointMake(sender.locationInView(self.view).x, 768 - sender.locationInView(self.view).y))
     }
 }
 

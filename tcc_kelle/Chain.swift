@@ -10,6 +10,7 @@ import Foundation
 
 class Chain: Hashable, CustomStringConvertible {
     var skills = [Skill]()
+    var chainType: ChainType
     var score = 0
     
     enum ChainType: CustomStringConvertible {
@@ -23,8 +24,6 @@ class Chain: Hashable, CustomStringConvertible {
             }
         }
     }
-    
-    var chainType: ChainType
     
     init(chainType: ChainType) {
         self.chainType = chainType

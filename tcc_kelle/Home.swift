@@ -12,6 +12,8 @@ class Home: SKScene {
 
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        let backgroundSound = SKAction.playSoundFileNamed("Principal.mp3", waitForCompletion: true)
+        runAction(SKAction.repeatActionForever(backgroundSound))
     }
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -38,7 +40,6 @@ class Home: SKScene {
                         break
                         
                     case "buttonStart":
-                        
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
                         let gameScene = MapGame(fileNamed: "MapGame")
                         gameScene!.first = true

@@ -15,9 +15,20 @@ class Level: SKScene {
     
     var fileName: String!
     
+    var totalLifeAvatar: Int!
+    var totalLifeEnemy: Int!
+    
     var lifeAvatar = 0
     var lifeEnemy = 0
+    
+    var basedRobot: Base!
+    var basedEnemy: Base!
+    
+    var currentPlayer: Bool = true
+    var firstEnemyPlay = true
+    
     var bgEnemyPresent: SKView!
+    var movesToEnemy = 0
     var maximumMovesToEnemy = 0
     
     var zPositionSkillA: CGFloat = 100
@@ -111,8 +122,62 @@ class Level: SKScene {
     private func calculateScores(chains: Set<Chain>) {
         // 3-chain is 60 pts, 4-chain is 120, 5-chain is 180, and so on
         for chain in chains {
-            chain.score = 18 * (chain.length - 2) * comboMultiplier
-            ++comboMultiplier
+            if(chain.skills[0].skillType.spriteName == "Snow"){
+                movesToEnemy++
+            }else if(chain.skills[0].skillType.spriteName == "Life"){
+                if(currentPlayer){
+                    self.lifeAvatar = self.lifeAvatar + 18 * (chain.length - 2) * comboMultiplier
+                    if(self.lifeAvatar > self.totalLifeAvatar){
+                        self.lifeAvatar = self.totalLifeAvatar
+                    }
+                    ++comboMultiplier
+                }else{
+                    self.lifeEnemy = self.lifeEnemy + 18 * (chain.length - 2) * comboMultiplier
+                    if(self.lifeEnemy > self.totalLifeEnemy){
+                        self.lifeEnemy = self.totalLifeEnemy
+                    }
+                    ++comboMultiplier
+                }
+            }else{
+                //chamar hierarquia
+                hierarquiaScores(chain)
+                ++comboMultiplier
+            }
+        }
+    }
+    
+    private func hierarquiaScores(chain: Chain){
+        print("tipo da peça: \(chain.skills[0].skillType.hashValue)")
+        print("tipo do robô: \(basedRobot.baseType.hashValue)")
+        print("tipo do inimigo: \(basedEnemy.baseType.hashValue)")
+        if(currentPlayer){
+            if(chain.skills[0].skillType.hashValue == basedRobot.baseType.hashValue){
+                if((chain.skills[0].skillType.hashValue == 4 && basedEnemy.baseType.hashValue == 1) || chain.skills[0].skillType.hashValue < basedEnemy.baseType.hashValue){
+                    chain.score = 150 * (chain.length - 2) * comboMultiplier
+                }else{
+                    chain.score = 90 * (chain.length - 2) * comboMultiplier
+                }
+            }else{
+                if((chain.skills[0].skillType.hashValue == 4 && basedEnemy.baseType.hashValue == 1) || chain.skills[0].skillType.hashValue < basedEnemy.baseType.hashValue){
+                    chain.score = 30 * (chain.length - 2) * comboMultiplier
+                }else{
+                    chain.score = 18 * (chain.length - 2) * comboMultiplier
+                }
+            }
+        }else{
+            if(chain.skills[0].skillType.hashValue == basedEnemy.baseType.hashValue){
+                if((chain.skills[0].skillType.hashValue == 4 && basedRobot.baseType.hashValue == 1) || chain.skills[0].skillType.hashValue < basedRobot.baseType.hashValue){
+                    chain.score = 150 * (chain.length - 2) * comboMultiplier
+                }else{
+                    chain.score = 90 * (chain.length - 2) * comboMultiplier
+                }
+            }else{
+                if((chain.skills[0].skillType.hashValue == 4 && basedRobot.baseType.hashValue == 1) || chain.skills[0].skillType.hashValue < basedRobot.baseType.hashValue){
+                    chain.score = 30 * (chain.length - 2) * comboMultiplier
+                }else{
+                    chain.score = 18 * (chain.length - 2) * comboMultiplier
+                }
+            }
         }
     }
     

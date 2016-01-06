@@ -84,6 +84,7 @@
 		3DA1BDF61C3C32B900E6D302 /* GameWin.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF51C3C32B900E6D302 /* GameWin.sks */; };
 		3DA1BDF81C3C32F000E6D302 /* GameLost.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF71C3C32F000E6D302 /* GameLost.sks */; };
 		3DA1BDFA1C3C330100E6D302 /* GameLost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF91C3C330100E6D302 /* GameLost.swift */; };
+		3DA1BDFC1C3C4ECB00E6D302 /* MyHighScores.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DA1BDFB1C3C4ECB00E6D302 /* MyHighScores.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +179,7 @@
 		3DA1BDF51C3C32B900E6D302 /* GameWin.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameWin.sks; sourceTree = "<group>"; };
 		3DA1BDF71C3C32F000E6D302 /* GameLost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameLost.sks; sourceTree = "<group>"; };
 		3DA1BDF91C3C330100E6D302 /* GameLost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLost.swift; sourceTree = "<group>"; };
+		3DA1BDFB1C3C4ECB00E6D302 /* MyHighScores.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MyHighScores.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -373,6 +375,7 @@
 				3D6E20BF1BCBF699009029E8 /* EditAvatar.sks */,
 				3D6E20C51BCC0DE3009029E8 /* EditAvatar.swift */,
 				3D1110DF1C30A64800EA3E83 /* CurrentGame.plist */,
+				3DA1BDFB1C3C4ECB00E6D302 /* MyHighScores.plist */,
 				3D05453B1BE819FC00D1DC0A /* MenuView.sks */,
 				3D1111241C3B018200EA3E83 /* PauseView.swift */,
 				3D1111261C3B019000EA3E83 /* PauseView.sks */,
@@ -519,6 +522,7 @@
 				3D2AA7021C0264360019FDA5 /* Level_09.json in Resources */,
 				3D09914B1BC9B7D1009C3C06 /* GameScene.sks in Resources */,
 				3D1110FD1C30CCE000EA3E83 /* Combo5.mp3 in Resources */,
+				3DA1BDFC1C3C4ECB00E6D302 /* MyHighScores.plist in Resources */,
 				3DA1BDF61C3C32B900E6D302 /* GameWin.sks in Resources */,
 				3D2AA7001C0264360019FDA5 /* Level_07.json in Resources */,
 				3D1110EA1C30CC2A00EA3E83 /* Water.mp3 in Resources */,
