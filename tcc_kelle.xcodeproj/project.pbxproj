@@ -22,14 +22,12 @@
 		3D1110DE1C30867F00EA3E83 /* Robot.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110DD1C30867F00EA3E83 /* Robot.plist */; };
 		3D1110E01C30A64800EA3E83 /* CurrentGame.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110DF1C30A64800EA3E83 /* CurrentGame.plist */; };
 		3D1110E41C30B92500EA3E83 /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1110E31C30B92500EA3E83 /* Base.swift */; };
-		3D1110E61C30CC0E00EA3E83 /* Snow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110E51C30CC0E00EA3E83 /* Snow.mp3 */; };
 		3D1110EA1C30CC2A00EA3E83 /* Water.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110E71C30CC2A00EA3E83 /* Water.mp3 */; };
 		3D1110EB1C30CC2A00EA3E83 /* Bolt.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110E81C30CC2A00EA3E83 /* Bolt.mp3 */; };
 		3D1110EC1C30CC2A00EA3E83 /* Magnet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110E91C30CC2A00EA3E83 /* Magnet.mp3 */; };
 		3D1110EE1C30CC9900EA3E83 /* Fire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110ED1C30CC9900EA3E83 /* Fire.mp3 */; };
 		3D1110F01C30CC9F00EA3E83 /* Life.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110EF1C30CC9F00EA3E83 /* Life.mp3 */; };
 		3D1110F91C30CCE000EA3E83 /* Combo1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110F11C30CCE000EA3E83 /* Combo1.mp3 */; };
-		3D1110FA1C30CCE000EA3E83 /* Combo2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110F21C30CCE000EA3E83 /* Combo2.mp3 */; };
 		3D1110FB1C30CCE000EA3E83 /* Combo3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110F31C30CCE000EA3E83 /* Combo3.mp3 */; };
 		3D1110FC1C30CCE000EA3E83 /* Combo4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110F41C30CCE000EA3E83 /* Combo4.mp3 */; };
 		3D1110FD1C30CCE000EA3E83 /* Combo5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1110F51C30CCE000EA3E83 /* Combo5.mp3 */; };
@@ -41,7 +39,6 @@
 		3D1111061C30CD2E00EA3E83 /* Fase3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1111031C30CD2E00EA3E83 /* Fase3.mp3 */; };
 		3D1111081C30CD5400EA3E83 /* Erro.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1111071C30CD5400EA3E83 /* Erro.mp3 */; };
 		3D11110A1C30CD6E00EA3E83 /* Click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1111091C30CD6E00EA3E83 /* Click.mp3 */; };
-		3D11110C1C30CD7500EA3E83 /* Click (in game).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D11110B1C30CD7500EA3E83 /* Click (in game).mp3 */; };
 		3D11110E1C30CD8800EA3E83 /* Principal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D11110D1C30CD8800EA3E83 /* Principal.mp3 */; };
 		3D1111101C30CD9800EA3E83 /* Compra.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D11110F1C30CD9800EA3E83 /* Compra.mp3 */; };
 		3D1111121C30CDA400EA3E83 /* Pergunta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1111111C30CDA400EA3E83 /* Pergunta.mp3 */; };
@@ -83,6 +80,9 @@
 		3D7511F21C4037B500C55D01 /* HierarquiaView.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3D7511F11C4037B500C55D01 /* HierarquiaView.sks */; };
 		3D7511F41C4038E100C55D01 /* HierarquiaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7511F31C4038E100C55D01 /* HierarquiaView.swift */; };
 		3D7511F61C403F7900C55D01 /* SceneInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7511F51C403F7900C55D01 /* SceneInterface.swift */; };
+		3D7511FA1C406E2300C55D01 /* Click (in game).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D7511F91C406E2300C55D01 /* Click (in game).mp3 */; };
+		3D7511FC1C406E4D00C55D01 /* Snow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D7511FB1C406E4D00C55D01 /* Snow.mp3 */; };
+		3D7511FE1C406E5E00C55D01 /* Combo2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D7511FD1C406E5E00C55D01 /* Combo2.mp3 */; };
 		3DA1BDF41C3C32A300E6D302 /* EndGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF31C3C32A300E6D302 /* EndGame.swift */; };
 		3DA1BDF61C3C32B900E6D302 /* GameWin.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF51C3C32B900E6D302 /* GameWin.sks */; };
 		3DA1BDF81C3C32F000E6D302 /* GameLost.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3DA1BDF71C3C32F000E6D302 /* GameLost.sks */; };
@@ -120,14 +120,12 @@
 		3D1110DD1C30867F00EA3E83 /* Robot.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Robot.plist; sourceTree = "<group>"; };
 		3D1110DF1C30A64800EA3E83 /* CurrentGame.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CurrentGame.plist; sourceTree = "<group>"; };
 		3D1110E31C30B92500EA3E83 /* Base.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
-		3D1110E51C30CC0E00EA3E83 /* Snow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Snow.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Snow.mp3"; sourceTree = "<group>"; };
 		3D1110E71C30CC2A00EA3E83 /* Water.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Water.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Water.mp3"; sourceTree = "<group>"; };
 		3D1110E81C30CC2A00EA3E83 /* Bolt.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Bolt.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Bolt.mp3"; sourceTree = "<group>"; };
 		3D1110E91C30CC2A00EA3E83 /* Magnet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Magnet.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Magnet.mp3"; sourceTree = "<group>"; };
 		3D1110ED1C30CC9900EA3E83 /* Fire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Fire.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Fire.mp3"; sourceTree = "<group>"; };
 		3D1110EF1C30CC9F00EA3E83 /* Life.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Life.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Life.mp3"; sourceTree = "<group>"; };
 		3D1110F11C30CCE000EA3E83 /* Combo1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Combo1.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Combo1.mp3"; sourceTree = "<group>"; };
-		3D1110F21C30CCE000EA3E83 /* Combo2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Combo2.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Combo2.mp3"; sourceTree = "<group>"; };
 		3D1110F31C30CCE000EA3E83 /* Combo3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Combo3.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Combo3.mp3"; sourceTree = "<group>"; };
 		3D1110F41C30CCE000EA3E83 /* Combo4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Combo4.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Combo4.mp3"; sourceTree = "<group>"; };
 		3D1110F51C30CCE000EA3E83 /* Combo5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Combo5.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Combo5.mp3"; sourceTree = "<group>"; };
@@ -139,7 +137,6 @@
 		3D1111031C30CD2E00EA3E83 /* Fase3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Fase3.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Fase3.mp3"; sourceTree = "<group>"; };
 		3D1111071C30CD5400EA3E83 /* Erro.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Erro.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Erro.mp3"; sourceTree = "<group>"; };
 		3D1111091C30CD6E00EA3E83 /* Click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Click.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Click.mp3"; sourceTree = "<group>"; };
-		3D11110B1C30CD7500EA3E83 /* Click (in game).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Click (in game).mp3"; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Click (in game).mp3"; sourceTree = "<group>"; };
 		3D11110D1C30CD8800EA3E83 /* Principal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Principal.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Principal.mp3"; sourceTree = "<group>"; };
 		3D11110F1C30CD9800EA3E83 /* Compra.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Compra.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Compra.mp3"; sourceTree = "<group>"; };
 		3D1111111C30CDA400EA3E83 /* Pergunta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Pergunta.mp3; path = "../../../../Downloads/Bot_Fight_TCC-2/00_AUDIO_files/Pergunta.mp3"; sourceTree = "<group>"; };
@@ -181,6 +178,9 @@
 		3D7511F11C4037B500C55D01 /* HierarquiaView.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HierarquiaView.sks; sourceTree = "<group>"; };
 		3D7511F31C4038E100C55D01 /* HierarquiaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HierarquiaView.swift; sourceTree = "<group>"; };
 		3D7511F51C403F7900C55D01 /* SceneInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneInterface.swift; sourceTree = "<group>"; };
+		3D7511F91C406E2300C55D01 /* Click (in game).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Click (in game).mp3"; sourceTree = "<group>"; };
+		3D7511FB1C406E4D00C55D01 /* Snow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Snow.mp3; sourceTree = "<group>"; };
+		3D7511FD1C406E5E00C55D01 /* Combo2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Combo2.mp3; sourceTree = "<group>"; };
 		3DA1BDF31C3C32A300E6D302 /* EndGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndGame.swift; sourceTree = "<group>"; };
 		3DA1BDF51C3C32B900E6D302 /* GameWin.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameWin.sks; sourceTree = "<group>"; };
 		3DA1BDF71C3C32F000E6D302 /* GameLost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameLost.sks; sourceTree = "<group>"; };
@@ -329,7 +329,7 @@
 				3D2AA6D71C0260440019FDA5 /* Levels */,
 				3D1111071C30CD5400EA3E83 /* Erro.mp3 */,
 				3D1111091C30CD6E00EA3E83 /* Click.mp3 */,
-				3D11110B1C30CD7500EA3E83 /* Click (in game).mp3 */,
+				3D7511F91C406E2300C55D01 /* Click (in game).mp3 */,
 				3D11110D1C30CD8800EA3E83 /* Principal.mp3 */,
 				3D11110F1C30CD9800EA3E83 /* Compra.mp3 */,
 				3D1111111C30CDA400EA3E83 /* Pergunta.mp3 */,
@@ -352,7 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				3D1110F11C30CCE000EA3E83 /* Combo1.mp3 */,
-				3D1110F21C30CCE000EA3E83 /* Combo2.mp3 */,
+				3D7511FD1C406E5E00C55D01 /* Combo2.mp3 */,
 				3D1110F31C30CCE000EA3E83 /* Combo3.mp3 */,
 				3D1110F41C30CCE000EA3E83 /* Combo4.mp3 */,
 				3D1110F51C30CCE000EA3E83 /* Combo5.mp3 */,
@@ -367,9 +367,9 @@
 			isa = PBXGroup;
 			children = (
 				3D1110E71C30CC2A00EA3E83 /* Water.mp3 */,
+				3D7511FB1C406E4D00C55D01 /* Snow.mp3 */,
 				3D1110E81C30CC2A00EA3E83 /* Bolt.mp3 */,
 				3D1110E91C30CC2A00EA3E83 /* Magnet.mp3 */,
-				3D1110E51C30CC0E00EA3E83 /* Snow.mp3 */,
 				3D1110EF1C30CC9F00EA3E83 /* Life.mp3 */,
 				3D1110ED1C30CC9900EA3E83 /* Fire.mp3 */,
 			);
@@ -501,13 +501,11 @@
 			files = (
 				3D2AA6FF1C0264360019FDA5 /* Level_06.json in Resources */,
 				3D0991571BC9B7D1009C3C06 /* LaunchScreen.xib in Resources */,
+				3D7511FC1C406E4D00C55D01 /* Snow.mp3 in Resources */,
 				3D0991541BC9B7D1009C3C06 /* Images.xcassets in Resources */,
 				3D1110E01C30A64800EA3E83 /* CurrentGame.plist in Resources */,
 				3D05453A1BE0F94D00D1DC0A /* Home.sks in Resources */,
-				3D11110C1C30CD7500EA3E83 /* Click (in game).mp3 in Resources */,
 				3D1110FF1C30CCE000EA3E83 /* Combo7.mp3 in Resources */,
-				3D1110E61C30CC0E00EA3E83 /* Snow.mp3 in Resources */,
-				3D1110FA1C30CCE000EA3E83 /* Combo2.mp3 in Resources */,
 				3D2AA6C11C015DB70019FDA5 /* Level_04.json in Resources */,
 				3D2AA6BE1C015DB70019FDA5 /* Level_01.json in Resources */,
 				3D1111041C30CD2E00EA3E83 /* Fase1.mp3 in Resources */,
@@ -527,6 +525,7 @@
 				3D2AA6FE1C0264360019FDA5 /* Level_05.json in Resources */,
 				3D1110F01C30CC9F00EA3E83 /* Life.mp3 in Resources */,
 				3D1111081C30CD5400EA3E83 /* Erro.mp3 in Resources */,
+				3D7511FE1C406E5E00C55D01 /* Combo2.mp3 in Resources */,
 				3DA1BDF81C3C32F000E6D302 /* GameLost.sks in Resources */,
 				3D1110FB1C30CCE000EA3E83 /* Combo3.mp3 in Resources */,
 				3D2AA7021C0264360019FDA5 /* Level_09.json in Resources */,
@@ -551,6 +550,7 @@
 				3D1111121C30CDA400EA3E83 /* Pergunta.mp3 in Resources */,
 				3D1110FC1C30CCE000EA3E83 /* Combo4.mp3 in Resources */,
 				3D1111211C3ADEF100EA3E83 /* TutorialView03.sks in Resources */,
+				3D7511FA1C406E2300C55D01 /* Click (in game).mp3 in Resources */,
 				3D11110A1C30CD6E00EA3E83 /* Click.mp3 in Resources */,
 				3D2AA6BF1C015DB70019FDA5 /* Level_02.json in Resources */,
 			);
