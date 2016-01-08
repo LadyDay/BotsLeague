@@ -8,12 +8,11 @@
 
 import SpriteKit
 
-class Home: SKScene {
+class Home: SceneInterface {
 
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let backgroundSound = SKAction.playSoundFileNamed("Principal.mp3", waitForCompletion: true)
-        runAction(SKAction.repeatActionForever(backgroundSound))
+        self.playSoundBackground("Principal.mp3")
     }
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -28,18 +27,27 @@ class Home: SKScene {
                     switch name {
                         
                     case "buttonFacebook":
+                        if(efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
                         
                         print("buttonFacebook Touched")
                         
                         break
                         
                     case "buttonConfiguration":
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
                         
                         print("buttonConfiguration Touched")
                         
                         break
                         
                     case "buttonStart":
+                        if(efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        self.stopSoundBackground()
+                        
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
                         let gameScene = MapGame(fileNamed: "MapGame")
                         gameScene!.first = true
@@ -52,6 +60,10 @@ class Home: SKScene {
                         break
                         
                     case "buttonEditAvatar":
+                        if(efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        self.stopSoundBackground()
                         
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
                         let gameScene = EditAvatar(fileNamed: "EditAvatar")

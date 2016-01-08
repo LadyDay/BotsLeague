@@ -8,32 +8,71 @@
 
 import SpriteKit
 
-class MapGame: SKScene {
+class MapGame: SceneInterface {
     
     var first: Bool!
     var currentLevel: Int!
     
     var touchRunning: Bool = false
     
+    var doCentralize: Bool = false
+    
+    var boolMenu: Bool = false
+    var viewMenu: SKView!
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        self.playSoundBackground("Principal.mp3")
+        
+        self.doCentralize = true
         addSwipes()
+        
+        let mapInterface = self.childNodeWithName("mapInterface")!
+        let powerInterface = self.childNodeWithName("powerInterface")!
+        let moneyInterface = self.childNodeWithName("moneyInterface")!
+        let powerLabel = self.childNodeWithName("powerLabel")!
+        let moneyLabel = self.childNodeWithName("moneyLabel")!
+        let buttonPower = self.childNodeWithName("buttonPower")!
+        let buttonMoney = self.childNodeWithName("buttonMoney")!
+        let buttonMenu = self.childNodeWithName("buttonMenu")!
+
         
         if(currentLevel > 10){
             currentLevel = 10
         }
+        
         var level: String!
+        
         if(currentLevel < 10){
             level = "level" + "0" + String(currentLevel)
         }else{
             level = "level" + String(currentLevel)
         }
+        
         if(first == true){
+            mapInterface.removeFromParent()
+            powerInterface.removeFromParent()
+            moneyInterface.removeFromParent()
+            powerLabel.removeFromParent()
+            moneyLabel.removeFromParent()
+            buttonPower.removeFromParent()
+            buttonMoney.removeFromParent()
+            buttonMenu.removeFromParent()
+            
             self.camera!.yScale = 2
             self.camera!.xScale = 2
             self.camera!.position = CGPoint(x: 768, y: 1024)
             let zoomCamera = SKAction.scaleTo(1, duration: 1.5)
-            self.camera!.runAction(zoomCamera)
+            self.camera!.runAction(zoomCamera, completion: {
+                self.addChild(mapInterface)
+                self.addChild(powerInterface)
+                self.addChild(moneyInterface)
+                self.addChild(powerLabel)
+                self.addChild(moneyLabel)
+                self.addChild(buttonPower)
+                self.addChild(buttonMoney)
+                self.addChild(buttonMenu)
+            })
         }
         centerOnNode(self.childNodeWithName(level)!.position)
     }
@@ -51,11 +90,26 @@ class MapGame: SKScene {
                 if let name: String = body.name {
                     switch name {
                         
+                    case "buttonMenu":
+                        if(efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        
+                        print("buttonMenu Touched")
+                        displayMenu()
+                        touchRunning = false
+                        break
+                        
                     case "backgroundMap":
                         touchRunning = false
                         break
                         
                     default:
+                        if(efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        self.stopSoundBackground()
+                        
                         self.view?.gestureRecognizers?.removeAll()
                         let index1 = name.startIndex.advancedBy(5)
                         let index2 = name.startIndex.advancedBy(6)
@@ -71,6 +125,7 @@ class MapGame: SKScene {
                                 self.view!.presentScene(gameScene!, transition: fadeScene)
                             }else{
                                 //avisar que esse level não está liberado
+                                touchRunning = false
                                 print("não tá liberado")
                             }
                         }
@@ -83,6 +138,9 @@ class MapGame: SKScene {
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        if(self.doCentralize == true && first == false){
+            updateButtonsScene()
+        }
     }
     
     func centerOnNode(position: CGPoint){
@@ -104,13 +162,47 @@ class MapGame: SKScene {
             positionTest.y = position.y
         }
         
+        self.doCentralize = true
         let moveCamera = SKAction.moveTo(positionTest, duration: 1.5)
-        self.camera!.runAction(moveCamera)
+        self.camera!.runAction(moveCamera, completion: {
+            self.updateButtonsScene()
+            self.doCentralize = false
+        })
     }
     
     func updateButtonsScene(){
-        let buttonEditAvatar = self.childNodeWithName("editAvatar") as! SKSpriteNode
-        buttonEditAvatar.position.x = 50 + self.camera!.position.x - 256
+        let mapInterface = self.childNodeWithName("mapInterface")!
+        let mapInterfaceGo = CGPoint(x: self.camera!.position.x - 384, y: self.camera!.position.y + 512)
+        
+        let powerInterface = self.childNodeWithName("powerInterface")!
+        let powerInterfaceGo = CGPoint(x: self.camera!.position.x - 316, y: self.camera!.position.y + 482)
+        
+        let moneyInterface = self.childNodeWithName("moneyInterface")!
+        let moneyInterfaceGo = CGPoint(x: self.camera!.position.x - 90, y: self.camera!.position.y + 482)
+        
+        let powerLabel = self.childNodeWithName("powerLabel")!
+        let powerLabelGo = CGPoint(x: self.camera!.position.x - 311, y: self.camera!.position.y + 482)
+        
+        let moneyLabel = self.childNodeWithName("moneyLabel")!
+        let moneyLabelGo = CGPoint(x: self.camera!.position.x - 120, y: self.camera!.position.y + 482)
+        
+        let buttonPower = self.childNodeWithName("buttonPower")!
+        let buttonPowerGo = CGPoint(x: self.camera!.position.x - 236, y: self.camera!.position.y + 482)
+        
+        let buttonMoney = self.childNodeWithName("buttonMoney")!
+        let buttonMoneyGo = CGPoint(x: self.camera!.position.x + 16, y: self.camera!.position.y + 482)
+        
+        let buttonMenu = self.childNodeWithName("buttonMenu")!
+        let buttonMenuGo = CGPoint(x: self.camera!.position.x + 345, y: self.camera!.position.y + 482)
+        
+        mapInterface.runAction(SKAction.moveTo(mapInterfaceGo, duration: 0))
+        powerInterface.runAction(SKAction.moveTo(powerInterfaceGo, duration: 0))
+        moneyInterface.runAction(SKAction.moveTo(moneyInterfaceGo, duration: 0))
+        powerLabel.runAction(SKAction.moveTo(powerLabelGo, duration: 0))
+        moneyLabel.runAction(SKAction.moveTo(moneyLabelGo, duration: 0))
+        buttonPower.runAction(SKAction.moveTo(buttonPowerGo, duration: 0))
+        buttonMoney.runAction(SKAction.moveTo(buttonMoneyGo, duration: 0))
+        buttonMenu.runAction(SKAction.moveTo(buttonMenuGo, duration: 0))
     }
     
     func addSwipes(){
@@ -136,6 +228,23 @@ class MapGame: SKScene {
         /* Function to display the inventory */
         
         centerOnNode(CGPointMake(sender.locationInView(self.view).x, 768 - sender.locationInView(self.view).y))
+    }
+    
+    func displayMenu(){
+        if(boolMenu){
+            boolMenu = false
+            self.viewMenu.removeFromSuperview()
+        }else{
+            boolMenu = true
+            self.viewMenu = SKView(frame: CGRectMake(474.12, 6, 284.88, 306.48))
+            self.view?.addSubview(self.viewMenu as UIView)
+            
+            let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
+            let gameScene = MenuView(fileNamed: "MenuView")!
+            gameScene.gameScene = self
+            viewMenu.presentScene(gameScene, transition: transition)
+            
+        }
     }
 }
 

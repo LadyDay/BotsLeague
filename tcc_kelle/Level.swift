@@ -11,7 +11,7 @@ import SpriteKit
 let NumColumns = 7
 let NumRows = 7
 
-class Level: SKScene {
+class Level: SceneInterface {
     
     var fileName: String!
     
@@ -298,7 +298,9 @@ class Level: SKScene {
                         scaleAction.timingMode = .EaseOut
                         print(nameType)
                         matchSound = SKAction.playSoundFileNamed(nameType, waitForCompletion: false)
-                        runAction(matchSound)
+                        if(self.efectsPermission()){
+                            runAction(matchSound)
+                        }
                         sprite.runAction(SKAction.sequence([changeSprite ,scaleAction, SKAction.removeFromParent()]),
                             withKey:"removing")
                     }

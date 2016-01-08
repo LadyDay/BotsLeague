@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SceneInterface {
     
     var finished: Bool = false
 
@@ -18,7 +18,9 @@ class GameScene: SKScene {
     var tapGestureRecognizer: UITapGestureRecognizer!
     
     var boolPause: Bool = false
+    var boolHierarquia: Bool = false
     var viewPause: SKView!
+    var viewHierarquia: SKView!
     
     let TileWidth: CGFloat = 86.0
     let TileHeight: CGFloat = 86.0
@@ -45,6 +47,7 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        self.playSoundBackground("Fase1.mp3")
         
         let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame")
         let dictionaryRobot = Dictionary<String, AnyObject>.loadGameData("Robot")
@@ -104,6 +107,8 @@ class GameScene: SKScene {
         viewEnd = SKView(frame: CGRect(x: 0, y: 0, width: 768, height: 1024))
         viewEnd.backgroundColor = UIColor.clearColor()
         self.view?.addSubview(viewEnd)
+        
+        self.stopSoundBackground()
         
         let endScene: EndGame!
         
@@ -173,8 +178,24 @@ class GameScene: SKScene {
                 switch name {
                     
                 case "buttonPause":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("buttonMenu Touched")
-                    displayPause()
+                    if(!boolHierarquia){
+                        displayPause()
+                    }
+                    break
+                    
+                case "hierarquia":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
+                    if(!boolPause){
+                        displayHierarquia()
+                    }
                     break
                     
                 default:
@@ -250,18 +271,26 @@ class GameScene: SKScene {
     func handleSwipe(swap: Swap) {
         self.view!.userInteractionEnabled = false
         
-        runAction(swapSound)
+        if(efectsPermission()){
+            runAction(swapSound)
+        }
         
         if level.isPossibleSwap(swap) {
             level.performSwap(swap)
             level.animateSwap(swap, completion: handleMatches)
         } else {
             level.animateInvalidSwap(swap, completion: {
-                self.runAction(self.invalidSwapSound, completion: {
+                if(self.efectsPermission()){
+                    self.runAction(self.invalidSwapSound, completion: {
+                        if(self.level.currentPlayer == true){
+                            self.view!.userInteractionEnabled = true
+                        }
+                    })
+                }else{
                     if(self.level.currentPlayer == true){
                         self.view!.userInteractionEnabled = true
                     }
-                })
+                }
             })
         }
     }
@@ -299,7 +328,9 @@ class GameScene: SKScene {
         
         if(level.comboMultiplier > 2){
             let som = "Combo" + String(level.comboMultiplier - 2) + ".mp3"
-            runAction(SKAction.playSoundFileNamed(som, waitForCompletion: false))
+            if(self.efectsPermission()){
+                runAction(SKAction.playSoundFileNamed(som, waitForCompletion: false))
+            }
         }
         
         level.detectPossibleSwaps()
@@ -425,6 +456,24 @@ class GameScene: SKScene {
             let gameScene = PauseView(fileNamed: "PauseView")!
             gameScene.gameScene = self
             viewPause.presentScene(gameScene, transition: transition)
+            
+        }
+    }
+    
+    func displayHierarquia(){
+        if(boolHierarquia){
+            boolHierarquia = false
+            self.viewHierarquia.removeFromSuperview()
+        }else{
+            boolHierarquia = true
+            self.viewHierarquia = SKView(frame: CGRectMake(5, 5, 297, 297))
+            self.viewHierarquia.backgroundColor = UIColor.clearColor()
+            self.view?.addSubview(self.viewHierarquia as UIView)
+            
+            let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
+            let gameScene = HierarquiaView(fileNamed: "HierarquiaView")!
+            gameScene.gameScene = self
+            viewHierarquia.presentScene(gameScene, transition: transition)
             
         }
     }

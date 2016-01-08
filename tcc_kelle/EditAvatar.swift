@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class EditAvatar: SKScene {
+class EditAvatar: SceneInterface {
     
     var currentLevel: Int!
     
@@ -185,6 +185,10 @@ class EditAvatar: SKScene {
                 switch name {
                     
                 case "antenna":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("antenna Touched")
                     self.selectedPart = self.currentRobot.antenna
                     zerarAlphaRobot()
@@ -193,6 +197,10 @@ class EditAvatar: SKScene {
                     break
                     
                 case "head":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("head Touched")
                     self.selectedPart = self.currentRobot.head
                     zerarAlphaRobot()
@@ -201,6 +209,10 @@ class EditAvatar: SKScene {
                     break
                     
                 case "eyes":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("eyes Touched")
                     self.selectedPart = self.currentRobot.eyes
                     zerarAlphaRobot()
@@ -209,6 +221,10 @@ class EditAvatar: SKScene {
                     break
                     
                 case "body":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("body Touched")
                     self.selectedPart = self.currentRobot.body
                     zerarAlphaRobot()
@@ -217,6 +233,10 @@ class EditAvatar: SKScene {
                     break
                     
                 case "rightArm":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     self.selectedPart = self.currentRobot.rightArm
                     zerarAlphaRobot()
                     positionLots()
@@ -224,6 +244,10 @@ class EditAvatar: SKScene {
                     break
                     
                 case "leftArm":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     self.selectedPart = self.currentRobot.leftArm
                     zerarAlphaRobot()
                     positionLots()
@@ -231,6 +255,10 @@ class EditAvatar: SKScene {
                     break
                     
                 case "legs":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("legs Touched")
                     self.selectedPart = self.currentRobot.legs
                     zerarAlphaRobot()
@@ -239,26 +267,46 @@ class EditAvatar: SKScene {
                     break
                     
                 case "buttonNext":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("buttonNext Touched")
                     buttonNextPressed()
                     break
                     
                 case "buttonBack":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("buttonBack Touched")
                     buttonBackPressed()
                     break
                     
                 case "buttonHome":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("buttonHome Touched")
                     goToHome()
                     break
                     
                 case "buttonMenu":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("buttonMenu Touched")
                     displayMenu()
                     break
                     
                 case "confirmar":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Confirmar.mp3", waitForCompletion: true))
+                    }
+                    
                     print("peca lotTwo confirmada")
                     self.selectedPart.blendMode = SKBlendMode.Alpha
                     self.view?.gestureRecognizers?.removeAll()
@@ -267,6 +315,10 @@ class EditAvatar: SKScene {
                     break
                     
                 case "cancelar":
+                    if(efectsPermission()){
+                        runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                    }
+                    
                     print("peca lotTwo confirmada")
                     self.view?.gestureRecognizers?.removeAll()
                     self.cancelar()

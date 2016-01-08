@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class EndGame: SKScene {
+class EndGame: SceneInterface {
     
     var currentLevel: Int!
     var myHighScore: Int!
@@ -20,6 +20,7 @@ class EndGame: SKScene {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        
         if let dictionary = Dictionary<String, AnyObject>.loadGameData("MyHighScores") {
             myHighScore = dictionary[gamePlay.level.fileName] as! Int
         }
@@ -58,6 +59,10 @@ class EndGame: SKScene {
                     switch name {
                         
                     case "replay":
+                        if(efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        
                         gamePlay.level.view!.removeFromSuperview()
                         
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
@@ -72,6 +77,10 @@ class EndGame: SKScene {
                         break
                         
                     case "proximo":
+                        if(efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        
                         gamePlay.level.view!.removeFromSuperview()
                         
                         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
