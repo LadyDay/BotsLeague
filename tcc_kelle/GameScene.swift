@@ -17,11 +17,6 @@ class GameScene: SceneInterface {
     var viewEnd: SKView!
     var tapGestureRecognizer: UITapGestureRecognizer!
     
-    var boolPause: Bool = false
-    var boolHierarquia: Bool = false
-    var viewPause: SKView!
-    var viewHierarquia: SKView!
-    
     let TileWidth: CGFloat = 86.0
     let TileHeight: CGFloat = 86.0
     
@@ -35,8 +30,6 @@ class GameScene: SceneInterface {
     
     var piscarBool = false
     
-    
-    
     var lifeAvatarLabel: SKLabelNode!
     var lifeEnemyLabel: SKLabelNode!
     var scoreLabel: SKLabelNode!
@@ -47,7 +40,7 @@ class GameScene: SceneInterface {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        self.playSoundBackground("Fase1.mp3")
+        self.playSoundBackground("Fase1")
         
         let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame")
         let dictionaryRobot = Dictionary<String, AnyObject>.loadGameData("Robot")
@@ -444,38 +437,30 @@ class GameScene: SceneInterface {
     }
     
     func displayPause(){
-        if(boolPause){
-            boolPause = false
-            self.viewPause.removeFromSuperview()
-        }else{
-            boolPause = true
-            self.viewPause = SKView(frame: CGRectMake(474.12, 6, 284.88, 306.48))
-            self.view?.addSubview(self.viewPause as UIView)
-            
-            let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
-            let gameScene = PauseView(fileNamed: "PauseView")!
-            gameScene.gameScene = self
-            viewPause.presentScene(gameScene, transition: transition)
-            
-        }
+        boolPause = true
+        self.userInteractionEnabled = false
+        //level.userInteractionEnabled = false
+        self.viewPause = SKView(frame: CGRectMake(0, 0, 768, 1024))
+        self.viewPause.backgroundColor = UIColor.clearColor()
+        self.view?.addSubview(self.viewPause as UIView)
+        
+        let transition = SKTransition.crossFadeWithDuration(2)
+        let gameScene = PauseView(fileNamed: "PauseView")!
+        gameScene.gameScene = self
+        viewPause.presentScene(gameScene, transition: transition)
     }
     
     func displayHierarquia(){
-        if(boolHierarquia){
-            boolHierarquia = false
-            self.viewHierarquia.removeFromSuperview()
-        }else{
-            boolHierarquia = true
-            self.viewHierarquia = SKView(frame: CGRectMake(5, 5, 297, 297))
-            self.viewHierarquia.backgroundColor = UIColor.clearColor()
-            self.view?.addSubview(self.viewHierarquia as UIView)
-            
-            let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
-            let gameScene = HierarquiaView(fileNamed: "HierarquiaView")!
-            gameScene.gameScene = self
-            viewHierarquia.presentScene(gameScene, transition: transition)
-            
-        }
+        boolHierarquia = true
+        self.userInteractionEnabled = false
+        self.viewHierarquia = SKView(frame: CGRectMake(0, 0, 768, 1024))
+        self.viewHierarquia.backgroundColor = UIColor.clearColor()
+        self.view?.addSubview(self.viewHierarquia as UIView)
+        
+        let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
+        let gameScene = HierarquiaView(fileNamed: "HierarquiaView")!
+        gameScene.gameScene = self
+        viewHierarquia.presentScene(gameScene, transition: transition)
     }
 
     override func update(currentTime: CFTimeInterval) {

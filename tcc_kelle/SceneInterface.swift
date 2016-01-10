@@ -11,16 +11,49 @@ import SpriteKit
 class SceneInterface: SKScene {
     var boolMusic: Bool = false
     var boolEfects: Bool = false
+    var audioNode: SKAudioNode!
+    
+    //menu
+    var boolMenu: Bool = false
+    var viewMenu: SKView!
+    
+    var boolPause: Bool = false
+    var boolHierarquia: Bool = false
+    var viewPause: SKView!
+    var viewHierarquia: SKView!
     
     func playSoundBackground(string: String){
         if(musicPermission()){
-            let backgroundSound = SKAction.playSoundFileNamed(string, waitForCompletion: true)
-            self.runAction(SKAction.repeatActionForever(backgroundSound), withKey: "soundBackground")
+            if(audioNode != nil){
+                audioNode.runAction(SKAction.play())
+                audioNode.runAction(SKAction.changeVolumeTo(0.1, duration: 0))
+            }else{
+                audioNode = SKAudioNode(fileNamed: string + ".mp3")
+                audioNode.name = "soundBackground"
+                audioNode.positional = false
+                audioNode.autoplayLooped = true
+                audioNode.runAction(SKAction.changeVolumeTo(0.1, duration: 0))
+                self.addChild(audioNode)
+            }
+        }
+    }
+    
+    func pauseSoundBackground(){
+        if(audioNode != nil){
+            audioNode.runAction(SKAction.changeVolumeTo(0, duration: 0), completion: {
+                self.audioNode.runAction(SKAction.pause())
+            })
         }
     }
     
     func stopSoundBackground(){
-        self.removeActionForKey("soundBackground")
+        if(audioNode != nil){
+            audioNode.runAction(SKAction.changeVolumeTo(0, duration: 0), completion: {
+                self.audioNode.runAction(SKAction.stop())
+                self.audioNode.removeFromParent()
+                self.audioNode = nil
+            })
+        }
     }
     
     func musicPermission() -> Bool{

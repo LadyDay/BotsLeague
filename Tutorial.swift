@@ -14,13 +14,17 @@ class Tutorial: SKScene {
     var robot: SKSpriteNode!
     var viewMensagem: TutorialView!
     
+    var viewAux: SKView!
+    
+    var gameScene: MapGame!
+    
     override func didMoveToView(view: SKView) {
         //tela de mensagem
         let viewAux = SKView(frame: CGRectMake(86.5, 70, 595, 555))
         self.view?.addSubview(viewAux as UIView)
         let transition = SKTransition.crossFadeWithDuration(2.5)
         self.viewMensagem = TutorialView(fileNamed: "TutorialView01")!
-        self.viewMensagem.viewAux = viewAux
+        self.viewAux = viewAux
         self.viewMensagem.tutorial = self
         viewAux.presentScene(self.viewMensagem, transition: transition)
         
@@ -46,30 +50,25 @@ class Tutorial: SKScene {
     }
     
     func verificarView(){
-        var gameScene: TutorialView = TutorialView(fileNamed: "TutorialView01")!
+        var scene: TutorialView!
         if(self.viewMensagem.numberView==1){
-            gameScene = TutorialView(fileNamed: "TutorialView01")!
+            scene = TutorialView(fileNamed: "TutorialView01")!
         }else if(self.viewMensagem.numberView==2){
-            gameScene = TutorialView(fileNamed: "TutorialView02")!
+            scene = TutorialView(fileNamed: "TutorialView02")!
         }else if(self.viewMensagem.numberView==3){
-            gameScene = TutorialView(fileNamed: "TutorialView03")!
+            scene = TutorialView(fileNamed: "TutorialView03")!
         }else{
             self.viewMensagem.comecaEssaPorra()
         }
         
         if(self.viewMensagem.numberView>=1 && self.viewMensagem.numberView<4){
-            gameScene.selected = self.viewMensagem.selected
-            gameScene.selectedBase = self.viewMensagem.selectedBase
-            gameScene.numberView = self.viewMensagem.numberView
-            gameScene.tutorial = self
-            self.viewMensagem.viewAux.removeFromSuperview()
-            self.viewMensagem = gameScene
+            scene.selected = self.viewMensagem.selected
+            scene.selectedBase = self.viewMensagem.selectedBase
+            scene.numberView = self.viewMensagem.numberView
+            scene.tutorial = self
+            self.viewMensagem = scene
             
-            let viewAux = SKView(frame: CGRectMake(86.5, 70, 595, 555))
-            self.view?.addSubview(viewAux as UIView)
-            self.viewMensagem.viewAux = viewAux
-            let transition = SKTransition.crossFadeWithDuration(2.5)
-            viewAux.presentScene(gameScene, transition: transition)
+            self.viewAux.presentScene(self.viewMensagem)
         }
     }
     

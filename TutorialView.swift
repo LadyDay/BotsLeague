@@ -15,8 +15,9 @@ class TutorialView: SKScene {
     var numberView: Int = 1
     
     var tutorial: Tutorial!
-    var viewAux: SKView!
     var background: SKSpriteNode!
+    
+    var touchRunning: Bool = false
     
     override func didMoveToView(view: SKView) {
 
@@ -65,60 +66,90 @@ class TutorialView: SKScene {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if let touch = touches.first {
-            let location = touch.locationInNode(self)
-            
-            let body = self.nodeAtPoint(location) as! SKSpriteNode
-            
-            if let name: String = body.name {
-                switch name {
-                    
-                case "bolt":
-                    print("bolt Touched")
-                    self.selectedBase = 4
-                    self.changePositionSelected(body)
-                    break
-                    
-                case "fire":
-                    print("fire Touched")
-                    self.selectedBase = 2
-                    self.changePositionSelected(body)
-                    break
-                    
-                case "water":
-                    print("water Touched")
-                    self.selectedBase = 1
-                    self.changePositionSelected(body)
-                    break
-                    
-                case "magnet":
-                    print("magnet Touched")
-                    self.selectedBase = 3
-                    self.changePositionSelected(body)
-                    break
-                    
-                case "confirmar":
-                    self.numberView++
-                    if(numberView==9){
-                        Dictionary<String, AnyObject>.saveGameData("CurrentGame", key: String.returnString("currentBase"), object: self.selectedBase)
-                        self.viewAux.removeFromSuperview()
+        if(!touchRunning){
+            touchRunning = true
+            if let touch = touches.first {
+                let location = touch.locationInNode(self)
+                
+                let body = self.nodeAtPoint(location) as! SKSpriteNode
+                
+                if let name: String = body.name {
+                    switch name {
                         
-                        let transition = SKTransition.crossFadeWithDuration(1.5)
-                        let mainScreen = Home(fileNamed: "Home")
-                        self.tutorial.view!.presentScene(mainScreen!, transition: transition)
-                        mainScreen!.scaleMode = .AspectFill
-                    }else{
+                    case "bolt":
+                        print("bolt Touched")
+                        if(self.tutorial.gameScene.efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        
+                        self.selectedBase = 4
+                        self.changePositionSelected(body)
+                        touchRunning = false
+                        break
+                        
+                    case "fire":
+                        print("fire Touched")
+                        if(self.tutorial.gameScene.efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        self.selectedBase = 2
+                        self.changePositionSelected(body)
+                        touchRunning = false
+                        break
+                        
+                    case "water":
+                        print("water Touched")
+                        if(self.tutorial.gameScene.efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        
+                        self.selectedBase = 1
+                        self.changePositionSelected(body)
+                        touchRunning = false
+                        break
+                        
+                    case "magnet":
+                        print("magnet Touched")
+                        if(self.tutorial.gameScene.efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        
+                        self.selectedBase = 3
+                        self.changePositionSelected(body)
+                        touchRunning = false
+                        break
+                        
+                    case "confirmar":
+                        if(self.tutorial.gameScene.efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        
+                        self.numberView++
+                        if(numberView==9){
+                            Dictionary<String, AnyObject>.saveGameData("CurrentGame", key: String.returnString("currentBase"), object: self.selectedBase)
+                            self.tutorial.viewAux.removeFromSuperview()
+                            self.tutorial.view?.removeFromSuperview()
+                            self.tutorial.gameScene.userInteractionEnabled = true
+                        }else{
+                            self.tutorial.verificarView()
+                        }
+                        touchRunning = false
+                        break
+                        
+                    case "cancelar":
+                        if(self.tutorial.gameScene.efectsPermission()){
+                            runAction(SKAction.playSoundFileNamed("Click (in game).mp3", waitForCompletion: true))
+                        }
+                        
+                        self.numberView--
                         self.tutorial.verificarView()
+                        touchRunning = false
+                        break
+                        
+                    default:
+                        touchRunning = false
+                        break
                     }
-                    break
-                    
-                case "cancelar":
-                    self.numberView--
-                    self.tutorial.verificarView()
-                    break
-                    
-                default:
-                    break
                 }
             }
         }

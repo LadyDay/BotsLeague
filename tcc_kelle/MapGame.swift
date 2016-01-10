@@ -17,12 +17,13 @@ class MapGame: SceneInterface {
     
     var doCentralize: Bool = false
     
-    var boolMenu: Bool = false
-    var viewMenu: SKView!
+    var viewTutorial: SKView!
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        self.playSoundBackground("Principal.mp3")
+        if(!first){
+            self.playSoundBackground("Principal")
+        }
         
         self.doCentralize = true
         addSwipes()
@@ -72,9 +73,27 @@ class MapGame: SceneInterface {
                 self.addChild(buttonPower)
                 self.addChild(buttonMoney)
                 self.addChild(buttonMenu)
+                
+                if let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame") {
+                    if((dictionary["currentBase"] as! Int)==0){
+                        self.displayTutorial()
+                    }
+                }
             })
         }
         centerOnNode(self.childNodeWithName(level)!.position)
+    }
+    
+    func displayTutorial(){
+        self.userInteractionEnabled = false
+        self.viewTutorial = SKView(frame: CGRectMake(0, 0, 768, 1024))
+        self.viewTutorial.backgroundColor = UIColor.clearColor()
+        self.view?.addSubview(self.viewTutorial as UIView)
+        
+        let transition = SKTransition.fadeWithDuration(10)
+        let gameScene = Tutorial(fileNamed: "Tutorial")!
+        gameScene.gameScene = self
+        self.viewTutorial.presentScene(gameScene, transition: transition)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -101,6 +120,38 @@ class MapGame: SceneInterface {
                         break
                         
                     case "backgroundMap":
+                        touchRunning = false
+                        break
+                    
+                    case "powerInterface":
+                        touchRunning = false
+                        break
+                        
+                    case "powerLabel":
+                        touchRunning = false
+                        break
+                        
+                    case "buttonPower":
+                        touchRunning = false
+                        break
+                        
+                    case "moneyInterface":
+                        touchRunning = false
+                        break
+                        
+                    case "moneyLabel":
+                        touchRunning = false
+                        break
+                        
+                    case "buttonMoney":
+                        touchRunning = false
+                        break
+                        
+                    case "buttonMenu":
+                        touchRunning = false
+                        break
+                        
+                    case "mapInterface":
                         touchRunning = false
                         break
                         
@@ -231,20 +282,16 @@ class MapGame: SceneInterface {
     }
     
     func displayMenu(){
-        if(boolMenu){
-            boolMenu = false
-            self.viewMenu.removeFromSuperview()
-        }else{
-            boolMenu = true
-            self.viewMenu = SKView(frame: CGRectMake(474.12, 6, 284.88, 306.48))
-            self.view?.addSubview(self.viewMenu as UIView)
-            
-            let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
-            let gameScene = MenuView(fileNamed: "MenuView")!
-            gameScene.gameScene = self
-            viewMenu.presentScene(gameScene, transition: transition)
-            
-        }
+        boolMenu = true
+        self.userInteractionEnabled = false
+        self.viewMenu = SKView(frame: CGRectMake(0, 0, 768, 1024))
+        self.viewMenu.backgroundColor = UIColor.clearColor()
+        self.view?.addSubview(self.viewMenu as UIView)
+        
+        let transition = SKTransition.crossFadeWithDuration(2)
+        let gameScene = MenuView(fileNamed: "MenuView")!
+        gameScene.gameScene = self
+        viewMenu.presentScene(gameScene, transition: transition)
     }
 }
 

@@ -15,7 +15,7 @@
 	<key>currentSizeMaxLife</key>
 	<integer>5</integer>
 	<key>currentMoney</key>
-	<integer>0</integer>
+	<integer>100</integer>
 	<key>currentBase</key>
 	<integer>0</integer>
 </dict>

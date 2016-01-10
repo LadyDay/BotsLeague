@@ -15,6 +15,8 @@ class EditAvatar: SceneInterface {
     var currentRobot: Robot = Robot()
     var selectedPart: SKSpriteNode!
     
+    var viewBox: UIView!
+    
     //informations of lots
     var colorPart: NSInteger = 0
     var colorPart2: NSInteger = 1
@@ -39,22 +41,18 @@ class EditAvatar: SceneInterface {
     var buttonPower: SKSpriteNode!
     var buttonMoney: SKSpriteNode!
     
-    //menu
-    var boolMenu: Bool = false
-    var viewMenu: SKView!
-    
     override func didMoveToView(view: SKView) {
         
-        let viewRecognizer: UIView = UIView(frame: CGRectMake(30, 770, 702, 209))
-        self.view?.addSubview(viewRecognizer)
+        viewBox = UIView(frame: CGRectMake(80, 680, 602, 209))
+        self.view?.addSubview(viewBox)
         
         let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "buttonNextPressed")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-        viewRecognizer.addGestureRecognizer(swipeLeft)
+        viewBox.addGestureRecognizer(swipeLeft)
         
         let swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "buttonBackPressed")
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        viewRecognizer.addGestureRecognizer(swipeRight)
+        viewBox.addGestureRecognizer(swipeRight)
         
         let base = self.childNodeWithName("basedRobot") as! SKSpriteNode
         if let dictionary = Dictionary<String, AnyObject>.loadGameData("CurrentGame") {
@@ -75,14 +73,22 @@ class EditAvatar: SceneInterface {
         initializeNodesInTheView()
         self.currentRobot.loadRobotFromFile()
         initializeTexturesOfLots()
+        zerarAlphaRobot()
     }
     
     func positionLots(){
         let string = SKTexture.returnNameTexture(self.selectedPart.texture!)
-        let numberTwo = Int(String(string[string.endIndex.predecessor()]))
-        colorPart2 = numberTwo!
-        print(colorPart2)
-        logicaNumber()
+        if(string[string.endIndex.predecessor()] == "l"){
+            let numberTwo = Int(String(string[string.endIndex.predecessor().predecessor().predecessor().predecessor()]))
+            colorPart2 = numberTwo!
+            print(colorPart2)
+            logicaNumber()
+        }else{
+            let numberTwo = Int(String(string[string.endIndex.predecessor()]))
+            colorPart2 = numberTwo!
+            print(colorPart2)
+            logicaNumber()
+        }
     }
     
     func logicaNumber(){
@@ -128,18 +134,89 @@ class EditAvatar: SceneInterface {
         self.currentRobot.rightArm = childNodeWithName("rightArm") as! SKSpriteNode
         self.currentRobot.leftArm = childNodeWithName("leftArm") as! SKSpriteNode
         self.currentRobot.legs = childNodeWithName("legs") as! SKSpriteNode
-        zerarAlphaRobot()
     }
     
     func zerarAlphaRobot(){
-        self.currentRobot.antenna.blendMode = SKBlendMode.Alpha
-        self.currentRobot.head.blendMode = SKBlendMode.Alpha
-        self.currentRobot.eyes.blendMode = SKBlendMode.Alpha
-        self.currentRobot.body.blendMode = SKBlendMode.Alpha
-        self.currentRobot.rightArm.blendMode = SKBlendMode.Alpha
-        self.currentRobot.leftArm.blendMode = SKBlendMode.Alpha
-        self.currentRobot.legs.blendMode = SKBlendMode.Alpha
-        self.selectedPart.blendMode = SKBlendMode.Replace
+        highlightDeselectedParts({
+            if(SKTexture.returnNameTexture(self.selectedPart.texture!)[SKTexture.returnNameTexture(self.selectedPart.texture!).endIndex.predecessor()] != "l"){
+                let string = SKTexture.returnNameTexture(self.selectedPart.texture!) + "-hl"
+                self.selectedPart.texture = SKTexture(imageNamed: string)
+            }
+        })
+    }
+    
+    func highlightDeselectedParts(completion: (Void) -> Void){
+        if(SKTexture.returnNameTexture(self.currentRobot.antenna.texture!)[SKTexture.returnNameTexture(self.currentRobot.antenna.texture!).endIndex.predecessor()] == "l"){
+            let indexEnd = SKTexture.returnNameTexture(self.currentRobot.antenna.texture!).endIndex.predecessor().predecessor().predecessor()
+            var indexStart = SKTexture.returnNameTexture(self.currentRobot.antenna.texture!).startIndex
+            var string : String! = ""
+            for( ;indexStart < indexEnd; indexStart++){
+                string = string + String(SKTexture.returnNameTexture(self.currentRobot.antenna.texture!)[indexStart])
+            }
+            self.currentRobot.antenna.texture = SKTexture(imageNamed: string)
+        }
+        
+        if(SKTexture.returnNameTexture(self.currentRobot.head.texture!)[SKTexture.returnNameTexture(self.currentRobot.head.texture!).endIndex.predecessor()] == "l"){
+            let indexEnd = SKTexture.returnNameTexture(self.currentRobot.head.texture!).endIndex.predecessor().predecessor().predecessor()
+            var indexStart = SKTexture.returnNameTexture(self.currentRobot.head.texture!).startIndex
+            var string : String! = ""
+            for( ;indexStart < indexEnd; indexStart++){
+                string = string + String(SKTexture.returnNameTexture(self.currentRobot.head.texture!)[indexStart])
+            }
+            self.currentRobot.head.texture = SKTexture(imageNamed: string)
+        }
+        
+        if(SKTexture.returnNameTexture(self.currentRobot.eyes.texture!)[SKTexture.returnNameTexture(self.currentRobot.eyes.texture!).endIndex.predecessor()] == "l"){
+            let indexEnd = SKTexture.returnNameTexture(self.currentRobot.eyes.texture!).endIndex.predecessor().predecessor().predecessor()
+            var indexStart = SKTexture.returnNameTexture(self.currentRobot.eyes.texture!).startIndex
+            var string : String! = ""
+            for( ;indexStart < indexEnd; indexStart++){
+                string = string + String(SKTexture.returnNameTexture(self.currentRobot.eyes.texture!)[indexStart])
+            }
+            self.currentRobot.eyes.texture = SKTexture(imageNamed: string)
+        }
+        
+        if(SKTexture.returnNameTexture(self.currentRobot.body.texture!)[SKTexture.returnNameTexture(self.currentRobot.body.texture!).endIndex.predecessor()] == "l"){
+            let indexEnd = SKTexture.returnNameTexture(self.currentRobot.body.texture!).endIndex.predecessor().predecessor().predecessor()
+            var indexStart = SKTexture.returnNameTexture(self.currentRobot.body.texture!).startIndex
+            var string : String! = ""
+            for( ;indexStart < indexEnd; indexStart++){
+                string = string + String(SKTexture.returnNameTexture(self.currentRobot.body.texture!)[indexStart])
+            }
+            self.currentRobot.body.texture = SKTexture(imageNamed: string)
+        }
+        
+        if(SKTexture.returnNameTexture(self.currentRobot.rightArm.texture!)[SKTexture.returnNameTexture(self.currentRobot.rightArm.texture!).endIndex.predecessor()] == "l"){
+            let indexEnd = SKTexture.returnNameTexture(self.currentRobot.rightArm.texture!).endIndex.predecessor().predecessor().predecessor()
+            var indexStart = SKTexture.returnNameTexture(self.currentRobot.rightArm.texture!).startIndex
+            var string : String! = ""
+            for( ;indexStart < indexEnd; indexStart++){
+                string = string + String(SKTexture.returnNameTexture(self.currentRobot.rightArm.texture!)[indexStart])
+            }
+            self.currentRobot.rightArm.texture = SKTexture(imageNamed: string)
+        }
+        
+        if(SKTexture.returnNameTexture(self.currentRobot.leftArm.texture!)[SKTexture.returnNameTexture(self.currentRobot.leftArm.texture!).endIndex.predecessor()] == "l"){
+            let indexEnd = SKTexture.returnNameTexture(self.currentRobot.leftArm.texture!).endIndex.predecessor().predecessor().predecessor()
+            var indexStart = SKTexture.returnNameTexture(self.currentRobot.leftArm.texture!).startIndex
+            var string : String! = ""
+            for( ;indexStart < indexEnd; indexStart++){
+                string = string + String(SKTexture.returnNameTexture(self.currentRobot.leftArm.texture!)[indexStart])
+            }
+            self.currentRobot.leftArm.texture = SKTexture(imageNamed: string)
+        }
+        
+        if(SKTexture.returnNameTexture(self.currentRobot.legs.texture!)[SKTexture.returnNameTexture(self.currentRobot.legs.texture!).endIndex.predecessor()] == "l"){
+            let indexEnd = SKTexture.returnNameTexture(self.currentRobot.legs.texture!).endIndex.predecessor().predecessor().predecessor()
+            var indexStart = SKTexture.returnNameTexture(self.currentRobot.legs.texture!).startIndex
+            var string : String! = ""
+            for( ;indexStart < indexEnd; indexStart++){
+                string = string + String(SKTexture.returnNameTexture(self.currentRobot.legs.texture!)[indexStart])
+            }
+            self.currentRobot.legs.texture = SKTexture(imageNamed: string)
+        }
+        
+        return completion()
     }
     
     func initializeTexturesOfNodesInView(){
@@ -191,9 +268,8 @@ class EditAvatar: SceneInterface {
                     
                     print("antenna Touched")
                     self.selectedPart = self.currentRobot.antenna
+                    initializeTexturesOfLots()
                     zerarAlphaRobot()
-                    positionLots()
-                    updateLots()
                     break
                     
                 case "head":
@@ -203,9 +279,8 @@ class EditAvatar: SceneInterface {
                     
                     print("head Touched")
                     self.selectedPart = self.currentRobot.head
+                    initializeTexturesOfLots()
                     zerarAlphaRobot()
-                    positionLots()
-                    updateLots()
                     break
                     
                 case "eyes":
@@ -215,9 +290,8 @@ class EditAvatar: SceneInterface {
                     
                     print("eyes Touched")
                     self.selectedPart = self.currentRobot.eyes
+                    initializeTexturesOfLots()
                     zerarAlphaRobot()
-                    positionLots()
-                    updateLots()
                     break
                     
                 case "body":
@@ -227,9 +301,8 @@ class EditAvatar: SceneInterface {
                     
                     print("body Touched")
                     self.selectedPart = self.currentRobot.body
+                    initializeTexturesOfLots()
                     zerarAlphaRobot()
-                    positionLots()
-                    updateLots()
                     break
                     
                 case "rightArm":
@@ -238,9 +311,8 @@ class EditAvatar: SceneInterface {
                     }
                     
                     self.selectedPart = self.currentRobot.rightArm
+                    initializeTexturesOfLots()
                     zerarAlphaRobot()
-                    positionLots()
-                    updateLots()
                     break
                     
                 case "leftArm":
@@ -249,9 +321,8 @@ class EditAvatar: SceneInterface {
                     }
                     
                     self.selectedPart = self.currentRobot.leftArm
+                    initializeTexturesOfLots()
                     zerarAlphaRobot()
-                    positionLots()
-                    updateLots()
                     break
                     
                 case "legs":
@@ -261,9 +332,8 @@ class EditAvatar: SceneInterface {
                     
                     print("legs Touched")
                     self.selectedPart = self.currentRobot.legs
+                    initializeTexturesOfLots()
                     zerarAlphaRobot()
-                    positionLots()
-                    updateLots()
                     break
                     
                 case "buttonNext":
@@ -309,7 +379,6 @@ class EditAvatar: SceneInterface {
                     
                     print("peca lotTwo confirmada")
                     self.selectedPart.blendMode = SKBlendMode.Alpha
-                    self.view?.gestureRecognizers?.removeAll()
                     self.confirmar()
                     goToHome()
                     break
@@ -320,7 +389,6 @@ class EditAvatar: SceneInterface {
                     }
                     
                     print("peca lotTwo confirmada")
-                    self.view?.gestureRecognizers?.removeAll()
                     self.cancelar()
                     goToHome()
                     break
@@ -351,6 +419,7 @@ class EditAvatar: SceneInterface {
             self.colorPart3 = 0
         }
         updateLots()
+        zerarAlphaRobot()
     }
     
     func buttonBackPressed(){
@@ -367,6 +436,7 @@ class EditAvatar: SceneInterface {
             self.colorPart3 = self.totalPieces-1
         }
         updateLots()
+        zerarAlphaRobot()
     }
     
     func updateLots(){
@@ -384,6 +454,7 @@ class EditAvatar: SceneInterface {
     }
     
     func goToHome(){
+        viewBox.removeFromSuperview()
         
         let transition = SKTransition.crossFadeWithDuration(1.5)
         let mainScreen = Home(fileNamed: "Home")
@@ -392,19 +463,21 @@ class EditAvatar: SceneInterface {
     }
     
     func confirmar(){
-        Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("antenna"), object: SKTexture.returnNameTexture(self.currentRobot.antenna.texture!))
-        
-        Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("head"), object: SKTexture.returnNameTexture(self.currentRobot.head.texture!))
-        
-        Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("eyes"), object: SKTexture.returnNameTexture(self.currentRobot.eyes.texture!))
-        
-        Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("body"), object: SKTexture.returnNameTexture(self.currentRobot.body.texture!))
-        
-        Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("leftArm"), object: SKTexture.returnNameTexture(self.currentRobot.leftArm.texture!))
-        
-        Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("rightArm"), object: SKTexture.returnNameTexture(self.currentRobot.rightArm.texture!))
-        
-        Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("legs"), object: SKTexture.returnNameTexture(self.currentRobot.legs.texture!))
+        highlightDeselectedParts({
+            Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("antenna"), object: SKTexture.returnNameTexture(self.currentRobot.antenna.texture!))
+            
+            Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("head"), object: SKTexture.returnNameTexture(self.currentRobot.head.texture!))
+            
+            Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("eyes"), object: SKTexture.returnNameTexture(self.currentRobot.eyes.texture!))
+            
+            Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("body"), object: SKTexture.returnNameTexture(self.currentRobot.body.texture!))
+            
+            Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("leftArm"), object: SKTexture.returnNameTexture(self.currentRobot.leftArm.texture!))
+            
+            Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("rightArm"), object: SKTexture.returnNameTexture(self.currentRobot.rightArm.texture!))
+            
+            Dictionary<String, AnyObject>.saveGameData("Robot", key: String.returnString("legs"), object: SKTexture.returnNameTexture(self.currentRobot.legs.texture!))
+        })
     }
     
     func cancelar(){
@@ -412,19 +485,16 @@ class EditAvatar: SceneInterface {
     }
     
     func displayMenu(){
-        if(boolMenu){
-            boolMenu = false
-            self.viewMenu.removeFromSuperview()
-        }else{
-            boolMenu = true
-            self.viewMenu = SKView(frame: CGRectMake(474.12, 6, 284.88, 306.48))
-            self.view?.addSubview(self.viewMenu as UIView)
-            
-            let transition = SKTransition.moveInWithDirection(SKTransitionDirection.Down, duration: 5)
-            let gameScene: SKScene = MenuView(fileNamed: "MenuView")!
-            viewMenu.presentScene(gameScene, transition: transition)
-            
-        }
+        boolMenu = true
+        self.userInteractionEnabled = false
+        self.viewMenu = SKView(frame: CGRectMake(0, 0, 768, 1024))
+        self.viewMenu.backgroundColor = UIColor.clearColor()
+        self.view?.addSubview(self.viewMenu as UIView)
+        
+        let transition = SKTransition.crossFadeWithDuration(2)
+        let gameScene = MenuView(fileNamed: "MenuView")!
+        gameScene.gameScene = self
+        viewMenu.presentScene(gameScene, transition: transition)
     }
     
 }
