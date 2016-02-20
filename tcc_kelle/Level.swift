@@ -27,7 +27,7 @@ class Level: SceneInterface {
     var currentPlayer: Bool = true
     var firstEnemyPlay = true
     
-    var bgEnemyPresent: SKView!
+    var bgEnemyPresent: Bool = false
     var movesToEnemy = 0
     var maximumMovesToEnemy = 0
     
@@ -271,6 +271,7 @@ class Level: SceneInterface {
         removeSkills(verticalChains)
         
         return horizontalChains.union(verticalChains)
+        
     }
     
     private func removeSkills(chains: Set<Chain>) {
@@ -301,8 +302,8 @@ class Level: SceneInterface {
                         if(self.efectsPermission()){
                             runAction(matchSound)
                         }
-                        sprite.runAction(SKAction.sequence([changeSprite ,scaleAction, SKAction.removeFromParent()]),
-                            withKey:"removing")
+                        sprite.runAction(SKAction.sequence([changeSprite ,scaleAction, SKAction.removeFromParent()]), completion: {
+                        })
                     }
                 }
             }

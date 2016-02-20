@@ -122,7 +122,7 @@ class GameScene: SceneInterface {
         endScene.currentScore = self.score
         
         self.userInteractionEnabled = false
-        level.userInteractionEnabled = false
+        //level.userInteractionEnabled = false
         
         let fadeScene = SKTransition.crossFadeWithDuration(1.5)
         viewEnd.presentScene(endScene, transition: fadeScene)
@@ -158,6 +158,10 @@ class GameScene: SceneInterface {
         let vaiNaFe = SKAction.sequence([SKAction.fadeOutWithDuration(0.5), SKAction.waitForDuration(0.1), SKAction.fadeInWithDuration(0.5), SKAction.waitForDuration(0.1)])
         
         piscar.runAction(SKAction.repeatActionForever(vaiNaFe))
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
     }
 
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -236,9 +240,10 @@ class GameScene: SceneInterface {
             level.firstEnemyPlay = true
             level.zPositionSkillA = 100
             level.zPositionSkillB = 90
-            if(level.bgEnemyPresent != nil){
-                level.bgEnemyPresent.removeFromSuperview()
-                level.bgEnemyPresent = nil
+            if(level.bgEnemyPresent){
+                let levelName = self.level.childNodeWithName("bgEnemy")!
+                levelName.removeFromParent()
+                level.bgEnemyPresent = false
             }
             level.basedRobot.sprite!.texture = SKTexture(imageNamed: level.basedRobot.baseType.highlightedSpriteName)
             level.basedEnemy.sprite!.texture = SKTexture(imageNamed: level.basedEnemy.baseType.spriteName)
@@ -300,8 +305,14 @@ class GameScene: SceneInterface {
                 if(self.level.currentPlayer == true){
                     self.score += chain.score
                     self.level.lifeEnemy -= chain.score
+                    if(self.level.lifeEnemy < 0){
+                        self.level.lifeEnemy = 0
+                    }
                 }else{
                     self.level.lifeAvatar -= chain.score
+                    if(self.level.lifeAvatar < 0){
+                        self.level.lifeAvatar = 0
+                    }
                 }
                 
             }
@@ -342,7 +353,10 @@ class GameScene: SceneInterface {
         finishedPlay()
         if(finished == false){
             decrementMoves()
+        }else{
+            self.view!.userInteractionEnabled = true
         }
+        
         if(level.currentPlayer == true){
             self.view!.userInteractionEnabled = true
         }
@@ -400,7 +414,6 @@ class GameScene: SceneInterface {
     
     //cria uma view para o level e apresenta o level nela
     func displayLevel(level: Level){
-        
         let levelName = "Level_" + String(currentLevel)
         let bgBackground = SKSpriteNode(color: UIColor.clearColor(), size: CGSizeMake(632, 634))
         bgBackground.position = CGPointMake(384, 340)
@@ -415,18 +428,13 @@ class GameScene: SceneInterface {
     
     func displayLayerEnemy(){
         let levelName = "Enemy-Level_" + String(currentLevel)
-        let scene = SKScene(size: CGSizeMake(632, 634))
-        let bgBackground = SKSpriteNode(color: UIColor.clearColor(), size: CGSizeMake(632, 634))
-        bgBackground.position = CGPointMake(316, 317)
-        bgBackground.zPosition = 30
+        let bgBackground = SKSpriteNode(texture: SKTexture(imageNamed: levelName), size: CGSizeMake(632, 634))
+        bgBackground.name = "bgEnemy"
+        bgBackground.position = CGPointMake(301, 301)
+        bgBackground.zPosition = 150
         bgBackground.blendMode = SKBlendMode.Multiply
-        bgBackground.texture = SKTexture(imageNamed: levelName)
-        scene.addChild(bgBackground)
-        let viewLevel = SKView(frame: CGRectMake(68, 367, 632, 634))
-        viewLevel.backgroundColor = UIColor.clearColor()
-        self.view?.addSubview(viewLevel as UIView)
-        level.bgEnemyPresent = viewLevel
-        viewLevel.presentScene(scene)
+        self.level.addChild(bgBackground)
+        self.level.bgEnemyPresent = true
     }
     
     //usa as variáveis de largura e altura da telha para posiciona-las

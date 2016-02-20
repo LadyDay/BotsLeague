@@ -8,8 +8,8 @@
               [0, 0, 0, 0, 0, 0, 0 ] ],
 
   "myHighScore": 0,
-  "lifeAvatar" : 370,
-  "lifeEnemy" : 260,
+  "lifeAvatar" : 320,
+  "lifeEnemy" : 320,
   "offset": 50,
   "basedEnemy" : 1,
   "movesToEnemy": 1,

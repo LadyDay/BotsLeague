@@ -473,7 +473,7 @@
 				TargetAttributes = {
 					3D0991421BC9B7D1009C3C06 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = DALRD2YRNJ;
+						DevelopmentTeam = 9S8UE9T8R2;
 					};
 					3D09915B1BC9B7D1009C3C06 = {
 						CreatedOnToolsVersion = 6.4;
@@ -738,7 +738,7 @@
 				INFOPLIST_FILE = tcc_kelle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "br.ufpe.cin.dkrs.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "br.ufpe.dkrs.tcc-kelle";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
@@ -754,7 +754,7 @@
 				INFOPLIST_FILE = tcc_kelle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "br.ufpe.cin.dkrs.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "br.ufpe.dkrs.tcc-kelle";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;

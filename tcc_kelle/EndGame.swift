@@ -30,7 +30,10 @@ class EndGame: SceneInterface {
         }
         
         if(win == true){
-            Dictionary<String, AnyObject>.saveGameData("MyHighScores", key: gamePlay.level.fileName, object: currentScore)
+            if(currentScore > myHighScore){
+                Dictionary<String, AnyObject>.saveGameData("MyHighScores", key: gamePlay.level.fileName, object: currentScore)
+                myHighScore = currentScore
+            }
         }
         
         let score = self.childNodeWithName("score") as! SKLabelNode
@@ -44,6 +47,10 @@ class EndGame: SceneInterface {
         nameLevel.text = "Level " + String(gamePlay.level.fileName[gamePlay.level.fileName.endIndex.predecessor().predecessor()]) + String(gamePlay.level.fileName[gamePlay.level.fileName.endIndex.predecessor()])
         
         touchRunning = false
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {

@@ -11,7 +11,7 @@
     "lifeAvatar" : 470,
     "lifeEnemy" : 390,
     "offset": 90,
-    "basedEnemy" : 1,
+    "basedEnemy" : 2,
     "movesToEnemy": 1,
     
 }
